@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.weathers.mapper.CityWeatherMapper">
+
+    <resultMap type="CityWeather" id="CityWeatherResult">
+        <result property="id"    column="id"    />
+        <result property="city"    column="city"    />
+        <result property="weatherDay"    column="weather_day"    />
+        <result property="weatherNight"    column="weather_night"    />
+        <result property="temperatureLow"    column="temperature_low"    />
+        <result property="temperatureHigh"    column="temperature_high"    />
+        <result property="windDirection"    column="wind_direction"    />
+        <result property="windScale"    column="wind_scale"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectCityWeatherVo">
+        select id, city, weather_day, weather_night, temperature_low, temperature_high, wind_direction, wind_scale, create_time from city_weather
+    </sql>
+
+    <select id="selectCityWeatherList" parameterType="CityWeather" resultMap="CityWeatherResult">
+        <include refid="selectCityWeatherVo"/>
+        <where>
+            <if test="city != null  and city != ''"> and city like concat('%', #{city}, '%')</if>
+            <if test="weatherDay != null  and weatherDay != ''"> and weather_day like concat('%', #{weatherDay}, '%')</if>
+            <if test="weatherNight != null  and weatherNight != ''"> and weather_night like concat('%', #{weatherNight}, '%')</if>
+            <if test="temperatureLow != null  and temperatureLow != ''"> and temperature_low like concat('%', #{temperatureLow}, '%')</if>
+            <if test="temperatureHigh != null  and temperatureHigh != ''"> and temperature_high like concat('%', #{temperatureHigh}, '%')</if>
+            <if test="windDirection != null  and windDirection != ''"> and wind_direction like concat('%', #{windDirection}, '%')</if>
+            <if test="windScale != null  and windScale != ''"> and wind_scale like concat('%', #{windScale}, '%')</if>
+            <if test="createTime != null "> and create_time like concat('%', #{createTime}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectCityWeatherById" parameterType="Long" resultMap="CityWeatherResult">
+        <include refid="selectCityWeatherVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCityWeather" parameterType="CityWeather" useGeneratedKeys="true" keyProperty="id">
+        insert into city_weather
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="city != null">city,</if>
+            <if test="weatherDay != null">weather_day,</if>
+            <if test="weatherNight != null">weather_night,</if>
+            <if test="temperatureLow != null">temperature_low,</if>
+            <if test="temperatureHigh != null">temperature_high,</if>
+            <if test="windDirection != null">wind_direction,</if>
+            <if test="windScale != null">wind_scale,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="city != null">#{city},</if>
+            <if test="weatherDay != null">#{weatherDay},</if>
+            <if test="weatherNight != null">#{weatherNight},</if>
+            <if test="temperatureLow != null">#{temperatureLow},</if>
+            <if test="temperatureHigh != null">#{temperatureHigh},</if>
+            <if test="windDirection != null">#{windDirection},</if>
+            <if test="windScale != null">#{windScale},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCityWeather" parameterType="CityWeather">
+        update city_weather
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="city != null">city = #{city},</if>
+            <if test="weatherDay != null">weather_day = #{weatherDay},</if>
+            <if test="weatherNight != null">weather_night = #{weatherNight},</if>
+            <if test="temperatureLow != null">temperature_low = #{temperatureLow},</if>
+            <if test="temperatureHigh != null">temperature_high = #{temperatureHigh},</if>
+            <if test="windDirection != null">wind_direction = #{windDirection},</if>
+            <if test="windScale != null">wind_scale = #{windScale},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCityWeatherById" parameterType="Long">
+        delete from city_weather where id = #{id}
+    </delete>
+
+    <delete id="deleteCityWeatherByIds" parameterType="String">
+        delete from city_weather where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
