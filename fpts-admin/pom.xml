@@ -67,6 +67,12 @@
             <artifactId>fpts-generator</artifactId>
         </dependency>
 
+        <!-- 金融信息-->
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-finance</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

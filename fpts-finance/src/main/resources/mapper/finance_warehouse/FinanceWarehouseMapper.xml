@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.finance_warehouse.mapper.FinanceWarehouseMapper">
+    
+    <resultMap type="FinanceWarehouse" id="FinanceWarehouseResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="newPrice"    column="new_price"    />
+        <result property="openPrice"    column="open_price"    />
+        <result property="yesterdayPrice"    column="yesterday_price"    />
+        <result property="maxPrice"    column="max_price"    />
+        <result property="minPrice"    column="min_price"    />
+        <result property="increase"    column="increase"    />
+        <result property="increaseRate"    column="increase_rate"    />
+        <result property="turnoverRate"    column="turnover_rate"    />
+    </resultMap>
+
+    <sql id="selectFinanceWarehouseVo">
+        select id, name, type, new_price, open_price, yesterday_price, max_price, min_price, increase, increase_rate, turnover_rate from finance_summary
+    </sql>
+
+    <select id="selectFinanceWarehouseList" parameterType="FinanceWarehouse" resultMap="FinanceWarehouseResult">
+        <include refid="selectFinanceWarehouseVo"/>
+        <where>  
+            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="newPrice != null "> and new_price = #{newPrice}</if>
+            <if test="openPrice != null "> and open_price = #{openPrice}</if>
+            <if test="yesterdayPrice != null "> and yesterday_price = #{yesterdayPrice}</if>
+            <if test="maxPrice != null "> and max_price = #{maxPrice}</if>
+            <if test="minPrice != null "> and min_price = #{minPrice}</if>
+            <if test="increase != null "> and increase = #{increase}</if>
+            <if test="increaseRate != null "> and increase_rate = #{increaseRate}</if>
+            <if test="turnoverRate != null "> and turnover_rate = #{turnoverRate}</if>
+        </where>
+    </select>
+    
+    <select id="selectFinanceWarehouseById" parameterType="String" resultMap="FinanceWarehouseResult">
+        <include refid="selectFinanceWarehouseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFinanceWarehouse" parameterType="FinanceWarehouse">
+        insert into finance_summary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="newPrice != null">new_price,</if>
+            <if test="openPrice != null">open_price,</if>
+            <if test="yesterdayPrice != null">yesterday_price,</if>
+            <if test="maxPrice != null">max_price,</if>
+            <if test="minPrice != null">min_price,</if>
+            <if test="increase != null">increase,</if>
+            <if test="increaseRate != null">increase_rate,</if>
+            <if test="turnoverRate != null">turnover_rate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="newPrice != null">#{newPrice},</if>
+            <if test="openPrice != null">#{openPrice},</if>
+            <if test="yesterdayPrice != null">#{yesterdayPrice},</if>
+            <if test="maxPrice != null">#{maxPrice},</if>
+            <if test="minPrice != null">#{minPrice},</if>
+            <if test="increase != null">#{increase},</if>
+            <if test="increaseRate != null">#{increaseRate},</if>
+            <if test="turnoverRate != null">#{turnoverRate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFinanceWarehouse" parameterType="FinanceWarehouse">
+        update finance_summary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="newPrice != null">new_price = #{newPrice},</if>
+            <if test="openPrice != null">open_price = #{openPrice},</if>
+            <if test="yesterdayPrice != null">yesterday_price = #{yesterdayPrice},</if>
+            <if test="maxPrice != null">max_price = #{maxPrice},</if>
+            <if test="minPrice != null">min_price = #{minPrice},</if>
+            <if test="increase != null">increase = #{increase},</if>
+            <if test="increaseRate != null">increase_rate = #{increaseRate},</if>
+            <if test="turnoverRate != null">turnover_rate = #{turnoverRate},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFinanceWarehouseById" parameterType="String">
+        delete from finance_summary where id = #{id}
+    </delete>
+
+    <delete id="deleteFinanceWarehouseByIds" parameterType="String">
+        delete from finance_summary where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

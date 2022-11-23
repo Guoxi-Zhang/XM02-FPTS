@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改数据仓库')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-finance_warehouse-edit" th:object="${financeWarehouse}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最新价：</label>
+                <div class="col-sm-8">
+                    <input name="newPrice" th:field="*{newPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">开盘价：</label>
+                <div class="col-sm-8">
+                    <input name="openPrice" th:field="*{openPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">昨日结算：</label>
+                <div class="col-sm-8">
+                    <input name="yesterdayPrice" th:field="*{yesterdayPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最高价：</label>
+                <div class="col-sm-8">
+                    <input name="maxPrice" th:field="*{maxPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最低价：</label>
+                <div class="col-sm-8">
+                    <input name="minPrice" th:field="*{minPrice}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">涨幅：</label>
+                <div class="col-sm-8">
+                    <input name="increase" th:field="*{increase}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">涨速：</label>
+                <div class="col-sm-8">
+                    <input name="increaseRate" th:field="*{increaseRate}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">换手率：</label>
+                <div class="col-sm-8">
+                    <input name="turnoverRate" th:field="*{turnoverRate}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "finance_warehouse/finance_warehouse";
+        $("#form-finance_warehouse-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-finance_warehouse-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

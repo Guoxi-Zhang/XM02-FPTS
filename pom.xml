@@ -199,6 +199,13 @@
                 <version>${fpts.version}</version>
             </dependency>
 
+            <!-- 金融信息-->
+            <dependency>
+                <groupId>com.fpts</groupId>
+                <artifactId>fpts-finance</artifactId>
+                <version>${fpts.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -209,6 +216,7 @@
         <module>fpts-quartz</module>
         <module>fpts-generator</module>
         <module>fpts-common</module>
+        <module>fpts-finance</module>
     </modules>
     <packaging>pom</packaging>
 
