@@ -1,6 +1,8 @@
 package com.fpts.todo.controller;
 
 import java.util.List;
+
+import com.fpts.framework.web.domain.server.Sys;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,6 +76,7 @@ public class TodoListController extends BaseController
     @GetMapping("/add")
     public String add()
     {
+        System.out.println(prefix + "/add");
         return prefix + "/add";
     }
 

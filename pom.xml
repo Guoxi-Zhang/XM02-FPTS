@@ -207,7 +207,7 @@
         <module>fpts-framework</module>
         <module>fpts-system</module>
         <module>fpts-quartz</module>
-        <module>fpts-generator</module>
+<!--        <module>fpts-generator</module>-->
         <module>fpts-common</module>
     </modules>
     <packaging>pom</packaging>

@@ -1120,8 +1120,8 @@ var table = {
             add: function(id) {
                 table.set();
                 console.log($.operate.addUrl(id));
-                // $.modal.open("添加" + table.options.modalName, $.operate.addUrl(id));
-                $.modal.open("添加" + table.options.modalName, "/todo/list/add");
+                $.modal.open("添加" + table.options.modalName, $.operate.addUrl(id));
+                // $.modal.open("添加" + table.options.modalName, "/todo/list/add");
             },
             // 添加信息，以tab页展现
             addTab: function (id) {

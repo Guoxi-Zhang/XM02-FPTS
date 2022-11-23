@@ -6,7 +6,7 @@
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
-            <div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse" title="搜索框">
                 <form id="formId">
                     <div class="select-list">
                         <ul>
@@ -71,6 +71,55 @@
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
+            </div>
+
+            <div class="col-sm-12 search-collapse">
+                <form id="formId1">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>编号：</label>
+                                <input type="text" name="id"/>
+                            </li>
+                            <li>
+                                <label>城市：</label>
+                                <input type="text" name="city"/>
+                            </li>
+                            <li>
+                                <label>日间天气：</label>
+                                <input type="text" name="weatherDay"/>
+                            </li>
+                            <li>
+                                <label>夜间天气：</label>
+                                <input type="text" name="weatherNight"/>
+                            </li>
+                            <li>
+                                <label>最低气温：</label>
+                                <input type="text" name="temperatureLow"/>
+                            </li>
+                            <li>
+                                <label>最高气温：</label>
+                                <input type="text" name="temperatureHigh"/>
+                            </li>
+                            <li>
+                                <label>风向：</label>
+                                <input type="text" name="windDirection"/>
+                            </li>
+                            <li>
+                                <label>风力等级：</label>
+                                <input type="text" name="windScale"/>
+                            </li>
+                            <li>
+                                <label>创建时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择创建时间" name="createTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
