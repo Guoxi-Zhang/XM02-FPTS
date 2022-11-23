@@ -11,25 +11,37 @@
 
 1. 克隆项目到自己本机
 
-	![image-20221104184253349](README.assets/image-20221104184253349.png)
+  ![image-20221104184253349](README.assets/image-20221104184253349.png)
 
-	选择合适的路径克隆。
+  选择合适的路径克隆。
 
-	
+  
 
 2. 在本机编写代码，所有改动均会被记录到github desktop中，如下图：
 
-	![image-20221104184718351](README.assets/image-20221104184718351.png)
+  ![image-20221104184718351](README.assets/image-20221104184718351.png)
 
 3. **在本机测试无误后，**添加描述信息（summary,Description）后，点击Commit to master进行提交
 
-	![image-20221104185058195](README.assets/image-20221104185058195.png)
+  ![image-20221104185058195](README.assets/image-20221104185058195.png)
 
 4. 点击Push origin，提交到github远程仓库
 
-	![image-20221104185327087](README.assets/image-20221104185327087.png)
+  ![image-20221104185327087](README.assets/image-20221104185327087.png)
 
 5. 完成
+
+
+
+### 注意事项
+
+1. 目前数据库已经采用辛卫老师的远程数据库，需要对数据库版本进行一定的修改，修改方法如下：
+
+   ![](README.assets/20221123213658.png)
+
+   ![](README.assets/20221123213858.png)
+
+
 
 ### 参考资料
 
