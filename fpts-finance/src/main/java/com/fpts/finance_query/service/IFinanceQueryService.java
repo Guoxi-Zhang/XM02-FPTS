@@ -7,7 +7,7 @@ import com.fpts.finance_query.domain.FinanceQuery;
  * 行情查询Service接口
  * 
  * @author laybxc
- * @date 2022-11-23
+ * @date 2022-11-24
  */
 public interface IFinanceQueryService 
 {

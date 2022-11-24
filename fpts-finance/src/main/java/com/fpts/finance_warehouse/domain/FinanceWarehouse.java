@@ -1,6 +1,5 @@
 package com.fpts.finance_warehouse.domain;
 
-import java.math.BigDecimal;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fpts.common.annotation.Excel;
@@ -10,7 +9,7 @@ import com.fpts.common.core.domain.BaseEntity;
  * 数据仓库对象 finance_summary
  * 
  * @author laybxc
- * @date 2022-11-23
+ * @date 2022-11-24
  */
 public class FinanceWarehouse extends BaseEntity
 {
@@ -30,35 +29,35 @@ public class FinanceWarehouse extends BaseEntity
 
     /** 最新价 */
     @Excel(name = "最新价")
-    private BigDecimal newPrice;
+    private Double newPrice;
 
     /** 开盘价 */
     @Excel(name = "开盘价")
-    private BigDecimal openPrice;
+    private Double openPrice;
 
     /** 昨日结算 */
     @Excel(name = "昨日结算")
-    private BigDecimal yesterdayPrice;
+    private Double yesterdayPrice;
 
     /** 最高价 */
     @Excel(name = "最高价")
-    private BigDecimal maxPrice;
+    private Double maxPrice;
 
     /** 最低价 */
     @Excel(name = "最低价")
-    private BigDecimal minPrice;
+    private Double minPrice;
 
     /** 涨幅 */
     @Excel(name = "涨幅")
-    private BigDecimal increase;
+    private Double increase;
 
     /** 涨速 */
     @Excel(name = "涨速")
-    private BigDecimal increaseRate;
+    private Double increaseRate;
 
     /** 换手率 */
     @Excel(name = "换手率")
-    private BigDecimal turnoverRate;
+    private Double turnoverRate;
 
     public void setId(String id) 
     {
@@ -87,75 +86,75 @@ public class FinanceWarehouse extends BaseEntity
     {
         return type;
     }
-    public void setNewPrice(BigDecimal newPrice) 
+    public void setNewPrice(Double newPrice) 
     {
         this.newPrice = newPrice;
     }
 
-    public BigDecimal getNewPrice() 
+    public Double getNewPrice() 
     {
         return newPrice;
     }
-    public void setOpenPrice(BigDecimal openPrice) 
+    public void setOpenPrice(Double openPrice) 
     {
         this.openPrice = openPrice;
     }
 
-    public BigDecimal getOpenPrice() 
+    public Double getOpenPrice() 
     {
         return openPrice;
     }
-    public void setYesterdayPrice(BigDecimal yesterdayPrice) 
+    public void setYesterdayPrice(Double yesterdayPrice) 
     {
         this.yesterdayPrice = yesterdayPrice;
     }
 
-    public BigDecimal getYesterdayPrice() 
+    public Double getYesterdayPrice() 
     {
         return yesterdayPrice;
     }
-    public void setMaxPrice(BigDecimal maxPrice) 
+    public void setMaxPrice(Double maxPrice) 
     {
         this.maxPrice = maxPrice;
     }
 
-    public BigDecimal getMaxPrice() 
+    public Double getMaxPrice() 
     {
         return maxPrice;
     }
-    public void setMinPrice(BigDecimal minPrice) 
+    public void setMinPrice(Double minPrice) 
     {
         this.minPrice = minPrice;
     }
 
-    public BigDecimal getMinPrice() 
+    public Double getMinPrice() 
     {
         return minPrice;
     }
-    public void setIncrease(BigDecimal increase) 
+    public void setIncrease(Double increase) 
     {
         this.increase = increase;
     }
 
-    public BigDecimal getIncrease() 
+    public Double getIncrease() 
     {
         return increase;
     }
-    public void setIncreaseRate(BigDecimal increaseRate) 
+    public void setIncreaseRate(Double increaseRate) 
     {
         this.increaseRate = increaseRate;
     }
 
-    public BigDecimal getIncreaseRate() 
+    public Double getIncreaseRate() 
     {
         return increaseRate;
     }
-    public void setTurnoverRate(BigDecimal turnoverRate) 
+    public void setTurnoverRate(Double turnoverRate) 
     {
         this.turnoverRate = turnoverRate;
     }
 
-    public BigDecimal getTurnoverRate() 
+    public Double getTurnoverRate() 
     {
         return turnoverRate;
     }

@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 行情查询Controller
  * 
  * @author laybxc
- * @date 2022-11-23
+ * @date 2022-11-24
  */
 @Controller
 @RequestMapping("/finance_query/finance_query")

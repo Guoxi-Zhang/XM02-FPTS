@@ -28,9 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="id != null  and id != ''"> and id = #{id}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
-            <if test="maxPrice != null "> and max_price &lt;= #{maxPrice}</if>
-            <if test="minPrice != null "> and min_price &gt;= #{minPrice}</if>
-            <if test="increase != null "> and increase &gt;= #{increase}</if>
         </where>
     </select>
     

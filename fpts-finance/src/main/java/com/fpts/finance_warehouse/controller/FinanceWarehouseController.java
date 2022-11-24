@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
-import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
+import com.fpts.finance_warehouse.service.impl.FinanceWarehouseServiceImpl;
 import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.utils.poi.ExcelUtil;
@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 数据仓库Controller
  * 
  * @author laybxc
- * @date 2022-11-23
+ * @date 2022-11-24
  */
 @Controller
 @RequestMapping("/finance_warehouse/finance_warehouse")
@@ -32,7 +32,7 @@ public class FinanceWarehouseController extends BaseController
     private String prefix = "finance_warehouse/finance_warehouse";
 
     @Autowired
-    private IFinanceWarehouseService financeWarehouseService;
+    private FinanceWarehouseServiceImpl financeWarehouseService;
 
     @RequiresPermissions("finance_warehouse:finance_warehouse:view")
     @GetMapping()

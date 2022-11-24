@@ -19,16 +19,11 @@
                                 <input type="text" name="name"/>
                             </li>
                             <li>
-                                <label>最高价：</label>
-                                <input type="text" name="maxPrice"/>
-                            </li>
-                            <li>
-                                <label>最低价：</label>
-                                <input type="text" name="minPrice"/>
-                            </li>
-                            <li>
-                                <label>涨幅：</label>
-                                <input type="text" name="increase"/>
+                                <label>类型：</label>
+                                <select name="type" th:with="type=${@dict.getType('product_type')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -62,6 +57,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('finance_query:finance_query:edit')}]];
         var removeFlag = [[${@permission.hasPermi('finance_query:finance_query:remove')}]];
+        var typeDatas = [[${@dict.getType('product_type')}]];
         var prefix = ctx + "finance_query/finance_query";
 
         $(function() {
@@ -86,7 +82,10 @@
                 },
                 {
                     field: 'type',
-                    title: '类型'
+                    title: '类型',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(typeDatas, value);
+                    }
                 },
                 {
                     field: 'newPrice',

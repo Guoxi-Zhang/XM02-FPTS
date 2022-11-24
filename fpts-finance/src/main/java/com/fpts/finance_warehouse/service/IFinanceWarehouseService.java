@@ -7,7 +7,7 @@ import com.fpts.finance_warehouse.domain.FinanceWarehouse;
  * 数据仓库Service接口
  * 
  * @author laybxc
- * @date 2022-11-23
+ * @date 2022-11-24
  */
 public interface IFinanceWarehouseService 
 {

@@ -35,6 +35,12 @@
             <artifactId>fpts-common</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-finance</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>
