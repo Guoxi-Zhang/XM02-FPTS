@@ -78,22 +78,26 @@
                 },
                 {
                     field: 'productId',
-                    title: '代码'
+                    title: '代码',
+                    sortable: true
                 },
                 {
                     field: 'name',
-                    title: '名称'
+                    title: '名称',
+                    sortable: true
                 },
                 {
                     field: 'type',
                     title: '类型',
+                    sortable: true,
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(typeDatas, value);
                     }
                 },
                 {
                     field: 'newPrice',
-                    title: '最新价'
+                    title: '最新价',
+                    sortable: true
                 },
                 {
                     field: 'openPrice',
@@ -105,23 +109,28 @@
                 },
                 {
                     field: 'maxPrice',
-                    title: '最高价'
+                    title: '最高价',
+                    sortable: true
                 },
                 {
                     field: 'minPrice',
-                    title: '最低价'
+                    title: '最低价',
+                    sortable: true
                 },
                 {
                     field: 'increase',
-                    title: '涨幅'
+                    title: '涨幅',
+                    sortable: true
                 },
                 {
                     field: 'increaseRate',
-                    title: '涨速'
+                    title: '涨速',
+                    sortable: true
                 },
                 {
                     field: 'turnoverRate',
-                    title: '换手率'
+                    title: '换手率',
+                    sortable: true
                 },
                 {
                     title: '操作',

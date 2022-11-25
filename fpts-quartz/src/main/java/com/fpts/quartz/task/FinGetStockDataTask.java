@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -24,14 +25,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@SpringBootApplication(scanBasePackages = "com.fpts.finance_warehouse")
-@MapperScan("com.fpts.finance_warehouse.mapper")
+@Component("finGetStockDataTask")
 public class FinGetStockDataTask {
 
     @Autowired
     FinanceWarehouseServiceImpl financeWarehouseService;
-
-    @RequiresPermissions("finance_warehouse:finance_warehouse:add")
 
     public void GetData(){
 
@@ -91,9 +89,9 @@ public class FinGetStockDataTask {
                 double turnover_rate=Double.valueOf(object.getString("换手率"));
                 stock.setTurnoverRate(turnover_rate);
             }
-            System.out.println(stock.toString());
-            System.out.println(financeWarehouseService.toString());
-            if(stock!=null){
+//            System.out.println(stock.toString());
+//            System.out.println(financeWarehouseService.toString());
+            if(null!=stock){
                 financeWarehouseService.insertFinanceWarehouse(stock);
             }
             //stocks.add(stock);
