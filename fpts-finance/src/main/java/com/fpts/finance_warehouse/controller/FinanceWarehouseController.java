@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
-import com.fpts.finance_warehouse.service.impl.FinanceWarehouseServiceImpl;
+import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
 import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.utils.poi.ExcelUtil;
@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 数据仓库Controller
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 @Controller
 @RequestMapping("/finance_warehouse/finance_warehouse")
@@ -32,7 +32,7 @@ public class FinanceWarehouseController extends BaseController
     private String prefix = "finance_warehouse/finance_warehouse";
 
     @Autowired
-    private FinanceWarehouseServiceImpl financeWarehouseService;
+    private IFinanceWarehouseService financeWarehouseService;
 
     @RequiresPermissions("finance_warehouse:finance_warehouse:view")
     @GetMapping()
@@ -94,7 +94,7 @@ public class FinanceWarehouseController extends BaseController
      */
     @RequiresPermissions("finance_warehouse:finance_warehouse:edit")
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") String id, ModelMap mmap)
+    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
         FinanceWarehouse financeWarehouse = financeWarehouseService.selectFinanceWarehouseById(id);
         mmap.put("financeWarehouse", financeWarehouse);

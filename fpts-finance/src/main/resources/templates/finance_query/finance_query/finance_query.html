@@ -12,7 +12,7 @@
                         <ul>
                             <li>
                                 <label>代码：</label>
-                                <input type="text" name="id"/>
+                                <input type="text" name="productId"/>
                             </li>
                             <li>
                                 <label>名称：</label>
@@ -26,6 +26,14 @@
                                 </select>
                             </li>
                             <li>
+                                <label>最高价：</label>
+                                <input type="text" name="maxPrice"/>
+                            </li>
+                            <li>
+                                <label>最低价：</label>
+                                <input type="text" name="minPrice"/>
+                            </li>
+                            <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
                             </li>
@@ -35,15 +43,7 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="finance_query:finance_query:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="finance_query:finance_query:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="finance_query:finance_query:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
+
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_query:finance_query:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
@@ -73,8 +73,12 @@
                 },
                 {
                     field: 'id',
-                    title: '代码',
+                    title: '编号',
                     visible: false
+                },
+                {
+                    field: 'productId',
+                    title: '代码'
                 },
                 {
                     field: 'name',

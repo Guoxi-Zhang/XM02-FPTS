@@ -7,7 +7,7 @@ import com.fpts.finance_query.domain.FinanceQuery;
  * 行情查询Service接口
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 public interface IFinanceQueryService 
 {
@@ -17,7 +17,7 @@ public interface IFinanceQueryService
      * @param id 行情查询主键
      * @return 行情查询
      */
-    public FinanceQuery selectFinanceQueryById(String id);
+    public FinanceQuery selectFinanceQueryById(Integer id);
 
     /**
      * 查询行情查询列表
@@ -57,5 +57,5 @@ public interface IFinanceQueryService
      * @param id 行情查询主键
      * @return 结果
      */
-    public int deleteFinanceQueryById(String id);
+    public int deleteFinanceQueryById(Integer id);
 }

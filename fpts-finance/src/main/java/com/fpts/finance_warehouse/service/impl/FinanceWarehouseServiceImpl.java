@@ -12,7 +12,7 @@ import com.fpts.common.core.text.Convert;
  * 数据仓库Service业务层处理
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 @Service
 public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService 
@@ -27,7 +27,7 @@ public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService
      * @return 数据仓库
      */
     @Override
-    public FinanceWarehouse selectFinanceWarehouseById(String id)
+    public FinanceWarehouse selectFinanceWarehouseById(Integer id)
     {
         return financeWarehouseMapper.selectFinanceWarehouseById(id);
     }
@@ -87,7 +87,7 @@ public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService
      * @return 结果
      */
     @Override
-    public int deleteFinanceWarehouseById(String id)
+    public int deleteFinanceWarehouseById(Integer id)
     {
         return financeWarehouseMapper.deleteFinanceWarehouseById(id);
     }

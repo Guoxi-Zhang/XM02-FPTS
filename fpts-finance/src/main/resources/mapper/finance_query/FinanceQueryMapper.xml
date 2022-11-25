@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="FinanceQuery" id="FinanceQueryResult">
         <result property="id"    column="id"    />
+        <result property="productId"    column="product_id"    />
         <result property="name"    column="name"    />
         <result property="type"    column="type"    />
         <result property="newPrice"    column="new_price"    />
@@ -19,27 +20,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectFinanceQueryVo">
-        select id, name, type, new_price, open_price, yesterday_price, max_price, min_price, increase, increase_rate, turnover_rate from finance_summary
+        select id, product_id, name, type, new_price, open_price, yesterday_price, max_price, min_price, increase, increase_rate, turnover_rate from finance_summary
     </sql>
 
     <select id="selectFinanceQueryList" parameterType="FinanceQuery" resultMap="FinanceQueryResult">
         <include refid="selectFinanceQueryVo"/>
         <where>  
-            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="maxPrice != null "> and max_price &lt;= #{maxPrice}</if>
+            <if test="minPrice != null "> and min_price &gt;= #{minPrice}</if>
         </where>
     </select>
     
-    <select id="selectFinanceQueryById" parameterType="String" resultMap="FinanceQueryResult">
+    <select id="selectFinanceQueryById" parameterType="Integer" resultMap="FinanceQueryResult">
         <include refid="selectFinanceQueryVo"/>
         where id = #{id}
     </select>
         
-    <insert id="insertFinanceQuery" parameterType="FinanceQuery">
+    <insert id="insertFinanceQuery" parameterType="FinanceQuery" useGeneratedKeys="true" keyProperty="id">
         insert into finance_summary
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
+            <if test="productId != null and productId != ''">product_id,</if>
             <if test="name != null">name,</if>
             <if test="type != null">type,</if>
             <if test="newPrice != null">new_price,</if>
@@ -52,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="turnoverRate != null">turnover_rate,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
+            <if test="productId != null and productId != ''">#{productId},</if>
             <if test="name != null">#{name},</if>
             <if test="type != null">#{type},</if>
             <if test="newPrice != null">#{newPrice},</if>
@@ -69,6 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateFinanceQuery" parameterType="FinanceQuery">
         update finance_summary
         <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null and productId != ''">product_id = #{productId},</if>
             <if test="name != null">name = #{name},</if>
             <if test="type != null">type = #{type},</if>
             <if test="newPrice != null">new_price = #{newPrice},</if>
@@ -83,7 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 
-    <delete id="deleteFinanceQueryById" parameterType="String">
+    <delete id="deleteFinanceQueryById" parameterType="Integer">
         delete from finance_summary where id = #{id}
     </delete>
 

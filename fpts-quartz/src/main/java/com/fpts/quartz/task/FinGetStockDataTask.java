@@ -50,9 +50,9 @@ public class FinGetStockDataTask {
         for(int i=0;i<array.size();i++){
             JSONObject object=(JSONObject)array.get(i);
             if(object.getString("代码")!=null){
-                String id =  object.getString("代码");
-                stock.setId(id);
-                System.out.println(id);
+                String product_id =  object.getString("代码");
+                stock.setProductId(product_id);
+                System.out.println(product_id);
             }
             if(object.getString("名称")!=null){
                 String name =  object.getString("名称"); //key参数为string

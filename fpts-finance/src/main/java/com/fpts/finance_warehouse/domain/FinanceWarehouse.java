@@ -9,15 +9,19 @@ import com.fpts.common.core.domain.BaseEntity;
  * 数据仓库对象 finance_summary
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 public class FinanceWarehouse extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    /** 编号 */
+    @Excel(name = "编号")
+    private Integer id;
+
     /** 代码 */
     @Excel(name = "代码")
-    private String id;
+    private String productId;
 
     /** 名称 */
     @Excel(name = "名称")
@@ -59,14 +63,23 @@ public class FinanceWarehouse extends BaseEntity
     @Excel(name = "换手率")
     private Double turnoverRate;
 
-    public void setId(String id) 
+    public void setId(Integer id) 
     {
         this.id = id;
     }
 
-    public String getId() 
+    public Integer getId() 
     {
         return id;
+    }
+    public void setProductId(String productId) 
+    {
+        this.productId = productId;
+    }
+
+    public String getProductId() 
+    {
+        return productId;
     }
     public void setName(String name) 
     {
@@ -163,6 +176,7 @@ public class FinanceWarehouse extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
+            .append("productId", getProductId())
             .append("name", getName())
             .append("type", getType())
             .append("newPrice", getNewPrice())

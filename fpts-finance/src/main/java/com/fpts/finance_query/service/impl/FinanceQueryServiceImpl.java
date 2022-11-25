@@ -12,7 +12,7 @@ import com.fpts.common.core.text.Convert;
  * 行情查询Service业务层处理
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 @Service
 public class FinanceQueryServiceImpl implements IFinanceQueryService 
@@ -27,7 +27,7 @@ public class FinanceQueryServiceImpl implements IFinanceQueryService
      * @return 行情查询
      */
     @Override
-    public FinanceQuery selectFinanceQueryById(String id)
+    public FinanceQuery selectFinanceQueryById(Integer id)
     {
         return financeQueryMapper.selectFinanceQueryById(id);
     }
@@ -87,7 +87,7 @@ public class FinanceQueryServiceImpl implements IFinanceQueryService
      * @return 结果
      */
     @Override
-    public int deleteFinanceQueryById(String id)
+    public int deleteFinanceQueryById(Integer id)
     {
         return financeQueryMapper.deleteFinanceQueryById(id);
     }

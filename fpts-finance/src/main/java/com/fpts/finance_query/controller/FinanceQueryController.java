@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 行情查询Controller
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 @Controller
 @RequestMapping("/finance_query/finance_query")
@@ -94,7 +94,7 @@ public class FinanceQueryController extends BaseController
      */
     @RequiresPermissions("finance_query:finance_query:edit")
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") String id, ModelMap mmap)
+    public String edit(@PathVariable("id") Integer id, ModelMap mmap)
     {
         FinanceQuery financeQuery = financeQueryService.selectFinanceQueryById(id);
         mmap.put("financeQuery", financeQuery);

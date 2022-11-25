@@ -7,7 +7,7 @@ import com.fpts.finance_warehouse.domain.FinanceWarehouse;
  * 数据仓库Mapper接口
  * 
  * @author laybxc
- * @date 2022-11-24
+ * @date 2022-11-25
  */
 public interface FinanceWarehouseMapper 
 {
@@ -17,7 +17,7 @@ public interface FinanceWarehouseMapper
      * @param id 数据仓库主键
      * @return 数据仓库
      */
-    public FinanceWarehouse selectFinanceWarehouseById(String id);
+    public FinanceWarehouse selectFinanceWarehouseById(Integer id);
 
     /**
      * 查询数据仓库列表
@@ -49,7 +49,7 @@ public interface FinanceWarehouseMapper
      * @param id 数据仓库主键
      * @return 结果
      */
-    public int deleteFinanceWarehouseById(String id);
+    public int deleteFinanceWarehouseById(Integer id);
 
     /**
      * 批量删除数据仓库
