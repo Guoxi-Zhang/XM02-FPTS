@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.finance_news.mapper.FinanceNewsMapper">
+    
+    <resultMap type="FinanceNews" id="FinanceNewsResult">
+        <result property="newsId"    column="news_id"    />
+        <result property="title"    column="title"    />
+        <result property="author"    column="author"    />
+        <result property="releaseTime"    column="release_time"    />
+        <result property="link"    column="link"    />
+        <result property="source"    column="source"    />
+        <result property="body"    column="body"    />
+        <result property="read"    column="read_num"    />
+        <result property="comment"    column="comment_num"    />
+    </resultMap>
+
+    <sql id="selectFinanceNewsVo">
+        select news_id, title, author, release_time, link, source, body, read_num, comment_num from finance_news
+    </sql>
+
+    <select id="selectFinanceNewsList" parameterType="FinanceNews" resultMap="FinanceNewsResult">
+        <include refid="selectFinanceNewsVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="author != null  and author != ''"> and author like concat('%', #{author}, '%')</if>
+            <if test="releaseTime != null "> and release_time like concat('%', #{releaseTime}, '%')</if>
+            <if test="link != null  and link != ''"> and link like concat('%', #{link}, '%')</if>
+            <if test="source != null  and source != ''"> and source like concat('%', #{source}, '%')</if>
+            <if test="body != null  and body != ''"> and body like concat('%', #{body}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectFinanceNewsByNewsId" parameterType="Long" resultMap="FinanceNewsResult">
+        <include refid="selectFinanceNewsVo"/>
+        where news_id = #{newsId}
+    </select>
+        
+    <insert id="insertFinanceNews" parameterType="FinanceNews" useGeneratedKeys="true" keyProperty="newsId">
+        insert into finance_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="author != null">author,</if>
+            <if test="releaseTime != null">release_time,</if>
+            <if test="link != null">link,</if>
+            <if test="source != null">source,</if>
+            <if test="body != null">body,</if>
+            <if test="read_num != null">read_num,</if>
+            <if test="comment_num != null">comment_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="author != null">#{author},</if>
+            <if test="releaseTime != null">#{releaseTime},</if>
+            <if test="link != null">#{link},</if>
+            <if test="source != null">#{source},</if>
+            <if test="body != null">#{body},</if>
+            <if test="read_num != null">#{read_num},</if>
+            <if test="comment_num != null">#{comment_num},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFinanceNews" parameterType="FinanceNews">
+        update finance_news
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="releaseTime != null">release_time = #{releaseTime},</if>
+            <if test="link != null">link = #{link},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="body != null">body = #{body},</if>
+            <if test="read_num != null">read_num = #{read_num},</if>
+            <if test="comment_num != null">comment_num = #{comment_num},</if>
+        </trim>
+        where news_id = #{newsId}
+    </update>
+
+    <delete id="deleteFinanceNewsByNewsId" parameterType="Long">
+        delete from finance_news where news_id = #{newsId}
+    </delete>
+
+    <delete id="deleteFinanceNewsByNewsIds" parameterType="String">
+        delete from finance_news where news_id in 
+        <foreach item="newsId" collection="array" open="(" separator="," close=")">
+            #{newsId}
+        </foreach>
+    </delete>
+
+</mapper>
