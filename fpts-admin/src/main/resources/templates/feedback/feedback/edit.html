@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改用户反馈')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-feedback-edit" th:object="${userFeedback}">
+            <input name="userFeedbackId" th:field="*{userFeedbackId}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">用户反馈信息：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" th:field="*{userFeedbackContent}">
+                    <div class="summernote" id="userFeedbackContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">管理员回复内容：</label>
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" th:field="*{adminFeedbackContent}">
+                    <div class="summernote" id="adminFeedbackContent"></div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">用户反馈创建时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="userFeedbackCreatetime" th:value="${#dates.format(userFeedback.userFeedbackCreatetime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">管理员回复时间：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input name="adminFeedbackCreatetime" th:value="${#dates.format(userFeedback.adminFeedbackCreatetime, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">完成标记：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box" th:each="dict : ${@dict.getType('user_feedback_complete')}">
+                        <input type="radio" th:id="${'completemark_' + dict.dictCode}" name="completemark" th:value="${dict.dictValue}" th:field="*{completemark}">
+                        <label th:for="${'completemark_' + dict.dictCode}" th:text="${dict.dictLabel}"></label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <th:block th:include="include :: summernote-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "feedback/feedback";
+        $("#form-feedback-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-feedback-edit').serialize());
+            }
+        }
+
+        $("input[name='userFeedbackCreatetime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='adminFeedbackCreatetime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $(function() {
+            $('.summernote').each(function(i) {
+                $('#' + this.id).summernote({
+                    lang: 'zh-CN',
+                    dialogsInBody: true,
+                    callbacks: {
+                        onChange: function(contents, $edittable) {
+                            $("input[name='" + this.id + "']").val(contents);
+                        },
+                        onImageUpload: function(files) {
+                            var obj = this;
+                            var data = new FormData();
+                            data.append("file", files[0]);
+                            $.ajax({
+                                type: "post",
+                                url: ctx + "common/upload",
+                                data: data,
+                                cache: false,
+                                contentType: false,
+                                processData: false,
+                                dataType: 'json',
+                                success: function(result) {
+                                    if (result.code == web_status.SUCCESS) {
+                                        $('#' + obj.id).summernote('insertImage', result.url);
+                                    } else {
+                                        $.modal.alertError(result.msg);
+                                    }
+                                },
+                                error: function(error) {
+                                    $.modal.alertWarning("图片上传失败。");
+                                }
+                            });
+                        }
+                    }
+                });
+                var content = $("input[name='" + this.id + "']").val();
+                $('#' + this.id).summernote('code', content);
+            })
+        });
+    </script>
+</body>
+</html>

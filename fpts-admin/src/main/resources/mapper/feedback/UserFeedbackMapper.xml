@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.feedback.mapper.UserFeedbackMapper">
+    
+    <resultMap type="UserFeedback" id="UserFeedbackResult">
+        <result property="userId"    column="user_id"    />
+        <result property="userFeedbackContent"    column="user_feedback_content"    />
+        <result property="adminFeedbackContent"    column="admin_feedback_content"    />
+        <result property="userFeedbackId"    column="user_feedback_id"    />
+        <result property="userFeedbackCreatetime"    column="user_feedback_createtime"    />
+        <result property="adminFeedbackCreatetime"    column="admin_feedback_createtime"    />
+        <result property="completemark"    column="completemark"    />
+    </resultMap>
+
+    <sql id="selectUserFeedbackVo">
+        select user_id, user_feedback_content, admin_feedback_content, user_feedback_id, user_feedback_createtime, admin_feedback_createtime, completemark from user_feedback
+    </sql>
+
+    <select id="selectUserFeedbackList" parameterType="UserFeedback" resultMap="UserFeedbackResult">
+        <include refid="selectUserFeedbackVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userFeedbackContent != null  and userFeedbackContent != ''"> and user_feedback_content like concat('%', #{userFeedbackContent}, '%')</if>
+            <if test="adminFeedbackContent != null  and adminFeedbackContent != ''"> and admin_feedback_content like concat('%', #{adminFeedbackContent}, '%')</if>
+            <if test="params.UserFeedbackCreatetime != null and params.UserFeedbackCreatetime != ''"> and user_feedback_createtime = #{params.UserFeedbackCreatetime} </if>
+            <if test="params.AdminFeedbackCreatetime != null and params.AdminFeedbackCreatetime != ''"> and admin_feedback_createtime = #{params.AdminFeedbackCreatetime} </if>
+            <if test="completemark != null "> and completemark = #{completemark}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserFeedbackByUserFeedbackId" parameterType="Long" resultMap="UserFeedbackResult">
+        <include refid="selectUserFeedbackVo"/>
+        where user_feedback_id = #{userFeedbackId}
+    </select>
+        
+    <insert id="insertUserFeedback" parameterType="UserFeedback" useGeneratedKeys="true" keyProperty="userFeedbackId">
+        insert into user_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userFeedbackContent != null">user_feedback_content,</if>
+            <if test="adminFeedbackContent != null">admin_feedback_content,</if>
+            <if test="userFeedbackCreatetime != null">user_feedback_createtime,</if>
+            <if test="adminFeedbackCreatetime != null">admin_feedback_createtime,</if>
+            <if test="completemark != null">completemark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userFeedbackContent != null">#{userFeedbackContent},</if>
+            <if test="adminFeedbackContent != null">#{adminFeedbackContent},</if>
+            <if test="userFeedbackCreatetime != null">#{userFeedbackCreatetime},</if>
+            <if test="adminFeedbackCreatetime != null">#{adminFeedbackCreatetime},</if>
+            <if test="completemark != null">#{completemark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserFeedback" parameterType="UserFeedback">
+        update user_feedback
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userFeedbackContent != null">user_feedback_content = #{userFeedbackContent},</if>
+            <if test="adminFeedbackContent != null">admin_feedback_content = #{adminFeedbackContent},</if>
+            <if test="userFeedbackCreatetime != null">user_feedback_createtime = #{userFeedbackCreatetime},</if>
+            <if test="adminFeedbackCreatetime != null">admin_feedback_createtime = #{adminFeedbackCreatetime},</if>
+            <if test="completemark != null">completemark = #{completemark},</if>
+        </trim>
+        where user_feedback_id = #{userFeedbackId}
+    </update>
+
+    <delete id="deleteUserFeedbackByUserFeedbackId" parameterType="Long">
+        delete from user_feedback where user_feedback_id = #{userFeedbackId}
+    </delete>
+
+    <delete id="deleteUserFeedbackByUserFeedbackIds" parameterType="String">
+        delete from user_feedback where user_feedback_id in 
+        <foreach item="userFeedbackId" collection="array" open="(" separator="," close=")">
+            #{userFeedbackId}
+        </foreach>
+    </delete>
+
+</mapper>
