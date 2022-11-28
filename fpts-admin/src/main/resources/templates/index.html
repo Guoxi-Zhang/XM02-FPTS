@@ -50,13 +50,13 @@
                 <span class="logo-lg">MX02-FPTS</span>
             </li>
         </a>
-        <div class="sidebar-collapse">
-            <ul class="nav" id="side-menu">
+        <div class="sidebar-collapse" style="background-color: #f4fcff">
+            <ul class="nav" id="side-menu" >
                 <li>
                     <div class="user-panel">
                         <a class="menuItem noactive" title="个人中心" th:href="@{/system/user/profile}">
                             <div class="hide" th:text="个人中心"></div>
-                            <div class="pull-left image">
+                            <div class="pull-left image" style="background-color: #e0f8f8">
                                 <img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
                             </div>
                         </a>
@@ -270,7 +270,7 @@
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
         </div>
 
-        <div th:if="${footer}" class="footer">
+        <div th:if="${footer}" class="footer" style="background-color: #f4fcff">
             <div class="pull-right">© [[${copyrightYear}]] MX02-FPTS Copyright </div>
         </div>
     </div>

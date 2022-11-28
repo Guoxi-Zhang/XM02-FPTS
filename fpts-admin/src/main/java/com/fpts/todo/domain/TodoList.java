@@ -10,7 +10,7 @@ import com.fpts.common.core.domain.BaseEntity;
 /**
  * 待办事项对象 todo_list
  * 
- * @author ruoyi
+ * @author Guoxi Zhang
  * @date 2022-11-15
  */
 public class TodoList extends BaseEntity

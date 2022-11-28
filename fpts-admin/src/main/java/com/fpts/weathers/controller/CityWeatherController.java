@@ -1,6 +1,11 @@
 package com.fpts.weathers.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +27,7 @@ import com.fpts.common.core.page.TableDataInfo;
 /**
  * 天气管理Controller
  * 
- * @author ruoyi
+ * @author Guoxi Zhang
  * @date 2022-11-15
  */
 @Controller
@@ -53,6 +58,8 @@ public class CityWeatherController extends BaseController
         List<CityWeather> list = cityWeatherService.selectCityWeatherList(cityWeather);
         return getDataTable(list);
     }
+
+
 
     /**
      * 导出天气管理列表
@@ -123,5 +130,30 @@ public class CityWeatherController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(cityWeatherService.deleteCityWeatherByIds(ids));
+    }
+
+    /**
+     * 统计报表
+     */
+//    @PostMapping( "/chart")
+    @RequestMapping("/chart")
+    public String showChart(){
+        return prefix + "/chart";
+    }
+
+    /**
+     * 查询特定天气
+     */
+    @PostMapping("/search/{city}")
+    @ResponseBody
+    public CityWeather searchWeather( @PathVariable("city") String cityName) throws IOException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar calendar =  Calendar.getInstance();
+        List<Map<String, String>> listData = WeatherUtil.getWeatherMap(cityName);
+        Map<String, String> map = listData.get(0);
+        System.out.println(map.toString());
+        CityWeather cityWeather = new CityWeather(cityName, map.get("text_day"),map.get("text_night"),map.get("low"),map.get("high"),map.get("wind_direction"),map.get("wind_scale"));
+
+        return cityWeather;
     }
 }

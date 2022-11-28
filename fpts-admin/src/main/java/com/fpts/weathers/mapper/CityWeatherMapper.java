@@ -6,7 +6,7 @@ import com.fpts.weathers.domain.CityWeather;
 /**
  * 天气管理Mapper接口
  * 
- * @author ruoyi
+ * @author Guoxi Zhang
  * @date 2022-11-15
  */
 public interface CityWeatherMapper 

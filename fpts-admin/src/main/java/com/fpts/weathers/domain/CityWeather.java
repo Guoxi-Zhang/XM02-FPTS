@@ -8,7 +8,7 @@ import com.fpts.common.core.domain.BaseEntity;
 /**
  * 天气管理对象 city_weather
  * 
- * @author ruoyi
+ * @author Guoxi Zhang
  * @date 2022-11-15
  */
 public class CityWeather extends BaseEntity
@@ -46,6 +46,17 @@ public class CityWeather extends BaseEntity
     /** 风力等级 */
     @Excel(name = "风力等级")
     private String windScale;
+
+    public CityWeather(String city, String weather_day, String weather_night, String temperature_low, String temperature_high, String wind_direction, String wind_scale) {
+        super();
+        this.city = city;
+        this.weatherDay = weather_day;
+        this.weatherNight = weather_night;
+        this.temperatureLow = temperature_low;
+        this.temperatureHigh = temperature_high;
+        this.windDirection = wind_direction;
+        this.windScale = wind_scale;
+    }
 
     public void setId(Long id) 
     {

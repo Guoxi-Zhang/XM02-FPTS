@@ -1,5 +1,7 @@
 package com.fpts.finance_query.service.impl;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +43,15 @@ public class FinanceQueryServiceImpl implements IFinanceQueryService
     @Override
     public List<FinanceQuery> selectFinanceQueryList(FinanceQuery financeQuery)
     {
-        return financeQueryMapper.selectFinanceQueryList(financeQuery);
+        List<FinanceQuery> list = financeQueryMapper.selectFinanceQueryList(financeQuery);
+        DecimalFormat df = new DecimalFormat("#.00");
+        for(FinanceQuery f: list){
+            f.setNewPrice(Double.parseDouble(df.format(f.getNewPrice())));
+        }
+        return list;
     }
+
+
 
     /**
      * 新增行情查询

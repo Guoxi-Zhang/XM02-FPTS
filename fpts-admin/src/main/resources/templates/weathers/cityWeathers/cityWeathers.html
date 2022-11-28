@@ -3,7 +3,8 @@
 <head>
     <th:block th:include="include :: header('天气管理列表')" />
 </head>
-<body class="gray-bg">
+<body class="gray-bg" style="background-color: #e0f8f8">
+<div class="container-div">
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse" title="搜索框">
@@ -18,34 +19,7 @@
                                 <label>城市：</label>
                                 <input type="text" name="city"/>
                             </li>
-                            <li>
-                                <label>日间天气：</label>
-                                <input type="text" name="weatherDay"/>
-                            </li>
-                            <li>
-                                <label>夜间天气：</label>
-                                <input type="text" name="weatherNight"/>
-                            </li>
-                            <li>
-                                <label>最低气温：</label>
-                                <input type="text" name="temperatureLow"/>
-                            </li>
-                            <li>
-                                <label>最高气温：</label>
-                                <input type="text" name="temperatureHigh"/>
-                            </li>
-                            <li>
-                                <label>风向：</label>
-                                <input type="text" name="windDirection"/>
-                            </li>
-                            <li>
-                                <label>风力等级：</label>
-                                <input type="text" name="windScale"/>
-                            </li>
-                            <li>
-                                <label>创建时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择创建时间" name="createTime"/>
-                            </li>
+
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -68,56 +42,64 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="weathers:cityWeathers:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <!--             ====================================================================================================-->
+                <!--             图表-->
+                <a class="btn btn-success" onclick="weatherAddChart()">
+                    <i class="fa fa-bar-chart"></i> 统计图表
+                </a>
+                <!--                ====================================================================================================-->
             </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
+            <div class="col-sm-12 select-table">
+                <table id="bootstrap-table" class="table table-bordered"></table>
             </div>
 
             <div class="col-sm-12 search-collapse">
-                <form id="formId1">
+                <form id="form-cityWeathers-search">
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>编号：</label>
-                                <input type="text" name="id"/>
+                                <label>查询城市：</label>
+                                <input type="text" id="searchCity"/>
                             </li>
                             <li>
-                                <label>城市：</label>
-                                <input type="text" name="city"/>
-                            </li>
-                            <li>
-                                <label>日间天气：</label>
-                                <input type="text" name="weatherDay"/>
-                            </li>
-                            <li>
-                                <label>夜间天气：</label>
-                                <input type="text" name="weatherNight"/>
-                            </li>
-                            <li>
-                                <label>最低气温：</label>
-                                <input type="text" name="temperatureLow"/>
-                            </li>
-                            <li>
-                                <label>最高气温：</label>
-                                <input type="text" name="temperatureHigh"/>
-                            </li>
-                            <li>
-                                <label>风向：</label>
-                                <input type="text" name="windDirection"/>
-                            </li>
-                            <li>
-                                <label>风力等级：</label>
-                                <input type="text" name="windScale"/>
-                            </li>
-                            <li>
-                                <label>创建时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择创建时间" name="createTime"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="searchWeather()"><i class="fa fa-search"></i>&nbsp;搜索该城市天气</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                                <a class="btn btn-success btn-rounded btn-sm" onclick="saveWeather()"><i class="fa fa-refresh"></i>&nbsp;保存</a>
                             </li>
+
                         </ul>
+                        <p name = "searchResultWeatherDay"> </p>
+<!--                        <ul>-->
+<!--                            <li>-->
+<!--                                <label>日间天气：</label>-->
+<!--                                <input type="text" name="searchResultWeatherDay"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>夜间天气：</label>-->
+<!--                                <input type="text" name="searchResultWeatherNight"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>最低气温：</label>-->
+<!--                                <input type="text" name="searchResultTemperatureLow"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>最高气温：</label>-->
+<!--                                <input type="text" name="searchResultTemperatureHigh"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>风向：</label>-->
+<!--                                <input type="text" name="searchResultWindDirection"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>风力等级：</label>-->
+<!--                                <input type="text" name="searchResultWindScale"/>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <label>时间：</label>-->
+<!--                                <input type="text" name="searchResultCreateTime"/>-->
+<!--                            </li>-->
+
+<!--                        </ul>-->
                     </div>
                 </form>
             </div>
@@ -128,7 +110,49 @@
         var editFlag = [[${@permission.hasPermi('weathers:cityWeathers:edit')}]];
         var removeFlag = [[${@permission.hasPermi('weathers:cityWeathers:remove')}]];
         var prefix = ctx + "weathers/cityWeathers";
+        // weather图表信息
+        function weatherAddChart() {
+            table.set();
+            $.modal.open(table.options.modalName + "统计图表", "/weathers/cityWeathers/chart");
+        }
+        function Get(){
+            $.ajax({
+                url:url,
+                dataType:'jsonp',
+                processData: false,
+                type:'get',
+                success:function(data){
+                    console.log(data);
+                    return data;
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }});
+        }
 
+        function saveWeather(){
+            $("#form-cityWeathers-add").validate({
+                focusCleanup: true
+            });
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-cityWeathers-search').serialize());
+            }
+        }
+        function searchWeather() {
+            var city = document.getElementById("searchCity").value;
+            console.log("city:" + city);
+            var url = "/weathers/cityWeathers/search/" +city;
+            $.post(url,function(data){
+                //hideWaitTip();
+                //显示在content中
+                console.log(data);
+                document.getElementsByName("searchResultWeatherDay").value=data.toString();
+
+            });
+
+        }
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -137,45 +161,61 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "天气管理",
+                rowStyle: function(row, index) {                         // 动态修改行的颜色
+                    if(row.id %2 == 1 ){                                 // 如果值是1，表示已删除，设置行的颜色
+                        return  {css:{"background-color":'#f2f8fd'}};
+                    }
+                    return '';                                           // 注意：即使不改变颜色，也得返回 '' ，否则会报错。
+                },
+
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
                     title: '编号',
-                    visible: false
+                    visible: false,
+                    sortable: true
                 },
                 {
                     field: 'city',
-                    title: '城市'
+                    title: '城市',
+                    sortable: true
                 },
                 {
                     field: 'weatherDay',
-                    title: '日间天气'
+                    title: '日间天气',
+                    sortable: true
                 },
                 {
                     field: 'weatherNight',
-                    title: '夜间天气'
+                    title: '夜间天气',
+                    sortable: true
                 },
                 {
                     field: 'temperatureLow',
-                    title: '最低气温'
+                    title: '最低气温',
+                    sortable: true
                 },
                 {
                     field: 'temperatureHigh',
-                    title: '最高气温'
+                    title: '最高气温',
+                    sortable: true
                 },
                 {
                     field: 'windDirection',
-                    title: '风向'
+                    title: '风向',
+                    sortable: true
                 },
                 {
                     field: 'windScale',
-                    title: '风力等级'
+                    title: '风力等级',
+                    sortable: true
                 },
                 {
                     field: 'createTime',
-                    title: '创建时间'
+                    title: '创建时间',
+                    sortable: true
                 },
                 {
                     title: '操作',

@@ -1121,7 +1121,6 @@ var table = {
                 table.set();
                 console.log($.operate.addUrl(id));
                 $.modal.open("添加" + table.options.modalName, $.operate.addUrl(id));
-                // $.modal.open("添加" + table.options.modalName, "/todo/list/add");
             },
             // 添加信息，以tab页展现
             addTab: function (id) {
@@ -1129,11 +1128,11 @@ var table = {
                 $.modal.openTab("添加" + table.options.modalName, $.operate.addUrl(id));
             },
 //======================================================================================================================
-            // 图表信息
-            addChart: function (id) {
-                table.set();
-                $.modal.open(table.options.modalName + "统计图表", "/todo/list/chart");
-            },
+
+
+
+
+
 //=======================================================================================================================
             // 添加信息 全屏
             addFull: function(id) {
@@ -1199,6 +1198,7 @@ var table = {
                     }
                     url = table.options.updateUrl.replace("{id}", id);
                 }
+                // console.log(url);
                 return url;
             },
             // 保存信息 刷新表格
@@ -1338,7 +1338,8 @@ var table = {
                     $.modal.alertError(result.msg);
                 }
                 $.modal.closeLoading();
-            }
+            },
+
         },
         // 校验封装处理
         validate: {
