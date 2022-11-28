@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.assets.mapper.AccountAssetsMapper">
+    
+    <resultMap type="AccountAssets" id="AccountAssetsResult">
+        <result property="No"    column="No"    />
+        <result property="userId"    column="user_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="accountBalance"    column="account_balance"    />
+        <result property="totalAssets"    column="total_assets"    />
+        <result property="stockAssets"    column="stock_assets"    />
+        <result property="goldAssets"    column="gold_assets"    />
+        <result property="futureAssets"    column="future_assets"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectAccountAssetsVo">
+        select No, user_id, account_id, account_balance, total_assets, stock_assets, gold_assets, future_assets, create_by, create_time from account_assets
+    </sql>
+
+    <select id="selectAccountAssetsList" parameterType="AccountAssets" resultMap="AccountAssetsResult">
+        <include refid="selectAccountAssetsVo"/>
+        <where>  
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="accountBalance != null "> and account_balance = #{accountBalance}</if>
+            <if test="totalAssets != null "> and total_assets = #{totalAssets}</if>
+            <if test="stockAssets != null "> and stock_assets = #{stockAssets}</if>
+            <if test="goldAssets != null "> and gold_assets = #{goldAssets}</if>
+            <if test="futureAssets != null "> and future_assets = #{futureAssets}</if>
+        </where>
+    </select>
+    
+    <select id="selectAccountAssetsByNo" parameterType="Integer" resultMap="AccountAssetsResult">
+        <include refid="selectAccountAssetsVo"/>
+        where No = #{No}
+    </select>
+        
+    <insert id="insertAccountAssets" parameterType="AccountAssets" useGeneratedKeys="true" keyProperty="No">
+        insert into account_assets
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">user_id,</if>
+            <if test="accountId != null and accountId != ''">account_id,</if>
+            <if test="accountBalance != null">account_balance,</if>
+            <if test="totalAssets != null">total_assets,</if>
+            <if test="stockAssets != null">stock_assets,</if>
+            <if test="goldAssets != null">gold_assets,</if>
+            <if test="futureAssets != null">future_assets,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="accountBalance != null">#{accountBalance},</if>
+            <if test="totalAssets != null">#{totalAssets},</if>
+            <if test="stockAssets != null">#{stockAssets},</if>
+            <if test="goldAssets != null">#{goldAssets},</if>
+            <if test="futureAssets != null">#{futureAssets},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAccountAssets" parameterType="AccountAssets">
+        update account_assets
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null and userId != ''">user_id = #{userId},</if>
+            <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
+            <if test="accountBalance != null">account_balance = #{accountBalance},</if>
+            <if test="totalAssets != null">total_assets = #{totalAssets},</if>
+            <if test="stockAssets != null">stock_assets = #{stockAssets},</if>
+            <if test="goldAssets != null">gold_assets = #{goldAssets},</if>
+            <if test="futureAssets != null">future_assets = #{futureAssets},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where No = #{No}
+    </update>
+
+    <delete id="deleteAccountAssetsByNo" parameterType="Integer">
+        delete from account_assets where No = #{No}
+    </delete>
+
+    <delete id="deleteAccountAssetsByNos" parameterType="String">
+        delete from account_assets where No in 
+        <foreach item="No" collection="array" open="(" separator="," close=")">
+            #{No}
+        </foreach>
+    </delete>
+
+</mapper>

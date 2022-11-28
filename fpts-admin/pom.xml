@@ -73,6 +73,19 @@
             <artifactId>fpts-finance</artifactId>
         </dependency>
 
+        <!-- 交易管理-->
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-transaction</artifactId>
+        </dependency>
+
+        <!-- 资产管理-->
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-assets</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>

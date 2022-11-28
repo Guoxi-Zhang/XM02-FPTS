@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.record.mapper.TradingRecordMapper">
+    
+    <resultMap type="TradingRecord" id="TradingRecordResult">
+        <result property="orderId"    column="order_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="productType"    column="product_type"    />
+        <result property="productPrice"    column="product_price"    />
+        <result property="pruductAmount"    column="pruduct_amount"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="orderDirection"    column="order_direction"    />
+        <result property="orderPattern"    column="order_pattern"    />
+        <result property="orderSituation"    column="order_situation"    />
+    </resultMap>
+
+    <sql id="selectTradingRecordVo">
+        select order_id, account_id, product_id, product_type, product_price, pruduct_amount, order_time, order_direction, order_pattern, order_situation from trading_record
+    </sql>
+
+    <select id="selectTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
+        <include refid="selectTradingRecordVo"/>
+        <where>  
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+            <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
+            <if test="productPrice != null "> and product_price = #{productPrice}</if>
+            <if test="pruductAmount != null "> and pruduct_amount = #{pruductAmount}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="orderDirection != null  and orderDirection != ''"> and order_direction = #{orderDirection}</if>
+            <if test="orderPattern != null  and orderPattern != ''"> and order_pattern = #{orderPattern}</if>
+            <if test="orderSituation != null  and orderSituation != ''"> and order_situation = #{orderSituation}</if>
+        </where>
+    </select>
+    
+    <select id="selectTradingRecordByOrderId" parameterType="Integer" resultMap="TradingRecordResult">
+        <include refid="selectTradingRecordVo"/>
+        where order_id = #{orderId}
+    </select>
+        
+    <insert id="insertTradingRecord" parameterType="TradingRecord" useGeneratedKeys="true" keyProperty="orderId">
+        insert into trading_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">account_id,</if>
+            <if test="productId != null and productId != ''">product_id,</if>
+            <if test="productType != null and productType != ''">product_type,</if>
+            <if test="productPrice != null">product_price,</if>
+            <if test="pruductAmount != null">pruduct_amount,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="orderDirection != null">order_direction,</if>
+            <if test="orderPattern != null">order_pattern,</if>
+            <if test="orderSituation != null">order_situation,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="productId != null and productId != ''">#{productId},</if>
+            <if test="productType != null and productType != ''">#{productType},</if>
+            <if test="productPrice != null">#{productPrice},</if>
+            <if test="pruductAmount != null">#{pruductAmount},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="orderDirection != null">#{orderDirection},</if>
+            <if test="orderPattern != null">#{orderPattern},</if>
+            <if test="orderSituation != null">#{orderSituation},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTradingRecord" parameterType="TradingRecord">
+        update trading_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
+            <if test="productId != null and productId != ''">product_id = #{productId},</if>
+            <if test="productType != null and productType != ''">product_type = #{productType},</if>
+            <if test="productPrice != null">product_price = #{productPrice},</if>
+            <if test="pruductAmount != null">pruduct_amount = #{pruductAmount},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="orderDirection != null">order_direction = #{orderDirection},</if>
+            <if test="orderPattern != null">order_pattern = #{orderPattern},</if>
+            <if test="orderSituation != null">order_situation = #{orderSituation},</if>
+        </trim>
+        where order_id = #{orderId}
+    </update>
+
+    <delete id="deleteTradingRecordByOrderId" parameterType="Integer">
+        delete from trading_record where order_id = #{orderId}
+    </delete>
+
+    <delete id="deleteTradingRecordByOrderIds" parameterType="String">
+        delete from trading_record where order_id in 
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+
+</mapper>

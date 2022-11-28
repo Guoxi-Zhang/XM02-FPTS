@@ -206,6 +206,21 @@
                 <version>${fpts.version}</version>
             </dependency>
 
+            <!-- 交易管理-->
+            <dependency>
+                <groupId>com.fpts</groupId>
+                <artifactId>fpts-transaction</artifactId>
+                <version>${fpts.version}</version>
+            </dependency>
+
+            <!-- 资产管理-->
+            <dependency>
+                <groupId>com.fpts</groupId>
+                <artifactId>fpts-assets</artifactId>
+                <version>${fpts.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -217,6 +232,8 @@
         <module>fpts-generator</module>
         <module>fpts-common</module>
         <module>fpts-finance</module>
+        <module>fpts-transaction</module>
+        <module>fpts-assets</module>
     </modules>
     <packaging>pom</packaging>
 
