@@ -3,122 +3,78 @@
 <head>
     <th:block th:include="include :: header('查看资产列表')" />
 </head>
-<html lang="zh"><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>时间轴</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/animate.min.css" rel="stylesheet">
-    <link href="/css/style.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost/ajax/libs/layer/theme/default/layer.css?v=3.5.1" id="layuicss-layer"><link rel="stylesheet" href="http://localhost/ajax/libs/layer/theme/moon/style.css" id="layuicss-thememoonstylecss"></head>
 <body class="gray-bg">
-<div class="row animated fadeInRight">
-    <div class="ibox float-e-margins">
-        <div id="ibox-content" class="">
-            <div id="vertical-timeline" class="vertical-container light-timeline">
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon navy-bg">
-                        <i class="fa fa-briefcase"></i>
-                    </div>
-
-
-                    <div class="vertical-timeline-content">
-                        <h2>账户：000001</h2>
-                        <p>账户余额：10000<br/>账户总资产：20000
-                        </p>
-                        <a href="#" class="btn btn-sm btn-primary">查看详情</a>
-                        <span class="vertical-date">
+     <div class="container-div">
+         <div class="row">
+             <div class="ibox float-e-margins">
+                 <div id="ibox-content" class="">
+                     <div id="vertical-timeline" class="vertical-container light-timeline">
+                         <div class="vertical-timeline-block">
+                             <div class="vertical-timeline-icon navy-bg">
+                                 <i class="fa fa-briefcase"></i>
+                             </div>
+                             <div class="vertical-timeline-content">
+                                 <h2>账户：000001</h2>
+                                 <p>账户余额：10000<br/>账户总资产：20000
+                                 </p>
+                                 <a href="#" class="btn btn-sm btn-primary">查看详情</a>
+                                 <span class="vertical-date">
                          	最新一笔交易<br>
                          <small>2022-11-28</small>
                      </span>
-                    </div>
-                </div>
-
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon blue-bg">
-                        <i class="fa fa-file-text"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>账户：000002</h2>
-                        <p>账户余额：32000<br/>账户总资产：50000
-                        </p>
-                        <a href="#" class="btn btn-sm btn-primary">查看详情</a>
-                        <span class="vertical-date">
+                             </div>
+                         </div>
+                         <div class="vertical-timeline-block">
+                             <div class="vertical-timeline-icon blue-bg">
+                                 <i class="fa fa-file-text"></i>
+                             </div>
+                             <div class="vertical-timeline-content">
+                                 <h2>账户：000002</h2>
+                                 <p>账户余额：32000<br/>账户总资产：50000
+                                 </p>
+                                 <a href="#" class="btn btn-sm btn-primary">查看详情</a>
+                                 <span class="vertical-date">
                          	最新一笔交易<br>
                          <small>2022-11-29</small>
                      </span>
-                    </div>
-                </div>
-
-                <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon lazur-bg">
-                        <i class="fa fa-coffee"></i>
-                    </div>
-
-                    <div class="vertical-timeline-content">
-                        <h2>账户：000003</h2>
-                        <p>账户余额：5000<br/>账户总资产：4000
-                        </p>
-                        <a href="#" class="btn btn-sm btn-primary">查看详情</a>
-                        <span class="vertical-date">
+                             </div>
+                         </div>
+                         <div class="vertical-timeline-block">
+                             <div class="vertical-timeline-icon lazur-bg">
+                                 <i class="fa fa-coffee"></i>
+                             </div>
+                             <div class="vertical-timeline-content">
+                                 <h2>账户：000003</h2>
+                                 <p>账户余额：5000<br/>账户总资产：4000
+                                 </p>
+                                 <a href="#" class="btn btn-sm btn-primary">查看详情</a>
+                                 <span class="vertical-date">
                          	最新一笔交易<br>
                          <small>2022-11-28</small>
                      </span>
-                    </div>
-                </div>
-        </div>
-    </div>
-</div>
-
-<script> var ctx = "\/"; var lockscreen = null; if(lockscreen){window.top.location=ctx+"lockscreen";} </script>
-<a id="scroll-up" href="#" class="btn btn-sm display" style="cursor: pointer; position: fixed; right: 15px; bottom: 5px;"><i class="fa fa-angle-double-up"></i></a>
-<script src="/js/jquery.min.js?v=3.6.1"></script>
-<script src="/js/bootstrap.min.js?v=3.3.7"></script>
-<!-- bootstrap-table 表格插件 -->
-<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=1.18.3"></script>
-<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js?v=1.18.3"></script>
-<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js?v=1.18.3"></script>
-<!-- jquery-validate 表单验证插件 -->
-<script src="/ajax/libs/validate/jquery.validate.min.js?v=1.19.3"></script>
-<script src="/ajax/libs/validate/jquery.validate.extend.js?v=1.19.3"></script>
-<script src="/ajax/libs/validate/messages_zh.js?v=1.19.3"></script>
-<!-- bootstrap-table 表格树插件 -->
-<script src="/ajax/libs/bootstrap-table/extensions/tree/bootstrap-table-tree.min.js?v=1.18.3"></script>
-<!-- 遮罩层 -->
-<script src="/ajax/libs/blockUI/jquery.blockUI.js?v=2.70.0"></script>
-<script src="/ajax/libs/iCheck/icheck.min.js?v=1.0.3"></script>
-<script src="/ajax/libs/layer/layer.min.js?v=3.5.1"></script>
-<script src="/ajax/libs/layui/layui.min.js?v=2.7.5"></script>
-<script src="/ruoyi/js/common.js?v=4.7.5"></script>
-<script src="/ruoyi/js/ry-ui.js?v=4.7.5"></script>
-
-<script>
-    $(document).ready(function(){
-        $('#lightVersion').click(function(event) {
-            event.preventDefault()
-            $('#ibox-content').removeClass('ibox-content');
-            $('#vertical-timeline').removeClass('dark-timeline');
-            $('#vertical-timeline').addClass('light-timeline');
-        });
-        $('#darkVersion').click(function(event) {
-            event.preventDefault()
-            $('#ibox-content').addClass('ibox-content');
-            $('#vertical-timeline').removeClass('light-timeline');
-            $('#vertical-timeline').addClass('dark-timeline');
-        });
-    });
-</script>
-
-
-</body>
-</html>
-
-
-<body class="gray-bg">
-     <div class="container-div">
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
         <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>账户ID：</label>
+                                <input type="text" name="accountId"/>
+                            </li>
+
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;更换账户</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="assets:account_assets:add">
