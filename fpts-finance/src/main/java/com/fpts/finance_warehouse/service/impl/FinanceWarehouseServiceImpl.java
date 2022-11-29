@@ -1,6 +1,9 @@
 package com.fpts.finance_warehouse.service.impl;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import com.fpts.finance_query.domain.FinanceQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.finance_warehouse.mapper.FinanceWarehouseMapper;
@@ -41,7 +44,20 @@ public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService
     @Override
     public List<FinanceWarehouse> selectFinanceWarehouseList(FinanceWarehouse financeWarehouse)
     {
-        return financeWarehouseMapper.selectFinanceWarehouseList(financeWarehouse);
+        //return financeWarehouseMapper.selectFinanceWarehouseList(financeWarehouse);
+        List<FinanceWarehouse> list = financeWarehouseMapper.selectFinanceWarehouseList(financeWarehouse);
+        DecimalFormat df = new DecimalFormat("#.00");
+        for(FinanceWarehouse f: list){
+            f.setNewPrice(Double.parseDouble(df.format(f.getNewPrice())));
+            f.setOpenPrice(Double.parseDouble(df.format(f.getOpenPrice())));
+            f.setYesterdayPrice(Double.parseDouble(df.format(f.getYesterdayPrice())));
+            f.setMaxPrice(Double.parseDouble(df.format(f.getMaxPrice())));
+            f.setMinPrice(Double.parseDouble(df.format(f.getMinPrice())));
+            f.setIncrease(Double.parseDouble(df.format(f.getIncrease())));
+            f.setIncreaseRate(Double.parseDouble(df.format(f.getIncreaseRate())));
+            f.setTurnoverRate(Double.parseDouble(df.format(f.getTurnoverRate())));
+        }
+        return list;
     }
 
     /**
