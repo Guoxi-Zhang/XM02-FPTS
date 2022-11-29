@@ -47,6 +47,13 @@ public class FinanceQueryServiceImpl implements IFinanceQueryService
         DecimalFormat df = new DecimalFormat("#.00");
         for(FinanceQuery f: list){
             f.setNewPrice(Double.parseDouble(df.format(f.getNewPrice())));
+            f.setOpenPrice(Double.parseDouble(df.format(f.getOpenPrice())));
+            f.setYesterdayPrice(Double.parseDouble(df.format(f.getYesterdayPrice())));
+            f.setMaxPrice(Double.parseDouble(df.format(f.getMaxPrice())));
+            f.setMinPrice(Double.parseDouble(df.format(f.getMinPrice())));
+            f.setIncrease(Double.parseDouble(df.format(f.getIncrease())));
+            f.setIncreaseRate(Double.parseDouble(df.format(f.getIncreaseRate())));
+            f.setTurnoverRate(Double.parseDouble(df.format(f.getTurnoverRate())));
         }
         return list;
     }

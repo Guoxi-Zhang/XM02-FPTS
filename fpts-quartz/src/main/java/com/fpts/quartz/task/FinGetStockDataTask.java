@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.List;
 
 @Component("finGetStockDataTask")
+//上面是重要引入，将这个Task类声明为bean，因为调用的那些service都是用bean注入的，反射的调用方式是没办法在非bean的对象里面注入bean的
+
 public class FinGetStockDataTask {
 
     @Autowired
@@ -38,7 +40,7 @@ public class FinGetStockDataTask {
         String time=dateFormat.format(new Date());
         System.out.println(time);
         RestTemplate restTemplate = new RestTemplate();
-        String forObject = restTemplate.getForObject("http://47.108.114.204:8080/api/public/stock_zh_a_spot_em", String.class);
+        String forObject = restTemplate.getForObject("http://47.108.114.204:8080/api/public/stock_zh_b_spot_em", String.class);
 
         JSONArray array = JSONArray.parseArray(forObject);
         //System.out.println(array);      //到这里是对的
