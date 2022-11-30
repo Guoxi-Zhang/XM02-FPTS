@@ -1,6 +1,11 @@
 package com.fpts.finance_query.controller;
 
 import java.util.List;
+
+import com.fpts.common.utils.security.PermissionUtils;
+import com.fpts.finance_collection.domain.FinanceCollection;
+import com.fpts.finance_collection.service.IFinanceCollectionService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +36,11 @@ public class FinanceQueryController extends BaseController
 {
     private String prefix = "finance_query/finance_query";
 
+    private FinanceCollection financeCollection;
+
     @Autowired
     private IFinanceQueryService financeQueryService;
+    private IFinanceCollectionService financeCollectionService;
 
     @RequiresPermissions("finance_query:finance_query:view")
     @GetMapping()
@@ -123,5 +131,27 @@ public class FinanceQueryController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(financeQueryService.deleteFinanceQueryByIds(ids));
+    }
+
+    /**
+     * 新增产品收藏
+     */
+    @PostMapping("/collect/{product_id}")
+    @ResponseBody
+    public FinanceCollection addCollection(@PathVariable("product_id") String productId) {
+        long userId = (long) PermissionUtils.getPrincipalProperty("userId");
+        System.out.println(userId);
+        financeCollection = new FinanceCollection(userId, productId);
+        return financeCollection;
+    }
+
+    /**
+     * 保存收藏
+     * @return
+     */
+    @RequestMapping("/collect/save")
+    @ResponseBody
+    public AjaxResult saveCollect(){
+        return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
     }
 }

@@ -124,4 +124,12 @@ public class FinanceWarehouseController extends BaseController
     {
         return toAjax(financeWarehouseService.deleteFinanceWarehouseByIds(ids));
     }
+
+    /**
+     * 统计报表
+     */
+    @RequestMapping("/chart")
+    public String showChart(){
+        return prefix + "/chart";
+    }
 }

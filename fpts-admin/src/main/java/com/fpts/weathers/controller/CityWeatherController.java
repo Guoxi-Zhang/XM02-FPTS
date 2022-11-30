@@ -166,7 +166,6 @@ public class CityWeatherController extends BaseController
     @RequestMapping("/save")
     @ResponseBody
     public AjaxResult saveWeatherRecord(){
-
         return toAjax(cityWeatherService.insertCityWeather(cityWeather));
     }
 }

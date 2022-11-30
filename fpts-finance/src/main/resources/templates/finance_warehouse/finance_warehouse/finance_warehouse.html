@@ -47,6 +47,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_warehouse:finance_warehouse:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-success" onclick="warehouseAddChart()" >
+                    <i class="fa fa-bar-chart"></i> 统计图表
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -60,6 +63,11 @@
         var typeDatas = [[${@dict.getType('product_type')}]];
         var prefix = ctx + "finance_warehouse/finance_warehouse";
 
+        function warehouseAddChart() {
+            table.set();
+
+            $.modal.open(table.options.modalName + "统计图表", "/finance_warehouse/finance_warehouse/chart");
+        }
         $(function() {
             var options = {
                 url: prefix + "/list",
