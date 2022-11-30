@@ -151,4 +151,11 @@ public class FinanceQueryController extends BaseController
         return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
     }
 
+    /**
+     * K线图
+     */
+    @RequestMapping("/chart")
+    public String showChart(){
+        return prefix + "/chart";
+    }
 }
