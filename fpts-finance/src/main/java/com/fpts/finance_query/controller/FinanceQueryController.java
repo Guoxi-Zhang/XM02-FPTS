@@ -8,6 +8,7 @@ import com.fpts.finance_collection.service.IFinanceCollectionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,9 @@ import com.fpts.common.core.page.TableDataInfo;
  */
 @Controller
 @RequestMapping("/finance_query/finance_query")
+
+//@Component("financeQueryController")
+
 public class FinanceQueryController extends BaseController
 {
     private String prefix = "finance_query/finance_query";
@@ -138,20 +142,12 @@ public class FinanceQueryController extends BaseController
      */
     @PostMapping("/collect/{product_id}")
     @ResponseBody
-    public FinanceCollection addCollection(@PathVariable("product_id") String productId) {
+    public AjaxResult addCollection(@PathVariable("product_id") String productId) {
         long userId = (long) PermissionUtils.getPrincipalProperty("userId");
         System.out.println(userId);
+        System.out.println(productId);
         financeCollection = new FinanceCollection(userId, productId);
-        return financeCollection;
-    }
-
-    /**
-     * 保存收藏
-     * @return
-     */
-    @RequestMapping("/collect/save")
-    @ResponseBody
-    public AjaxResult saveCollect(){
         return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
     }
+
 }
