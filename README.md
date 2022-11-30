@@ -1,4 +1,4 @@
-# MX02-FPTS
+# XM02-FPTS
 02组项目：金融产品交易系统（Financial product optimization trading system， FPTS）
 
 ## 合作开发流程
