@@ -63,43 +63,19 @@
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="searchWeather()"><i class="fa fa-search"></i>&nbsp;搜索该城市天气</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                                <a class="btn btn-success btn-rounded btn-sm" onclick="saveWeather()"><i class="fa fa-refresh"></i>&nbsp;保存</a>
+                                <a class="btn btn-success btn-rounded btn-sm" onclick="saveWeather()"><i class="fa fa-plus-square-o"></i>&nbsp;保存至数据库</a>
                             </li>
 
                         </ul>
-                        <p name = "searchResultWeatherDay"> </p>
-<!--                        <ul>-->
-<!--                            <li>-->
-<!--                                <label>日间天气：</label>-->
-<!--                                <input type="text" name="searchResultWeatherDay"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>夜间天气：</label>-->
-<!--                                <input type="text" name="searchResultWeatherNight"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>最低气温：</label>-->
-<!--                                <input type="text" name="searchResultTemperatureLow"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>最高气温：</label>-->
-<!--                                <input type="text" name="searchResultTemperatureHigh"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>风向：</label>-->
-<!--                                <input type="text" name="searchResultWindDirection"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>风力等级：</label>-->
-<!--                                <input type="text" name="searchResultWindScale"/>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <label>时间：</label>-->
-<!--                                <input type="text" name="searchResultCreateTime"/>-->
-<!--                            </li>-->
+                        <br>
+                        <br>
+                        <br>
 
-<!--                        </ul>-->
+<!--                                <label>查询结果：</label>-->
+                        <div class="col-sm-10">
+                            <textarea type="text" id = "searchResultWeatherDay" name="searchResultWeatherDay" class="form-control" placeholder="查询结果"></textarea>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -115,40 +91,39 @@
             table.set();
             $.modal.open(table.options.modalName + "统计图表", "/weathers/cityWeathers/chart");
         }
-        function Get(){
-            $.ajax({
-                url:url,
-                dataType:'jsonp',
-                processData: false,
-                type:'get',
-                success:function(data){
-                    console.log(data);
-                    return data;
-                },
-                error:function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
-                }});
-        }
 
         function saveWeather(){
-            $("#form-cityWeathers-add").validate({
-                focusCleanup: true
-            });
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-cityWeathers-search').serialize());
-            }
+            var config = {
+                url: "/weathers/cityWeathers/save",
+                type: "post",
+                dataType: "json",
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍候...");
+                    $.modal.disable();
+                },
+                success: function(result) {
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successCallback(result);
+                }
+            };
+            $.ajax(config);
+            document.getElementById("searchResultWeatherDay").value= null;
+
         }
+
         function searchWeather() {
             var city = document.getElementById("searchCity").value;
             console.log("city:" + city);
             var url = "/weathers/cityWeathers/search/" +city;
             $.post(url,function(data){
-                //hideWaitTip();
-                //显示在content中
+                var str = "城市：" + data.city + ", 日间天气：" + data.weatherDay + ", 夜间天气：" + data.weatherNight
+                    + ", 最高气温：" + data.temperatureHigh +", 最低气温：" + data.temperatureLow + ", 风向：" +
+                    data.windDirection + ", 风力：" + data.windScale;
                 console.log(data);
-                document.getElementsByName("searchResultWeatherDay").value=data.toString();
+                console.log(str);
+                document.getElementById("searchResultWeatherDay").value=str;
 
             });
 

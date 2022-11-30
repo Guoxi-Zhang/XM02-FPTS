@@ -59,7 +59,9 @@
         var editFlag = [[${@permission.hasPermi('finance_news:news_manage:edit')}]];
         var removeFlag = [[${@permission.hasPermi('finance_news:news_manage:remove')}]];
         var prefix = ctx + "finance_news/news_manage";
-
+        function openNewsURL(newsURL){
+            $.modal.openTab("新闻原文阅读", newsURL);
+        }
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -69,7 +71,7 @@
                 exportUrl: prefix + "/export",
                 modalName: "新闻管理",
                 rowStyle: function(row, index) {                         // 动态修改行的颜色
-                    if(row.id %2 == 1 ){                                 // 如果值是1，表示已删除，设置行的颜色
+                    if(row.newsId %2 == 1 ){                                 // 如果值是1，表示已删除，设置行的颜色
                         return  {css:{"background-color":'#f2f8fd'}};
                     }
                     return '';                                           // 注意：即使不改变颜色，也得返回 '' ，否则会报错。
@@ -80,19 +82,23 @@
                 {
                     field: 'newsId',
                     title: '新闻id',
-                    visible: false
+                    visible: false,
+                    sortable:true
                 },
                 {
                     field: 'title',
-                    title: '标题'
+                    title: '标题',
+                    sortable:true
                 },
                 {
                     field: 'author',
-                    title: '作者'
+                    title: '作者',
+                    sortable:true
                 },
                 {
                     field: 'releaseTime',
-                    title: '发布时间'
+                    title: '发布时间',
+                    sortable:true
                 },
                 {
                     field: 'link',
@@ -104,11 +110,13 @@
                 },
                 {
                     field: 'read',
-                    title: '阅读数'
+                    title: '阅读数',
+                    sortable:true
                 },
                 {
                     field: 'comment',
-                    title: '评论数'
+                    title: '评论数',
+                    sortable:true
                 },
                 {
                     title: '操作',
@@ -117,6 +125,7 @@
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.newsId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.newsId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + '" href="javascript:void(0)" onclick="openNewsURL(\'' + row.link + '\')"><i class="fa fa-remove"></i>查看原文</a>');
                         return actions.join('');
                     }
                 }]

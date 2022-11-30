@@ -36,6 +36,8 @@ public class CityWeatherController extends BaseController
 {
     private String prefix = "weathers/cityWeathers";
 
+    private CityWeather cityWeather;
+
     @Autowired
     private ICityWeatherService cityWeatherService;
 
@@ -152,8 +154,19 @@ public class CityWeatherController extends BaseController
         List<Map<String, String>> listData = WeatherUtil.getWeatherMap(cityName);
         Map<String, String> map = listData.get(0);
         System.out.println(map.toString());
-        CityWeather cityWeather = new CityWeather(cityName, map.get("text_day"),map.get("text_night"),map.get("low"),map.get("high"),map.get("wind_direction"),map.get("wind_scale"));
+        cityWeather = new CityWeather(cityName, map.get("text_day"),map.get("text_night"),map.get("low"),map.get("high"),map.get("wind_direction"),map.get("wind_scale"));
 
         return cityWeather;
+    }
+
+    /**
+     * 保存该天气
+     * @return
+     */
+    @RequestMapping("/save")
+    @ResponseBody
+    public AjaxResult saveWeatherRecord(){
+
+        return toAjax(cityWeatherService.insertCityWeather(cityWeather));
     }
 }
