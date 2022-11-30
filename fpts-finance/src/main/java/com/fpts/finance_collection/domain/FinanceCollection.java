@@ -26,9 +26,9 @@ public class FinanceCollection extends BaseEntity
     @Excel(name = "用户ID")
     private Long userId;
 
-    public FinanceCollection(long userId,String productId){
-        this.productId = productId;
+    public FinanceCollection(Long userId,String productId){
         this.userId = userId;
+        this.productId = productId;
     }
 
     public void setId(Long id) 

@@ -34,7 +34,7 @@ import com.fpts.common.core.page.TableDataInfo;
 @Controller
 @RequestMapping("/finance_query/finance_query")
 
-//@Component("financeQueryController")
+
 
 public class FinanceQueryController extends BaseController
 {
@@ -44,6 +44,7 @@ public class FinanceQueryController extends BaseController
 
     @Autowired
     private IFinanceQueryService financeQueryService;
+    @Autowired
     private IFinanceCollectionService financeCollectionService;
 
     @RequiresPermissions("finance_query:finance_query:view")
