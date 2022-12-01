@@ -7,31 +7,46 @@
 
 </head>
 <body class="white-bg">
+
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-<div id="main" style="width: 600px;height:400px;"></div>
+<div id="main" style="width: 800px;height:500px;"></div>
 <script th:src="@{/js/echarts.js}"></script>
 <<script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
+    //处理后台传过来的参数
+    var tempCityCntList = '[[${cityCntList}]]'.replace('[','').replace(']','').split(",");
+    var tempCityList = '[[${cityList}]]';
 
+    //转化为字符串数组和整数数组
+    var cityList = tempCityList.replace('[','').replace(']','').split(",");
+    var cityCntList = [];
+    tempCityCntList.forEach(function(data,index,arr){
+        cityCntList.push(+data);
+    });
+
+    console.log(cityCntList);
+    console.log(cityList);
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: 'ECharts 入门示例'
+            text: '城市天气记录统计数据'
         },
         tooltip: {},
         legend: {
-            data: ['销量']
+            data: ['记录条数']
         },
         xAxis: {
-            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            data: cityList
+            // data: ['成都' ,'重庆' ,'昆明' ,'西安' ,'兰州' ,'洛南' ,'北京']
         },
         yAxis: {},
         series: [
             {
-                name: '销量',
+                name: '记录条数',
                 type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+                data: cityCntList
+                // data: [22, 6, 5, 3, 2, 1, 1]
             }
         ]
     };

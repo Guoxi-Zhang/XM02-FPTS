@@ -1,8 +1,7 @@
 package com.fpts.todo.controller;
 
+import java.io.IOException;
 import java.util.List;
-
-import com.fpts.framework.web.domain.server.Sys;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +22,9 @@ import com.fpts.common.core.page.TableDataInfo;
 
 /**
  * 待办事项Controller
- * 
+ *
  * @author Guoxi Zhang
- * @date 2022-11-15
+ * @date 2022-12-01
  */
 @Controller
 @RequestMapping("/todo/list")
@@ -76,7 +75,6 @@ public class TodoListController extends BaseController
     @GetMapping("/add")
     public String add()
     {
-        System.out.println(prefix + "/add");
         return prefix + "/add";
     }
 
@@ -135,5 +133,13 @@ public class TodoListController extends BaseController
     @RequestMapping("/chart")
     public String showChart(){
         return prefix + "/chart";
+    }
+
+    @PostMapping("/complete/{id}")
+    @ResponseBody
+    public AjaxResult toItemComplete(@PathVariable("id") Long id){
+        TodoList todoList = todoListService.selectTodoListById(id);
+        todoList.setState("1");
+        return toAjax(todoListService.updateTodoList(todoList));
     }
 }

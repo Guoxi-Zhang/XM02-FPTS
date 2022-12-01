@@ -9,9 +9,9 @@ import com.fpts.common.core.domain.BaseEntity;
 
 /**
  * 待办事项对象 todo_list
- * 
+ *
  * @author Guoxi Zhang
- * @date 2022-11-15
+ * @date 2022-12-01
  */
 public class TodoList extends BaseEntity
 {
@@ -37,48 +37,48 @@ public class TodoList extends BaseEntity
     @Excel(name = "细节")
     private String detail;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setTask(String task) 
+    public void setTask(String task)
     {
         this.task = task;
     }
 
-    public String getTask() 
+    public String getTask()
     {
         return task;
     }
-    public void setEndTime(Date endTime) 
+    public void setEndTime(Date endTime)
     {
         this.endTime = endTime;
     }
 
-    public Date getEndTime() 
+    public Date getEndTime()
     {
         return endTime;
     }
-    public void setState(String state) 
+    public void setState(String state)
     {
         this.state = state;
     }
 
-    public String getState() 
+    public String getState()
     {
         return state;
     }
-    public void setDetail(String detail) 
+    public void setDetail(String detail)
     {
         this.detail = detail;
     }
 
-    public String getDetail() 
+    public String getDetail()
     {
         return detail;
     }
@@ -86,11 +86,11 @@ public class TodoList extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("task", getTask())
-            .append("endTime", getEndTime())
-            .append("state", getState())
-            .append("detail", getDetail())
-            .toString();
+                .append("id", getId())
+                .append("task", getTask())
+                .append("endTime", getEndTime())
+                .append("state", getState())
+                .append("detail", getDetail())
+                .toString();
     }
 }

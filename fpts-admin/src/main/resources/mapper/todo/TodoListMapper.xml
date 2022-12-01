@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpts.todo.mapper.TodoListMapper">
-    
+
     <resultMap type="TodoList" id="TodoListResult">
         <result property="id"    column="id"    />
         <result property="task"    column="task"    />
@@ -12,24 +12,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="detail"    column="detail"    />
     </resultMap>
 
+
     <sql id="selectTodoListVo">
         select id, task, end_time, state, detail from todo_list
     </sql>
 
     <select id="selectTodoListList" parameterType="TodoList" resultMap="TodoListResult">
         <include refid="selectTodoListVo"/>
-        <where>  
+        <where>
             <if test="task != null  and task != ''"> and task like concat('%', #{task}, '%')</if>
             <if test="endTime != null "> and end_time like concat('%', #{endTime}, '%')</if>
+            <if test="state != null  and state != ''"> and state = #{state}</if>
             <if test="detail != null  and detail != ''"> and detail like concat('%', #{detail}, '%')</if>
         </where>
     </select>
-    
+
     <select id="selectTodoListById" parameterType="Long" resultMap="TodoListResult">
         <include refid="selectTodoListVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertTodoList" parameterType="TodoList" useGeneratedKeys="true" keyProperty="id">
         insert into todo_list
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -37,13 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="endTime != null">end_time,</if>
             <if test="state != null">state,</if>
             <if test="detail != null">detail,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="task != null and task != ''">#{task},</if>
             <if test="endTime != null">#{endTime},</if>
             <if test="state != null">#{state},</if>
             <if test="detail != null">#{detail},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateTodoList" parameterType="TodoList">
@@ -62,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteTodoListByIds" parameterType="String">
-        delete from todo_list where id in 
+        delete from todo_list where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

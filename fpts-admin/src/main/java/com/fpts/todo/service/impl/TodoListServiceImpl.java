@@ -10,19 +10,19 @@ import com.fpts.common.core.text.Convert;
 
 /**
  * 待办事项Service业务层处理
- * 
+ *
  * @author Guoxi Zhang
- * @date 2022-11-15
+ * @date 2022-12-01
  */
 @Service
-public class TodoListServiceImpl implements ITodoListService 
+public class TodoListServiceImpl implements ITodoListService
 {
     @Autowired
     private TodoListMapper todoListMapper;
 
     /**
      * 查询待办事项
-     * 
+     *
      * @param id 待办事项主键
      * @return 待办事项
      */
@@ -34,7 +34,7 @@ public class TodoListServiceImpl implements ITodoListService
 
     /**
      * 查询待办事项列表
-     * 
+     *
      * @param todoList 待办事项
      * @return 待办事项
      */
@@ -46,7 +46,7 @@ public class TodoListServiceImpl implements ITodoListService
 
     /**
      * 新增待办事项
-     * 
+     *
      * @param todoList 待办事项
      * @return 结果
      */
@@ -58,7 +58,7 @@ public class TodoListServiceImpl implements ITodoListService
 
     /**
      * 修改待办事项
-     * 
+     *
      * @param todoList 待办事项
      * @return 结果
      */
@@ -70,7 +70,7 @@ public class TodoListServiceImpl implements ITodoListService
 
     /**
      * 批量删除待办事项
-     * 
+     *
      * @param ids 需要删除的待办事项主键
      * @return 结果
      */
@@ -82,7 +82,7 @@ public class TodoListServiceImpl implements ITodoListService
 
     /**
      * 删除待办事项信息
-     * 
+     *
      * @param id 待办事项主键
      * @return 结果
      */

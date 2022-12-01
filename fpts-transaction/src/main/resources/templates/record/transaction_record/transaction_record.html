@@ -317,8 +317,9 @@
                     field: 'orderSituation',
                     title: '订单完成情况',
                     formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(orderSituationDatas, value);
+                        return $.table.selectDictLabel(orderSituationDatas, value);
                         return $.table.selectDictLabel(stateDatas, value);
+                    }
                 },
                 {
                     title: '操作',

@@ -2,10 +2,13 @@ package com.fpts.weathers.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import com.fpts.weathers.domain.WeatherStatistics;
+import com.fpts.weathers.service.IWeatherStatisticsService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +44,9 @@ public class CityWeatherController extends BaseController
     @Autowired
     private ICityWeatherService cityWeatherService;
 
+    @Autowired
+    private IWeatherStatisticsService weatherStatisticsService;
+
     @RequiresPermissions("weathers:cityWeathers:view")
     @GetMapping()
     public String cityWeathers()
@@ -58,6 +64,7 @@ public class CityWeatherController extends BaseController
     {
         startPage();
         List<CityWeather> list = cityWeatherService.selectCityWeatherList(cityWeather);
+
         return getDataTable(list);
     }
 
@@ -139,7 +146,16 @@ public class CityWeatherController extends BaseController
      */
 //    @PostMapping( "/chart")
     @RequestMapping("/chart")
-    public String showChart(){
+    public String showChart(ModelMap mmap){
+        List<WeatherStatistics> weatherStatisticsList = weatherStatisticsService.searchWeatherStatistics();
+        List<String> cityList = new ArrayList<String>();
+        List<Integer> cityCntList = new ArrayList<Integer>();
+        for(WeatherStatistics w: weatherStatisticsList){
+            cityList.add(w.getCity());
+            cityCntList.add(w.getCityCnt());
+        }
+        mmap.put("cityList", cityList);
+        mmap.put("cityCntList", cityCntList);
         return prefix + "/chart";
     }
 
@@ -168,4 +184,6 @@ public class CityWeatherController extends BaseController
     public AjaxResult saveWeatherRecord(){
         return toAjax(cityWeatherService.insertCityWeather(cityWeather));
     }
+
+
 }
