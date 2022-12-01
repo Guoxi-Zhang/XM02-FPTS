@@ -94,6 +94,7 @@
 
         function kgraph(pId){
             var productId=pId;
+            localStorage.setItem("MyproductID",productId);
             table.set();
             $.modal.open(table.options.modalName + "统计图表", "/finance_query/finance_query/chart");
         }
