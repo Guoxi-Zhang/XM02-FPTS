@@ -8,7 +8,7 @@
 </head>
 <body class="white-bg">
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-<div id="main" style="width: 600px;height:400px;"></div>
+<div id="main" style="width: 800px;height:500px;"></div>
 <script th:src="@{/js/echarts.js}"></script>
 <script th:src="@{/js/jquery.min.js}"></script>
 <<script type="text/javascript">
@@ -263,7 +263,7 @@
         var arr = [];
         $.ajax({
             //url: "http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=000001&period=daily&start_date=20220329&end_date=20221129&adjust=hfq",
-            url:`http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=${productId}&period=daily&start_date=20220329&end_date=20221129&adjust=hfq`,
+            url:`http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=${productId}&period=daily&start_date=20220601&end_date=20221201&adjust=hfq`,
             type: "get",
             //data: {}, //向服务器发送的数据
             async: false,

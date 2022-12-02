@@ -46,14 +46,14 @@ public class FinanceQueryServiceImpl implements IFinanceQueryService
         List<FinanceQuery> list = financeQueryMapper.selectFinanceQueryList(financeQuery);
         DecimalFormat df = new DecimalFormat("#.00");
         for(FinanceQuery f: list){
-            f.setNewPrice(Double.parseDouble(df.format(f.getNewPrice())));
-            f.setOpenPrice(Double.parseDouble(df.format(f.getOpenPrice())));
-            f.setYesterdayPrice(Double.parseDouble(df.format(f.getYesterdayPrice())));
-            f.setMaxPrice(Double.parseDouble(df.format(f.getMaxPrice())));
-            f.setMinPrice(Double.parseDouble(df.format(f.getMinPrice())));
-            f.setIncrease(Double.parseDouble(df.format(f.getIncrease())));
-            f.setIncreaseRate(Double.parseDouble(df.format(f.getIncreaseRate())));
-            f.setTurnoverRate(Double.parseDouble(df.format(f.getTurnoverRate())));
+            if(null!=f.getNewPrice()) f.setNewPrice(Double.parseDouble(df.format(f.getNewPrice())));
+            if(null!=f.getOpenPrice()) f.setOpenPrice(Double.parseDouble(df.format(f.getOpenPrice())));
+            if(null!=f.getYesterdayPrice()) f.setYesterdayPrice(Double.parseDouble(df.format(f.getYesterdayPrice())));
+            if(null!=f.getMaxPrice()) f.setMaxPrice(Double.parseDouble(df.format(f.getMaxPrice())));
+            if(null!=f.getMinPrice()) f.setMinPrice(Double.parseDouble(df.format(f.getMinPrice())));
+            if(null!=f.getIncrease()) f.setIncrease(Double.parseDouble(df.format(f.getIncrease())));
+            if(null!=f.getIncreaseRate()) f.setIncreaseRate(Double.parseDouble(df.format(f.getIncreaseRate())));
+            if(null!=f.getTurnoverRate()) f.setTurnoverRate(Double.parseDouble(df.format(f.getTurnoverRate())));
         }
         return list;
     }

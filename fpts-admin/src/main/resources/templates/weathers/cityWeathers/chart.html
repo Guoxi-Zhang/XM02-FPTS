@@ -9,9 +9,9 @@
 <body class="white-bg">
 
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-<div id="main" style="width: 800px;height:500px;"></div>
+<div id="main" style="width: 800px;height:500px; text-align: center; margin: 0 auto;"></div>
 <script th:src="@{/js/echarts.js}"></script>
-<<script type="text/javascript">
+<script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
     //处理后台传过来的参数
@@ -38,7 +38,6 @@
         },
         xAxis: {
             data: cityList
-            // data: ['成都' ,'重庆' ,'昆明' ,'西安' ,'兰州' ,'洛南' ,'北京']
         },
         yAxis: {},
         series: [
@@ -46,7 +45,6 @@
                 name: '记录条数',
                 type: 'bar',
                 data: cityCntList
-                // data: [22, 6, 5, 3, 2, 1, 1]
             }
         ]
     };

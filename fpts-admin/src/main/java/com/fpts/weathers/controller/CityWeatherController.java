@@ -160,6 +160,28 @@ public class CityWeatherController extends BaseController
     }
 
     /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(CityWeather cityWeather)
+    {
+//        startPage();
+        List<CityWeather> list = cityWeatherService.selectCityWeatherList(cityWeather);
+
+        return getDataTable(list);
+    }
+
+    /**
      * 查询特定天气
      */
     @PostMapping("/search/{city}")
