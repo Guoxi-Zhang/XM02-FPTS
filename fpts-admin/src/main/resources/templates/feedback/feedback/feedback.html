@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="include :: header('用户反馈列表')" />
 </head>
-<body class="gray-bg">
+<body class="gray-bg" style="background-color: #e0f8f8">
      <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
@@ -15,13 +15,13 @@
                                 <input type="text" name="userId"/>
                             </li>
                             <li class="select-time">
-                                <label>用户反馈创建时间：</label>
+                                <label>反馈时间：</label>
                                 <input type="text" class="time-input" id="userFeedbackTime" placeholder="开始时间" name="params[UserFeedbackCreatetime]"/>
 <!--                                <span>-</span>-->
 <!--                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUserFeedbackCreatetime]"/>-->
                             </li>
                             <li class="select-time">
-                                <label>管理员回复时间：</label>
+                                <label>回复时间：</label>
                                 <input type="text" class="time-input" id="adminFeedbackTime" placeholder="开始时间" name="params[AdminFeedbackCreatetime]"/>
 <!--                                <span>-</span>-->
 <!--                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endAdminFeedbackCreatetime]"/>-->
@@ -55,8 +55,11 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="feedback:feedback:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-success" onclick="feedbackAddchart()">
+                    <i class="fa fa-bar-chart"></i> 统计图表
+                </a>
             </div>
-            <div class="col-sm-12 select-table table-striped">
+            <div class="col-sm-12 select-table">
                 <table id="bootstrap-table"></table>
             </div>
         </div>
@@ -68,6 +71,11 @@
         var completemarkDatas = [[${@dict.getType('user_feedback_complete')}]];
         var prefix = ctx + "feedback/feedback";
 
+        function feedbackAddchart() {
+            table.set();
+            $.modal.open(table.options.modalName + "统计图表", "/feedback/feedback/feedbackchart");
+        }
+
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -76,6 +84,13 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "用户反馈",
+                sortName:"completemark",
+                rowStyle: function(row, index) {                         // 动态修改行的颜色
+                    if(row.completemark %2 == 1 ){                                 // 如果值是1，表示已删除，设置行的颜色
+                        return  {css:{"background-color":'#f2f8fd'}};
+                    }
+                    return '';                                           // 注意：即使不改变颜色，也得返回 '' ，否则会报错。
+                },
                 columns: [{
                     checkbox: true
                 },
@@ -86,7 +101,8 @@
                 },
                 {
                     field: 'userId',
-                    title: '用户ID'
+                    title: '用户ID',
+                    sortable:'true'
                 },
                 {
                     field: 'userFeedbackContent',
@@ -98,15 +114,18 @@
                 },
                 {
                     field: 'userFeedbackCreatetime',
-                    title: '用户反馈创建时间'
+                    title: '用户反馈创建时间',
+                    sortable:'true'
                 },
                 {
                     field: 'adminFeedbackCreatetime',
-                    title: '管理员回复时间'
+                    title: '管理员回复时间',
+                    sortable:'true'
                 },
                 {
                     field: 'completemark',
                     title: '完成标记',
+                    sortable:'true',
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(completemarkDatas, value);
                     }
