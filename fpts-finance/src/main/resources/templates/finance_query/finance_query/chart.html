@@ -250,34 +250,58 @@
     }
 
     function GetData() {
-        var str = window.location.href.toString().split("?")[1];
-        /*
-        var item = str.split('&');
 
-        var st = item[0].split('=')[1];
-        var et = item[1].split('=')[1];
-        var code = item[2].split('=')[1];
-        IndexName = item[2].split('=')[1];
-        */
         let productId = localStorage.getItem( "MyproductID");
+        let Type=localStorage.getItem("Type");
+        let field = Type == 0  ?  `stock_zh_a_hist?symbol=${productId}&period=daily` : `stock_zh_b_daily?symbol=sh${productId}`;
+
+        let url=null;
+
+        console.log(Type);
+
+        switch ( Type ) {
+            // 情况一
+            case '0':
+                url = `http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=${productId}&period=daily&start_date=20220601&end_date=20221201&adjust=hfq`;
+                    break;
+            // 情况二
+            case '1':
+                url = `http://47.108.114.204:8080/api/public/stock_zh_b_daily?symbol=sh${productId}&start_date=20220601&end_date=20221201&adjust=hfq`;
+                    break;
+
+            default:
+                break;
+        }
+        console.log(url);
         var arr = [];
         $.ajax({
-            //url: "http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=000001&period=daily&start_date=20220329&end_date=20221129&adjust=hfq",
-            url:`http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=${productId}&period=daily&start_date=20220601&end_date=20221201&adjust=hfq`,
+            //url:`http://47.108.114.204:8080/api/public/${field}&start_date=20220601&end_date=20221201&adjust=hfq`,
+            url,    // 这是url :url 的简写
             type: "get",
-            //data: {}, //向服务器发送的数据
             async: false,
             dataType: "json",
             success: function (data) {
-                console.log(typeof data);
+                console.log(url);
                 arr = [];
-                let result = data.map(item => [
-                    item['日期'],
-                    item['开盘'],
-                    item['收盘'],
-                    item['最低'],
-                    item['最高'],
-                ]) //映射为官方demo的数据格式
+                let result=[];
+                if(Type==='0'){
+                    result = data.map(item => [
+                        item['日期'],
+                        item['开盘'],
+                        item['收盘'],
+                        item['最低'],
+                        item['最高'],
+                    ]) //映射为官方demo的数据格式
+                }
+                else if(Type==='1'){
+                    result = data.map(item => [
+                        item['date'],
+                        item['open'],
+                        item['close'],
+                        item['low'],
+                        item['high'],
+                    ]) //映射为官方demo的数据格式
+                }
                 arr=result;
 
             }

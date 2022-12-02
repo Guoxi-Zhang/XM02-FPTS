@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectFinanceWarehouseVo"/>
         where id = #{id}
     </select>
+
+    <select id="selectFinanceWarehouseByProductId" parameterType="String" resultMap="FinanceWarehouseResult">
+        <include refid="selectFinanceWarehouseVo"/>
+        where product_id = #{productId}
+    </select>
         
     <insert id="insertFinanceWarehouse" parameterType="FinanceWarehouse" useGeneratedKeys="true" keyProperty="id">
         insert into finance_summary
@@ -84,6 +89,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
+
+    <update id="updateFinanceWarehouse2" parameterType="FinanceWarehouse">
+        update finance_summary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="newPrice != null">new_price = #{newPrice},</if>
+            <if test="openPrice != null">open_price = #{openPrice},</if>
+            <if test="yesterdayPrice != null">yesterday_price = #{yesterdayPrice},</if>
+            <if test="maxPrice != null">max_price = #{maxPrice},</if>
+            <if test="minPrice != null">min_price = #{minPrice},</if>
+            <if test="increase != null">increase = #{increase},</if>
+            <if test="increaseRate != null">increase_rate = #{increaseRate},</if>
+            <if test="turnoverRate != null">turnover_rate = #{turnoverRate},</if>
+        </trim>
+        where product_id = #{productId}
+    </update>
+
+
 
     <delete id="deleteFinanceWarehouseById" parameterType="Integer">
         delete from finance_summary where id = #{id}

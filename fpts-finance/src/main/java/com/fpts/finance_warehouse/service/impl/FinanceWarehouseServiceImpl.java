@@ -36,6 +36,18 @@ public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService
     }
 
     /**
+     * 查询数据仓库2
+     *
+     * @param productId 数据仓库产品代码
+     * @return 数据仓库
+     */
+    @Override
+    public FinanceWarehouse selectFinanceWarehouseByProductId(String productId)
+    {
+        return financeWarehouseMapper.selectFinanceWarehouseByProductId(productId);
+    }
+
+    /**
      * 查询数据仓库列表
      * 
      * @param financeWarehouse 数据仓库
@@ -82,6 +94,12 @@ public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService
     public int updateFinanceWarehouse(FinanceWarehouse financeWarehouse)
     {
         return financeWarehouseMapper.updateFinanceWarehouse(financeWarehouse);
+    }
+
+    @Override
+    public int updateFinanceWarehouse2(FinanceWarehouse financeWarehouse)
+    {
+        return financeWarehouseMapper.updateFinanceWarehouse2(financeWarehouse);
     }
 
     /**

@@ -92,9 +92,14 @@
             */
         }
 
-        function kgraph(pId){
-            var productId=pId;
-            localStorage.setItem("MyproductID",productId);
+
+        function kgraph(m){
+            // 截取m前位
+            console.log( m.substring(0,6));
+            console.log( m.substring(6,7));
+
+            localStorage.setItem("MyproductID", m.substring(0,6));
+            localStorage.setItem("Type", m.substring(6,7));
             table.set();
             $.modal.open(table.options.modalName + "统计图表", "/finance_query/finance_query/chart");
         }
@@ -176,7 +181,11 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="kgraph(\'' + row.productId + '\')"><i class="fa fa-line-chart"></i>K线图</a> ');
+                        let m = {
+                            productId: row.productId ,
+                            type: row.type ,
+                        }
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="kgraph(\'' + row.productId + row.type + '\')"><i class="fa fa-line-chart"></i>K线图</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(\'' + row.id + '\')"><i class="fa fa-jpy"></i>买入</a>');
                         actions.push('<a class="btn btn-info btn-xs ' +  '" href="javascript:void(0)" onclick="collect(\'' + row.productId + '\')"><i class="fa fa-star"></i>收藏</a>');
                         return actions.join('');
