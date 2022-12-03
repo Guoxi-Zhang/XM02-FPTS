@@ -55,6 +55,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="feedback:feedback:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-warning" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
                 <a class="btn btn-success" onclick="feedbackAddchart()">
                     <i class="fa fa-bar-chart"></i> 统计图表
                 </a>
@@ -70,6 +73,10 @@
         var removeFlag = [[${@permission.hasPermi('feedback:feedback:remove')}]];
         var completemarkDatas = [[${@dict.getType('user_feedback_complete')}]];
         var prefix = ctx + "feedback/feedback";
+
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/feedback/feedback/feedbackprint");
+        }
 
         function feedbackAddchart() {
             table.set();

@@ -1,6 +1,9 @@
 package com.fpts.feedback.controller;
 
 import java.util.List;
+
+import com.fpts.todo.domain.TodoList;
+import com.fpts.weathers.domain.CityWeather;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -124,4 +127,43 @@ public class UserFeedbackController extends BaseController
     {
         return toAjax(userFeedbackService.deleteUserFeedbackByUserFeedbackIds(ids));
     }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/feedbackprint")
+    public String print(){
+
+        return prefix + "/feedbackprint";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(UserFeedback userFeedback)
+    {
+//      startPage();
+        List<UserFeedback> list = userFeedbackService.selectUserFeedbackList(userFeedback);
+
+        return getDataTable(list);
+    }
+    /**
+     * 统计报表
+     */
+//    @PostMapping( "/chart")
+    @RequestMapping("/feedbackchart")
+    public String showChart(){
+        return prefix + "/feedbackchart";
+    }
+
+    @PostMapping("/complete/{userFeedbackId}")
+    @ResponseBody
+    public AjaxResult toItemComplete(@PathVariable("userFeedbackId") Long userFeedbackId){
+        UserFeedback userFeedback = userFeedbackService.selectUserFeedbackByUserFeedbackId(userFeedbackId);
+        //userFeedback.setState("1");
+        return toAjax(userFeedbackService.updateUserFeedback(userFeedback));
+    }
+
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增反馈图表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto; "></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "feedback/feedback";
+
+    $(function() {
+        var options = {
+            url: prefix + "/printToHtml",
+            modalName: "用户反馈",
+            // rowStyle: function(row, index) {                         // 动态修改行的颜色
+            //     if(row.id %2 == 1 ){                                 // 如果值是1，表示已删除，设置行的颜色
+            //         return  {css:{"background-color":'#f2f8fd'}};
+            //     }
+            //     return '';                                           // 注意：即使不改变颜色，也得返回 '' ，否则会报错。
+            // },
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showToggle:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            columns: [
+                {
+                    field: 'userFeedbackId',
+                    title: '用户反馈编号',
+                    visible: false
+                },
+                {
+                    field: 'userId',
+                    title: '用户ID',
+                },
+                {
+                    field: 'userFeedbackContent',
+                    title: '用户反馈信息'
+                },
+                {
+                    field: 'adminFeedbackContent',
+                    title: '管理员回复内容'
+                },
+                {
+                    field: 'userFeedbackCreatetime',
+                    title: '用户反馈创建时间',
+                },
+                {
+                    field: 'adminFeedbackCreatetime',
+                    title: '管理员回复时间',
+                },
+                ]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>
