@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('交易记录html打印')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto;"></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "record/transaction_record";
+    var productTypeDatas = [[${@dict.getType('product_type')}]];
+    var orderDirectionDatas = [[${@dict.getType('transaction_direction')}]];
+    var orderPatternDatas = [[${@dict.getType('transaction_pattern')}]];
+    var orderSituationDatas = [[${@dict.getType('transaction_situation')}]];
+
+    $(function() {
+        var options = {
+            url: prefix + "/printToHtml",
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showToggle:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            modalName: "交易记录",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'orderId',
+                    title: '订单ID',
+                    visible: false
+                },
+                {
+                    field: 'userId',
+                    title: '用户ID'
+                },
+                {
+                    field: 'accountId',
+                    title: '账户ID'
+                },
+                {
+                    field: 'productId',
+                    title: '产品编号'
+                },
+                {
+                    field: 'productType',
+                    title: '产品类型',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(productTypeDatas, value);
+                    }
+                },
+                {
+                    field: 'productPrice',
+                    title: '成交价格'
+                },
+                {
+                    field: 'pruductAmount',
+                    title: '成交数量'
+                },
+                {
+                    field: 'orderTime',
+                    title: '下单时间'
+                },
+                {
+                    field: 'orderDirection',
+                    title: '交易方向',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(orderDirectionDatas, value);
+                    }
+                },
+                {
+                    field: 'orderPattern',
+                    title: '交易方式',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(orderPatternDatas, value);
+                    }
+                },
+                {
+                    field: 'orderSituation',
+                    title: '订单情况',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(orderSituationDatas, value);
+                    }
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+
+
+</script>
+</body>
+</html>

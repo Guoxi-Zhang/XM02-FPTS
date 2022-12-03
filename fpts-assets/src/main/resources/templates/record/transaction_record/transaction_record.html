@@ -12,11 +12,11 @@
                         <ul>
                             <li>
                                 <label>账户ID：</label>
-                                <input type="text" name="accountId"/>
+                                <input type="text" name="accountId" disabled="true"/>
                             </li>
                             <li>
                                 <label>金融产品：</label>
-                                <input type="text" name="productId"/>
+                                <input type="text" name="productId" disabled="true"/>
                             </li>
                             <li>
                                 <label>产品类型：</label>
@@ -27,15 +27,15 @@
                             </li>
                             <li>
                                 <label>购买价格：</label>
-                                <input type="text" name="productPrice"/>
+                                <input type="text" name="productPrice" disabled="true"/>
                             </li>
                             <li>
                                 <label>购买数量：</label>
-                                <input type="text" name="pruductAmount"/>
+                                <input type="text" name="pruductAmount" disabled="true"/>
                             </li>
                             <li>
                                 <label>下单时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择下单时间" name="orderTime"/>
+                                <input type="text" class="time-input" placeholder="请选择下单时间" name="orderTime" disabled="true"/>
                             </li>
                             <li>
                                 <label>交易方向：</label>
@@ -80,8 +80,8 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="record:transaction_record:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="record:transaction_record:export">
-                    <i class="fa fa-download"></i> HTML打印
+                <a class="btn btn-primary" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -98,6 +98,10 @@
         var orderPatternDatas = [[${@dict.getType('transaction_pattern')}]];
         var orderSituationDatas = [[${@dict.getType('transaction_situation')}]];
         var prefix = ctx + "record/transaction_record";
+
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/record/transaction_record/print");
+        }
 
         $(function() {
             var options = {
