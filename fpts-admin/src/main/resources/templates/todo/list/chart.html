@@ -13,25 +13,29 @@
 <<script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
+    var dateSet = '[[$dateSet]]';
+    var cntSet = '[[$cntSet]]';
+    console.log(dateSet);
+    console.log(cntSet);
 
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: 'ECharts 入门示例'
+            text: '待办事项截止日期统计'
         },
         tooltip: {},
         legend: {
-            data: ['销量']
+            data: ['截止待办事项个数']
         },
         xAxis: {
-            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            data: dateSet
         },
         yAxis: {},
         series: [
             {
-                name: '销量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+                name: '截止待办事项个数',
+                type: 'line',
+                data: cntSet
             }
         ]
     };
