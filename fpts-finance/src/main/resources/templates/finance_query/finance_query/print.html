@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增行情查询')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto;"></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "finance_query/finance_query";
+    var typeDatas = [[${@dict.getType('product_type')}]];
+    $(function() {
+        var options = {
+            url: prefix + "/printToHtml",
+
+            modalName: "行情查询",
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showToggle:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '编号',
+                    visible: false
+                },
+                {
+                    field: 'productId',
+                    title: '代码'
+                },
+                {
+                    field: 'name',
+                    title: '名称'
+                },
+                {
+                    field: 'type',
+                    title: '类型',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(typeDatas, value);
+                    }
+                },
+                {
+                    field: 'newPrice',
+                    title: '最新价'
+                },
+                {
+                    field: 'openPrice',
+                    title: '开盘价'
+                },
+                {
+                    field: 'yesterdayPrice',
+                    title: '昨日结算'
+                },
+                {
+                    field: 'maxPrice',
+                    title: '最高价'
+                },
+                {
+                    field: 'minPrice',
+                    title: '最低价'
+                },
+                {
+                    field: 'increase',
+                    title: '涨幅'
+                },
+                {
+                    field: 'increaseRate',
+                    title: '涨速'
+                },
+                {
+                    field: 'turnoverRate',
+                    title: '换手率'
+                },
+                // {
+                //     title: '操作',
+                //     align: 'center',
+                //     formatter: function(value, row, index) {
+                //         var actions = [];
+                //         let m = {
+                //             productId: row.productId ,
+                //             type: row.type ,
+                //         }
+                //         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="kgraph(\'' + row.productId + row.type + '\')"><i class="fa fa-line-chart"></i>K线图</a> ');
+                //         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(\'' + row.id + '\')"><i class="fa fa-jpy"></i>买入</a>');
+                //         actions.push('<a class="btn btn-info btn-xs ' +  '" href="javascript:void(0)" onclick="collect(\'' + row.productId + '\')"><i class="fa fa-star"></i>收藏</a>');
+                //         return actions.join('');
+                //     }
+                // }
+            ]
+        };
+        $.table.init(options);
+    });
+
+
+</script>
+</body>
+</html>

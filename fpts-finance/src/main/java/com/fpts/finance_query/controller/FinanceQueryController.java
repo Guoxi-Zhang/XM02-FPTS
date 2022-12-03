@@ -158,4 +158,26 @@ public class FinanceQueryController extends BaseController
     public String showChart(){
         return prefix + "/chart";
     }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(FinanceQuery financeQuery)
+    {
+//        startPage();
+        List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(financeQuery);
+
+        return getDataTable(list);
+    }
 }

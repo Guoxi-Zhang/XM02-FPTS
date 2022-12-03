@@ -40,10 +40,9 @@ public class FinGetStockDataTask {
         String time=dateFormat.format(new Date());
         System.out.println(time);
         RestTemplate restTemplate = new RestTemplate();
-        String forObject = restTemplate.getForObject("http://47.108.114.204:8080/api/public/stock_zh_b_spot_em", String.class);
+        String forObject = restTemplate.getForObject("http://47.108.114.204:8080/api/public/stock_zh_a_spot_em", String.class);
 
         JSONArray array = JSONArray.parseArray(forObject);
-        //System.out.println(array);      //到这里是对的
 
         FinanceWarehouse stock = new FinanceWarehouse();
         List<FinanceWarehouse> stocks = new ArrayList<>();
@@ -94,7 +93,13 @@ public class FinGetStockDataTask {
 //            System.out.println(stock.toString());
 //            System.out.println(financeWarehouseService.toString());
             if(null!=stock){
+                /*
                 financeWarehouseService.insertFinanceWarehouse(stock);
+                (old version)
+                */
+                FinanceWarehouse f = financeWarehouseService.selectFinanceWarehouseByProductId(stock.getProductId());
+                if(null==f) financeWarehouseService.insertFinanceWarehouse(stock);
+                financeWarehouseService.updateFinanceWarehouse2(stock);
             }
             //stocks.add(stock);
 

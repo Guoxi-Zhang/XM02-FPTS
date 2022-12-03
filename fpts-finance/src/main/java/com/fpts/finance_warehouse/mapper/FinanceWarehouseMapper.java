@@ -20,6 +20,14 @@ public interface FinanceWarehouseMapper
     public FinanceWarehouse selectFinanceWarehouseById(Integer id);
 
     /**
+     * 查询数据仓库2
+     *
+     * @param productId 数据仓库产品代码
+     * @return 数据仓库
+     */
+    public FinanceWarehouse selectFinanceWarehouseByProductId(String productId);
+
+    /**
      * 查询数据仓库列表
      * 
      * @param financeWarehouse 数据仓库
@@ -42,6 +50,9 @@ public interface FinanceWarehouseMapper
      * @return 结果
      */
     public int updateFinanceWarehouse(FinanceWarehouse financeWarehouse);
+
+    public int updateFinanceWarehouse2(FinanceWarehouse financeWarehouse);
+
 
     /**
      * 删除数据仓库

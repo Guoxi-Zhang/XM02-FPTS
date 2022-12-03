@@ -1,7 +1,8 @@
 package com.fpts.todo.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,7 +132,25 @@ public class TodoListController extends BaseController
      */
 //    @PostMapping( "/chart")
     @RequestMapping("/chart")
-    public String showChart(){
+    public String showChart(ModelMap mmap, TodoList todoList){
+        List<TodoList> list = todoListService.selectTodoListList(todoList);
+        Map<Date, Integer> map = new HashMap<Date, Integer>();
+        for(TodoList t: list){
+            Date tempDate = t.getEndTime();
+            if(map.containsKey(t.getEndTime())){
+                int cnt = map.get(tempDate);
+                map.replace(tempDate, cnt, cnt++);
+            }else{
+                map.put(t.getEndTime(), 1);
+            }
+        }
+        Object[] dateSetObj = map.keySet().toArray();
+        String[] dateSet = Arrays.copyOf(dateSetObj, dateSetObj.length, String[].class);
+        Object[] cntSetObj = map.values().toArray();
+        Integer[] cntSet = Arrays.copyOf(cntSetObj, cntSetObj.length, Integer[].class);
+
+        mmap.put("dateSet", dateSet);
+        mmap.put("cntSet", cntSet);
         return prefix + "/chart";
     }
 
