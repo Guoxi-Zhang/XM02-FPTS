@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="TradingRecord" id="TradingRecordResult">
         <result property="orderId"    column="order_id"    />
+        <result property="userId"    column="user_id"    />
         <result property="accountId"    column="account_id"    />
         <result property="productId"    column="product_id"    />
         <result property="productType"    column="product_type"    />
@@ -18,12 +19,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTradingRecordVo">
-        select order_id, account_id, product_id, product_type, product_price, pruduct_amount, order_time, order_direction, order_pattern, order_situation from trading_record
+        select order_id, user_id, account_id, product_id, product_type, product_price, pruduct_amount, order_time, order_direction, order_pattern, order_situation from trading_record
     </sql>
 
     <select id="selectTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
         <include refid="selectTradingRecordVo"/>
         <where>  
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
             <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
             <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
             <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
@@ -35,8 +37,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderSituation != null  and orderSituation != ''"> and order_situation = #{orderSituation}</if>
         </where>
     </select>
+
+    <select id="selectAStockTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
+        <include refid="selectTradingRecordVo"/>
+        <where>
+            <if test="productType != null  and productType != ''"> and product_type = '0'</if>
+        </where>
+    </select>
+
+    <select id="selectBStockTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
+        <include refid="selectTradingRecordVo"/>
+        <where>
+            <if test="productType != null  and productType != ''"> and product_type = '1'</if>
+        </where>
+    </select>
+
+    <select id="selectBondTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
+        <include refid="selectTradingRecordVo"/>
+        <where>
+            <if test="productType != null  and productType != ''"> and product_type = '2'</if>
+        </where>
+    </select>
     
-    <select id="selectTradingRecordByOrderId" parameterType="Integer" resultMap="TradingRecordResult">
+    <select id="selectTradingRecordByOrderId" parameterType="Long" resultMap="TradingRecordResult">
         <include refid="selectTradingRecordVo"/>
         where order_id = #{orderId}
     </select>
@@ -44,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertTradingRecord" parameterType="TradingRecord" useGeneratedKeys="true" keyProperty="orderId">
         insert into trading_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">user_id,</if>
             <if test="accountId != null and accountId != ''">account_id,</if>
             <if test="productId != null and productId != ''">product_id,</if>
             <if test="productType != null and productType != ''">product_type,</if>
@@ -55,6 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderSituation != null">order_situation,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">#{userId},</if>
             <if test="accountId != null and accountId != ''">#{accountId},</if>
             <if test="productId != null and productId != ''">#{productId},</if>
             <if test="productType != null and productType != ''">#{productType},</if>
@@ -70,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTradingRecord" parameterType="TradingRecord">
         update trading_record
         <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null and userId != ''">user_id = #{userId},</if>
             <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
             <if test="productId != null and productId != ''">product_id = #{productId},</if>
             <if test="productType != null and productType != ''">product_type = #{productType},</if>
@@ -83,7 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where order_id = #{orderId}
     </update>
 
-    <delete id="deleteTradingRecordByOrderId" parameterType="Integer">
+    <delete id="deleteTradingRecordByOrderId" parameterType="Long">
         delete from trading_record where order_id = #{orderId}
     </delete>
 

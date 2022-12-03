@@ -234,6 +234,7 @@
         <module>fpts-finance</module>
         <module>fpts-transaction</module>
         <module>fpts-assets</module>
+        <module>fpts-transaction</module>
     </modules>
     <packaging>pom</packaging>
 

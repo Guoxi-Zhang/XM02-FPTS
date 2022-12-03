@@ -7,7 +7,7 @@ import com.fpts.record.domain.TradingRecord;
  * 交易记录Service接口
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-02
  */
 public interface ITradingRecordService 
 {
@@ -17,11 +17,35 @@ public interface ITradingRecordService
      * @param orderId 交易记录主键
      * @return 交易记录
      */
-    public TradingRecord selectTradingRecordByOrderId(Integer orderId);
+    public TradingRecord selectTradingRecordByOrderId(Long orderId);
+
+    /**
+     * 查询A股记录列表
+     * 
+     * @param tradingRecord 交易记录
+     * @return 交易记录集合
+     */
+    public List<TradingRecord> selectAStockTradingRecordList(TradingRecord tradingRecord);
+
+    /**
+     * 查询B股记录列表
+     *
+     * @Bparam tradingRecord 交易记录
+     * @return 交易记录集合
+     */
+    public List<TradingRecord> selectBStockTradingRecordList(TradingRecord tradingRecord);
+
+    /**
+     * 查询债券交易记录列表
+     *
+     * @param tradingRecord 交易记录
+     * @return 交易记录集合
+     */
+    public List<TradingRecord> selectBondTradingRecordList(TradingRecord tradingRecord);
 
     /**
      * 查询交易记录列表
-     * 
+     *
      * @param tradingRecord 交易记录
      * @return 交易记录集合
      */
@@ -57,5 +81,5 @@ public interface ITradingRecordService
      * @param orderId 交易记录主键
      * @return 结果
      */
-    public int deleteTradingRecordByOrderId(Integer orderId);
+    public int deleteTradingRecordByOrderId(Long orderId);
 }

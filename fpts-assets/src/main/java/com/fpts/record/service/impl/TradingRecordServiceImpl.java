@@ -12,7 +12,7 @@ import com.fpts.common.core.text.Convert;
  * 交易记录Service业务层处理
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-02
  */
 @Service
 public class TradingRecordServiceImpl implements ITradingRecordService 
@@ -27,7 +27,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 交易记录
      */
     @Override
-    public TradingRecord selectTradingRecordByOrderId(Integer orderId)
+    public TradingRecord selectTradingRecordByOrderId(Long orderId)
     {
         return tradingRecordMapper.selectTradingRecordByOrderId(orderId);
     }
@@ -42,6 +42,43 @@ public class TradingRecordServiceImpl implements ITradingRecordService
     public List<TradingRecord> selectTradingRecordList(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.selectTradingRecordList(tradingRecord);
+    }
+
+    /**
+     * 查询A股交易记录列表
+     *
+     * @param tradingRecord 交易记录
+     * @return 交易记录
+     */
+    @Override
+    public List<TradingRecord> selectAStockTradingRecordList(TradingRecord tradingRecord)
+    {
+        return tradingRecordMapper.selectAStockTradingRecordList(tradingRecord);
+    }
+
+    /**
+     * 查询B股交易记录列表
+     *
+     * @param tradingRecord 交易记录
+     * @return 交易记录
+     */
+    @Override
+    public List<TradingRecord> selectBStockTradingRecordList(TradingRecord tradingRecord)
+    {
+        return tradingRecordMapper.selectBStockTradingRecordList(tradingRecord);
+    }
+
+
+    /**
+     * 查询债券交易记录列表
+     *
+     * @param tradingRecord 交易记录
+     * @return 交易记录
+     */
+    @Override
+    public List<TradingRecord> selectBondTradingRecordList(TradingRecord tradingRecord)
+    {
+        return tradingRecordMapper.selectBondTradingRecordList(tradingRecord);
     }
 
     /**
@@ -87,7 +124,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 结果
      */
     @Override
-    public int deleteTradingRecordByOrderId(Integer orderId)
+    public int deleteTradingRecordByOrderId(Long orderId)
     {
         return tradingRecordMapper.deleteTradingRecordByOrderId(orderId);
     }

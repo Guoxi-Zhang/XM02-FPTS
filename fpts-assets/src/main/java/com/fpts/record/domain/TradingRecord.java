@@ -1,6 +1,6 @@
 package com.fpts.record.domain;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -12,33 +12,37 @@ import com.fpts.common.core.domain.BaseEntity;
  * 交易记录对象 trading_record
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-02
  */
 public class TradingRecord extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 订单ID */
-    private Integer orderId;
+    private Long orderId;
+
+    /** 用户ID */
+    @Excel(name = "用户ID")
+    private String userId;
 
     /** 账户ID */
     @Excel(name = "账户ID")
     private String accountId;
 
-    /** 金融产品 */
-    @Excel(name = "金融产品")
+    /** 金融产品ID */
+    @Excel(name = "金融产品ID")
     private String productId;
 
     /** 产品类型 */
     @Excel(name = "产品类型")
     private String productType;
 
-    /** 成交价格 */
-    @Excel(name = "成交价格")
-    private BigDecimal productPrice;
+    /** 产品成交价格 */
+    @Excel(name = "产品成交价格")
+    private Double productPrice;
 
-    /** 购买数量 */
-    @Excel(name = "购买数量")
+    /** 产品成交数量 */
+    @Excel(name = "产品成交数量")
     private Integer pruductAmount;
 
     /** 下单时间 */
@@ -46,31 +50,31 @@ public class TradingRecord extends BaseEntity
     @Excel(name = "下单时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date orderTime;
 
-    /** 交易方向 */
-    @Excel(name = "交易方向")
+    /** 交易方向(0买入，1卖出) */
+    @Excel(name = "交易方向(0买入，1卖出)")
     private String orderDirection;
 
-    /** 交易方式 */
-    @Excel(name = "交易方式")
+    /** 交易方式（0实时下单，1挂单） */
+    @Excel(name = "交易方式", readConverterExp = "0=实时下单，1挂单")
     private String orderPattern;
 
-    /** 订单完成情况 */
-    @Excel(name = "订单完成情况")
+    /** 订单完成情况（0未完成，1完成） */
+    @Excel(name = "订单完成情况", readConverterExp = "0=未完成，1完成")
     private String orderSituation;
 
-    public void setOrderId(Integer orderId) 
+    public void setOrderId(Long orderId) 
     {
         this.orderId = orderId;
     }
 
-    public Integer getOrderId() 
+    public Long getOrderId() 
     {
         return orderId;
     }
-    public void setAccountId(String accountId) 
-    {
-        this.accountId = accountId;
-    }
+    public void setUserId(String userId) { this.userId = userId; }
+
+    public String getUserId() { return userId; }
+    public void setAccountId(String accountId) { this.accountId = accountId; }
 
     public String getAccountId() 
     {
@@ -94,12 +98,12 @@ public class TradingRecord extends BaseEntity
     {
         return productType;
     }
-    public void setProductPrice(BigDecimal productPrice) 
+    public void setProductPrice(Double productPrice) 
     {
         this.productPrice = productPrice;
     }
 
-    public BigDecimal getProductPrice() 
+    public Double getProductPrice() 
     {
         return productPrice;
     }
@@ -153,6 +157,7 @@ public class TradingRecord extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("orderId", getOrderId())
+            .append("userId", getUserId())
             .append("accountId", getAccountId())
             .append("productId", getProductId())
             .append("productType", getProductType())

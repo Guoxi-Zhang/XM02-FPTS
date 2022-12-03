@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 交易记录Controller
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-02
  */
 @Controller
 @RequestMapping("/record/transaction_record")
@@ -51,6 +51,45 @@ public class TradingRecordController extends BaseController
     {
         startPage();
         List<TradingRecord> list = tradingRecordService.selectTradingRecordList(tradingRecord);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询A股票交易记录列表
+     */
+    @RequiresPermissions("record:transaction_record:list")
+    @PostMapping("/AStocklist")
+    @ResponseBody
+    public TableDataInfo AStocklist(TradingRecord tradingRecord)
+    {
+        startPage();
+        List<TradingRecord> list = tradingRecordService.selectAStockTradingRecordList(tradingRecord);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询股票交易记录列表
+     */
+    @RequiresPermissions("record:transaction_record:list")
+    @PostMapping("/BStocklist")
+    @ResponseBody
+    public TableDataInfo BSTocklist(TradingRecord tradingRecord)
+    {
+        startPage();
+        List<TradingRecord> list = tradingRecordService.selectBStockTradingRecordList(tradingRecord);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询债券交易记录列表
+     */
+    @RequiresPermissions("record:transaction_record:list")
+    @PostMapping("/Bondlist")
+    @ResponseBody
+    public TableDataInfo BondTocklist(TradingRecord tradingRecord)
+    {
+        startPage();
+        List<TradingRecord> list = tradingRecordService.selectBondTradingRecordList(tradingRecord);
         return getDataTable(list);
     }
 
@@ -94,7 +133,7 @@ public class TradingRecordController extends BaseController
      */
     @RequiresPermissions("record:transaction_record:edit")
     @GetMapping("/edit/{orderId}")
-    public String edit(@PathVariable("orderId") Integer orderId, ModelMap mmap)
+    public String edit(@PathVariable("orderId") Long orderId, ModelMap mmap)
     {
         TradingRecord tradingRecord = tradingRecordService.selectTradingRecordByOrderId(orderId);
         mmap.put("tradingRecord", tradingRecord);
