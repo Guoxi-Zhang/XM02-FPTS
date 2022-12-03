@@ -163,4 +163,24 @@ public class TradingRecordController extends BaseController
     {
         return toAjax(tradingRecordService.deleteTradingRecordByOrderIds(ids));
     }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(TradingRecord tradingRecord)
+    {
+        List<TradingRecord> list = tradingRecordService.selectTradingRecordList(tradingRecord);
+        return getDataTable(list);
+    }
 }
