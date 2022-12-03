@@ -47,6 +47,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_query:finance_query:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-warning" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -62,6 +65,9 @@
         var typeDatas = [[${@dict.getType('product_type')}]];
         var prefix = ctx + "finance_query/finance_query";
 
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/finance_query/finance_query/print");
+        }
 
         function collect(pId){
             var productId=pId;
