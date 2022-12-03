@@ -2,6 +2,8 @@ package com.fpts.system.domain;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fpts.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fpts.common.core.domain.BaseEntity;
@@ -20,15 +22,19 @@ public class SysNotice extends BaseEntity
     private Long noticeId;
 
     /** 公告标题 */
+    @Excel(name = "公告标题")
     private String noticeTitle;
 
     /** 公告类型（1通知 2公告） */
+    @Excel(name = "公告类型")
     private String noticeType;
 
     /** 公告内容 */
+    @Excel(name = "公告内容")
     private String noticeContent;
 
     /** 公告状态（0正常 1关闭） */
+    @Excel(name = "公告状态")
     private String status;
 
     public Long getNoticeId()

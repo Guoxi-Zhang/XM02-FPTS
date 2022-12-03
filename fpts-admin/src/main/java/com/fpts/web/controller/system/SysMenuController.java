@@ -1,6 +1,9 @@
 package com.fpts.web.controller.system;
 
 import java.util.List;
+
+import com.fpts.common.core.page.TableDataInfo;
+import com.fpts.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +55,34 @@ public class SysMenuController extends BaseController
         Long userId = ShiroUtils.getUserId();
         List<SysMenu> menuList = menuService.selectMenuList(menu, userId);
         return menuList;
+    }
+
+    /**
+     * 导出菜单
+     */
+    @Log(title = "菜单管理", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:menu:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(SysMenu menu)
+    {
+
+        Long userId = ShiroUtils.getUserId();
+        List<SysMenu> list = menuService.selectMenuList(menu, userId);
+        ExcelUtil<SysMenu> util = new ExcelUtil<SysMenu>(SysMenu.class);
+        return util.exportExcel(list, "菜单数据");
+    }
+
+    /**
+     * 打印菜单
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysMenu menu)
+    {
+        Long userId = ShiroUtils.getUserId();
+        List<SysMenu> list = menuService.selectMenuList(menu, userId);
+        return getDataTable(list);
     }
 
     /**

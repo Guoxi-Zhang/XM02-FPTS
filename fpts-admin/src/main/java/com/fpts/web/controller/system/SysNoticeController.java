@@ -1,6 +1,8 @@
 package com.fpts.web.controller.system;
 
 import java.util.List;
+
+import com.fpts.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,32 @@ public class SysNoticeController extends BaseController
         List<SysNotice> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
     }
+
+    /**
+     * 导出公告
+     */
+    @Log(title = "通知公告", businessType = BusinessType.EXPORT)
+    @RequiresPermissions("system:notice:export")
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(SysNotice notice)
+    {
+        List<SysNotice> list = noticeService.selectNoticeList(notice);
+        ExcelUtil<SysNotice> util = new ExcelUtil<SysNotice>(SysNotice.class);
+        return util.exportExcel(list, "通知公告");
+    }
+
+    /**
+     * 打印公告
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysNotice notice)
+    {
+        List<SysNotice> list = noticeService.selectNoticeList(notice);
+        return getDataTable(list);
+    }
+
 
     /**
      * 新增公告
