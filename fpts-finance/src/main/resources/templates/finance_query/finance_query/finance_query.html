@@ -94,10 +94,8 @@
 
 
         function kgraph(m){
-            // 截取m前位
-            console.log( m.substring(0,6));
-            console.log( m.substring(6,7));
-
+            // 字符串处理，截取m前若干位
+            //这里其实不需要传参，也可以在别的地方localStorage存储
             localStorage.setItem("MyproductID", m.substring(0,6));
             localStorage.setItem("Type", m.substring(6,7));
             table.set();

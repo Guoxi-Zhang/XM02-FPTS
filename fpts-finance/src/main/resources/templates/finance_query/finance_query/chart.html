@@ -256,8 +256,14 @@
         let field = Type == 0  ?  `stock_zh_a_hist?symbol=${productId}&period=daily` : `stock_zh_b_daily?symbol=sh${productId}`;
 
         let url=null;
+        let num=productId.substring(0,1);
+        //console.log(num);
+        let city=null;
 
-        console.log(Type);
+        if(Type=='1') {
+            if(num=='9') city='sh';
+            else if (num=='2') city='sz';
+        }
 
         switch ( Type ) {
             // 情况一
@@ -266,7 +272,7 @@
                     break;
             // 情况二
             case '1':
-                url = `http://47.108.114.204:8080/api/public/stock_zh_b_daily?symbol=sh${productId}&start_date=20220601&end_date=20221201&adjust=hfq`;
+                url = `http://47.108.114.204:8080/api/public/stock_zh_b_daily?symbol=${city}${productId}&start_date=20220601&end_date=20221201&adjust=hfq`;
                     break;
 
             default:
