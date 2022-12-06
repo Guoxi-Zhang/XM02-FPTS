@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('财经新闻数据打印预览')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "finance_news/news_manage";
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+
+            modalName: "新闻管理",
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            columns: [
+                {
+                    field: 'newsId',
+                    title: '新闻id',
+                    visible: false,
+                },
+                {
+                    field: 'title',
+                    title: '标题',
+                },
+                {
+                    field: 'author',
+                    title: '作者',
+                },
+                {
+                    field: 'releaseTime',
+                    title: '发布时间',
+                },
+                {
+                    field: 'link',
+                    title: '链接'
+                },
+                {
+                    field: 'body',
+                    title: '内容'
+                },
+                {
+                    field: 'read',
+                    title: '阅读数',
+                },
+                {
+                    field: 'comment',
+                    title: '评论数',
+                },
+                ]
+        };
+        $.table.init(options);
+    });
+
+</script>
+</body>
+</html>

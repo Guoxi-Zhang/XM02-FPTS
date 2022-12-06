@@ -47,13 +47,16 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="todo:list:export">
                 <i class="fa fa-download"></i> 导出
             </a>
+            <a class="btn btn-info" onclick="printToHtml()">
+                <i class="fa fa-bars"></i> 打印HTML
+            </a>
             <!--             图表-->
             <a class="btn btn-success" onclick="todoAddChart()">
                 <i class="fa fa-bar-chart"></i> 统计图表
             </a>
         </div>
-        <div class="col-sm-12 select-table table-striped">
-            <table id="bootstrap-table"></table>
+        <div class="col-sm-12 select-table">
+            <table id="bootstrap-table" class="table table-bordered"></table>
         </div>
     </div>
 </div>
@@ -86,6 +89,11 @@
         };
         $.ajax(config);
     }
+
+    function printToHtml(){
+        $.modal.openFull(table.options.modalName + "打印", "/todo/list/print");
+    }
+
     $(function() {
         var options = {
             url: prefix + "/list",
@@ -95,6 +103,7 @@
             exportUrl: prefix + "/export",
             modalName: "待办事项",
             sortName:"state",
+            striped:true,
             columns: [{
                 checkbox: true
             },

@@ -48,6 +48,13 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_news:news_manage:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-info" onclick="printToHtml()">
+                    <i class="fa fa-bars"></i> 打印HTML
+                </a>
+                <!--             图表-->
+                <a class="btn btn-success" onclick="newsAddChart()">
+                    <i class="fa fa-bar-chart"></i> 统计图表
+                </a>
             </div>
             <div class="col-sm-12 select-table">
                 <table id="bootstrap-table" class="table table-bordered"></table>
@@ -61,6 +68,13 @@
         var prefix = ctx + "finance_news/news_manage";
         function openNewsURL(newsURL){
             $.modal.openTab("新闻原文阅读", newsURL);
+        }
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/finance_news/news_manage/print");
+        }
+
+        function newsAddChart(){
+            $.modal.open(table.options.modalName + "统计图表", "/finance_news/news_manage/chart");
         }
         $(function() {
             var options = {

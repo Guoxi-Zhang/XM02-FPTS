@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('待办事项图表')" />
+    <th:block th:include="include :: header('财经新闻图表')" />
     <th:block th:include="include :: datetimepicker-css" />
     <!-- bootstrap-table 表格插件样式 -->
 
@@ -22,20 +22,20 @@
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '待办事项截止日期统计'
+            text: '财经新闻发布日期统计'
         },
         tooltip: {},
         legend: {
-            data: ['截止待办事项个数']
+            data: ['发布新闻个数']
         },
         xAxis: {
-            name: '截止日期',
+            name: '发布日期',
             data: dateList
         },
         yAxis: {},
         series: [
             {
-                name: '截止待办事项个数',
+                name: '发布新闻个数',
                 type: 'line',
                 data: cntList
             }

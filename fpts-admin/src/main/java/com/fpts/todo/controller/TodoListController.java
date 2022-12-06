@@ -161,6 +161,16 @@ public class TodoListController extends BaseController
         return prefix + "/chart";
     }
 
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+
     @PostMapping("/complete/{id}")
     @ResponseBody
     public AjaxResult toItemComplete(@PathVariable("id") Long id){
