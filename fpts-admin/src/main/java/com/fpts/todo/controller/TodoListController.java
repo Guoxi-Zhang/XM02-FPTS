@@ -1,8 +1,10 @@
 package com.fpts.todo.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.fpts.framework.web.domain.server.Sys;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -132,27 +134,42 @@ public class TodoListController extends BaseController
      */
 //    @PostMapping( "/chart")
     @RequestMapping("/chart")
-    public String showChart(ModelMap mmap, TodoList todoList){
-        List<TodoList> list = todoListService.selectTodoListList(todoList);
-        Map<Date, Integer> map = new HashMap<Date, Integer>();
+    public String showChart(ModelMap mmap){
+        List<TodoList> list = todoListService.selectTodoListList( new TodoList());
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+        Map<String, Integer> map = new TreeMap<String, Integer>();
         for(TodoList t: list){
             Date tempDate = t.getEndTime();
-            if(map.containsKey(t.getEndTime())){
-                int cnt = map.get(tempDate);
-                map.replace(tempDate, cnt, cnt++);
+            String date = dateformat.format(tempDate);
+
+            if(map.containsKey(date)){
+                int cnt = map.get(date);
+                map.replace(date, cnt, cnt + 1);
             }else{
-                map.put(t.getEndTime(), 1);
+                map.put(date, 1);
             }
         }
-        Object[] dateSetObj = map.keySet().toArray();
-        String[] dateSet = Arrays.copyOf(dateSetObj, dateSetObj.length, String[].class);
-        Object[] cntSetObj = map.values().toArray();
-        Integer[] cntSet = Arrays.copyOf(cntSetObj, cntSetObj.length, Integer[].class);
+        String[] dateSet = map.keySet().toArray(new String[0]);
+        List<String> dateList=Arrays.asList(dateSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
 
-        mmap.put("dateSet", dateSet);
-        mmap.put("cntSet", cntSet);
+        System.out.println(dateList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("dateList", dateList);
+        mmap.put("cntList", cntList);
         return prefix + "/chart";
     }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
 
     @PostMapping("/complete/{id}")
     @ResponseBody

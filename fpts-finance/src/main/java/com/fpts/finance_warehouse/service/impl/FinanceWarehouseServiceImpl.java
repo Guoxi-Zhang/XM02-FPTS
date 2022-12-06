@@ -125,4 +125,24 @@ public class FinanceWarehouseServiceImpl implements IFinanceWarehouseService
     {
         return financeWarehouseMapper.deleteFinanceWarehouseById(id);
     }
+
+
+    /**
+     * 查询产品收藏列表
+     *
+     * @param financeWarehouse 数据仓库
+     * @return 数据仓库
+     */
+    @Override
+    public List<FinanceWarehouse> selectFinanceWarehouseListTocoll(FinanceWarehouse financeWarehouse)
+    {
+        //return financeWarehouseMapper.selectFinanceWarehouseList(financeWarehouse);
+        List<FinanceWarehouse> list = financeWarehouseMapper.selectFinanceWarehouseListTocoll(financeWarehouse);
+        return list;
+    }
+
 }
+
+
+
+

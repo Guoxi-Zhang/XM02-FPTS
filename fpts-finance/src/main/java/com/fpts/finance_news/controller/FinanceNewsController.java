@@ -1,6 +1,8 @@
 package com.fpts.finance_news.controller;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,5 +125,42 @@ public class FinanceNewsController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(financeNewsService.deleteFinanceNewsByNewsIds(ids));
+    }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    @RequestMapping("/chart")
+    public String showChart(ModelMap mmap){
+        List<FinanceNews> list = financeNewsService.selectFinanceNewsList( new FinanceNews());
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+        for(FinanceNews f: list){
+            Date tempDate = f.getReleaseTime();
+            String date = dateformat.format(tempDate);
+
+            if(map.containsKey(date)){
+                int cnt = map.get(date);
+                map.replace(date, cnt, cnt + 1);
+            }else{
+                map.put(date, 1);
+            }
+        }
+        String[] dateSet = map.keySet().toArray(new String[0]);
+        List<String> dateList= Arrays.asList(dateSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
+
+        System.out.println(dateList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("dateList", dateList);
+        mmap.put("cntList", cntList);
+        return prefix + "/chart";
     }
 }

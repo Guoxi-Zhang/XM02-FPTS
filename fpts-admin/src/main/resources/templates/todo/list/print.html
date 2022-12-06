@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('待办事项数据打印预览')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "todo/list";
+
+    var stateDatas = [[${@dict.getType('todo_state')}]];
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            modalName: "待办事项",
+            sortName:"state",
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            columns: [
+                {
+                    field: 'id',
+                    title: '编号',
+                    visible: false
+                },
+                {
+                    field: 'task',
+                    title: '任务'
+                },
+                {
+                    field: 'endTime',
+                    title: '截止日期'
+                },
+                {
+                    field: 'state',
+                    title: '状态',
+                    formatter: function(value, row, index) {
+                        return $.table.selectDictLabel(stateDatas, value);
+                    }
+                },
+                {
+                    field: 'detail',
+                    title: '细节'
+                },
+                ]
+        };
+        $.table.init(options);
+
+    });
+</script>
+</body>
+</html>

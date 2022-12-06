@@ -11,19 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>代码：</label>
+                                <label>产品代码：</label>
                                 <input type="text" name="productId"/>
                             </li>
                             <li>
-                                <label>名称：</label>
-                                <input type="text" name="name"/>
-                            </li>
-                            <li>
-                                <label>类型：</label>
-                                <select name="type" th:with="type=${@dict.getType('product_type')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <label>用户ID：</label>
+                                <input type="text" name="userId"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -47,9 +40,6 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_collection:collection:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-                <a class="btn btn-success" onclick="warehouseAddChart()" >
-                    <i class="fa fa-bar-chart"></i> 统计图表
-                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -60,14 +50,8 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('finance_collection:collection:edit')}]];
         var removeFlag = [[${@permission.hasPermi('finance_collection:collection:remove')}]];
-        var typeDatas = [[${@dict.getType('product_type')}]];
         var prefix = ctx + "finance_collection/collection";
 
-        function warehouseAddChart() {
-            table.set();
-
-            $.modal.open(table.options.modalName + "统计图表", "/finance_warehouse/finance_warehouse/chart");
-        }
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -85,65 +69,12 @@
                     visible: false
                 },
                 {
-                    field: 'userId',
-                    title: '收藏用户',
-                    visible: true
-                },
-                {
                     field: 'productId',
-                    title: '代码',
-                    sortable: true
+                    title: '产品代码'
                 },
                 {
-                    field: 'name',
-                    title: '名称',
-                    sortable: true
-                },
-                {
-                    field: 'type',
-                    title: '类型',
-                    sortable: true,
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(typeDatas, value);
-                    }
-                },
-                {
-                    field: 'newPrice',
-                    title: '最新价',
-                    sortable: true
-                },
-                {
-                    field: 'openPrice',
-                    title: '开盘价'
-                },
-                {
-                    field: 'yesterdayPrice',
-                    title: '昨日结算'
-                },
-                {
-                    field: 'maxPrice',
-                    title: '最高价',
-                    sortable: true
-                },
-                {
-                    field: 'minPrice',
-                    title: '最低价',
-                    sortable: true
-                },
-                {
-                    field: 'increase',
-                    title: '涨幅',
-                    sortable: true
-                },
-                {
-                    field: 'increaseRate',
-                    title: '涨速',
-                    sortable: true
-                },
-                {
-                    field: 'turnoverRate',
-                    title: '换手率',
-                    sortable: true
+                    field: 'userId',
+                    title: '用户ID'
                 },
                 {
                     title: '操作',

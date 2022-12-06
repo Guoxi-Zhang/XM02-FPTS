@@ -35,7 +35,7 @@ public interface IFinanceWarehouseService
      * @return 数据仓库集合
      */
     public List<FinanceWarehouse> selectFinanceWarehouseList(FinanceWarehouse financeWarehouse);
-
+    public List<FinanceWarehouse> selectFinanceWarehouseListTocoll(FinanceWarehouse financeWarehouse);
     /**
      * 新增数据仓库
      * 
@@ -68,4 +68,7 @@ public interface IFinanceWarehouseService
      * @return 结果
      */
     public int deleteFinanceWarehouseById(Integer id);
+
+
+
 }
