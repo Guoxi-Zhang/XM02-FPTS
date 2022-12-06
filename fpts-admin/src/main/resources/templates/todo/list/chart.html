@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增待办事项')" />
+    <th:block th:include="include :: header('待办事项图表')" />
     <th:block th:include="include :: datetimepicker-css" />
     <!-- bootstrap-table 表格插件样式 -->
 
 </head>
 <body class="white-bg">
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-<div id="main" style="width: 600px;height:400px;"></div>
+<div id="main" style="width: 800px;height:500px;"></div>
 <script th:src="@{/js/echarts.js}"></script>
-<<script type="text/javascript">
+<script th:inline="javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
-    var dateSet = '[[$dateSet]]';
-    var cntSet = '[[$cntSet]]';
-    console.log(dateSet);
-    console.log(cntSet);
+    var cntList = [[${cntList}]];
+    console.log(cntList);
+
+    var dateList = [[${dateList}]];
+    console.log(dateList);
 
     // 指定图表的配置项和数据
     var option = {
@@ -28,14 +29,14 @@
             data: ['截止待办事项个数']
         },
         xAxis: {
-            data: dateSet
+            data: dateList
         },
         yAxis: {},
         series: [
             {
                 name: '截止待办事项个数',
                 type: 'line',
-                data: cntSet
+                data: cntList
             }
         ]
     };
