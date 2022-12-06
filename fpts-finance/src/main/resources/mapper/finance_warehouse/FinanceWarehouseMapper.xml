@@ -17,6 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="increase"    column="increase"    />
         <result property="increaseRate"    column="increase_rate"    />
         <result property="turnoverRate"    column="turnover_rate"    />
+        <result property="userId"    column="userId"    />
+
     </resultMap>
 
     <sql id="selectFinanceWarehouseVo">
@@ -119,5 +121,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+
+    <select id="selectFinanceWarehouseListTocoll" parameterType="FinanceWarehouse" resultMap="FinanceWarehouseResult">
+        SELECT su.user_id as userId, fs.* from finance_collection  fc left join sys_user su  on fc.user_id = su.user_id
+        LEFT JOIN  finance_summary fs  on fc.product_id = fs.product_id
+        <where>
+            <if test="productId != null  and productId != ''"> and fs.product_id = #{productId}</if>
+            <if test="name != null  and name != ''"> and fs.name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and fs.type = #{type}</if>
+        </where>
+    </select>
 
 </mapper>

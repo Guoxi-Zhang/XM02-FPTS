@@ -1,6 +1,9 @@
 package com.fpts.finance_collection.controller;
 
 import java.util.List;
+
+import com.fpts.finance_warehouse.domain.FinanceWarehouse;
+import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,8 @@ public class FinanceCollectionController extends BaseController
     @Autowired
     private IFinanceCollectionService financeCollectionService;
 
+    @Autowired
+    private IFinanceWarehouseService financeWarehouseServiceImpl;
     @RequiresPermissions("finance_collection:collection:view")
     @GetMapping()
     public String collection()
@@ -47,10 +52,10 @@ public class FinanceCollectionController extends BaseController
     @RequiresPermissions("finance_collection:collection:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(FinanceCollection financeCollection)
+    public TableDataInfo list(FinanceWarehouse financeCollection)
     {
         startPage();
-        List<FinanceCollection> list = financeCollectionService.selectFinanceCollectionList(financeCollection);
+        List<FinanceWarehouse> list = financeWarehouseServiceImpl.selectFinanceWarehouseListTocoll(financeCollection);
         return getDataTable(list);
     }
 

@@ -69,4 +69,6 @@ public interface FinanceWarehouseMapper
      * @return 结果
      */
     public int deleteFinanceWarehouseByIds(String[] ids);
+
+    List<FinanceWarehouse> selectFinanceWarehouseListTocoll(FinanceWarehouse financeWarehouse);
 }

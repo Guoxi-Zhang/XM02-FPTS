@@ -63,7 +63,17 @@ public class FinanceWarehouse extends BaseEntity
     @Excel(name = "换手率")
     private Double turnoverRate;
 
-    public void setId(Integer id) 
+    private Integer userId ;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public void setId(Integer id)
     {
         this.id = id;
     }
