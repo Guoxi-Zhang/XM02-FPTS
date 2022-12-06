@@ -85,6 +85,11 @@
             <artifactId>fpts-transaction</artifactId>
         </dependency>
 
+        <!-- 银行账户管理-->
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-bank</artifactId>
+        </dependency>
 
     </dependencies>
 
