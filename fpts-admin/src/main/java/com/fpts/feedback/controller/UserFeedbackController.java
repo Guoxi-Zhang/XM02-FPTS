@@ -1,6 +1,7 @@
 package com.fpts.feedback.controller;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.fpts.todo.domain.TodoList;
 import com.fpts.weathers.domain.CityWeather;
@@ -154,16 +155,31 @@ public class UserFeedbackController extends BaseController
      */
 //    @PostMapping( "/chart")
     @RequestMapping("/feedbackchart")
-    public String showChart(){
-        return prefix + "/feedbackchart";
-    }
+    public String showChart(ModelMap mmap){
+        List<UserFeedback> list = userFeedbackService.selectUserFeedbackList( new UserFeedback());
+       SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+        for( UserFeedback t: list){
+            Date tempDate = t.getUserFeedbackCreatetime();
+            String date = dateformat.format(tempDate);
 
-    @PostMapping("/complete/{userFeedbackId}")
-    @ResponseBody
-    public AjaxResult toItemComplete(@PathVariable("userFeedbackId") Long userFeedbackId){
-        UserFeedback userFeedback = userFeedbackService.selectUserFeedbackByUserFeedbackId(userFeedbackId);
-        //userFeedback.setState("1");
-        return toAjax(userFeedbackService.updateUserFeedback(userFeedback));
+            if(map.containsKey(date)){
+                int cnt = map.get(date);
+                map.replace(date, cnt, cnt + 1);
+            }else{
+                map.put(date, 1);
+            }
+        }
+        String[] dateSet = map.keySet().toArray(new String[0]);
+        List<String> dateList= Arrays.asList(dateSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
+
+        System.out.println(dateList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("dateList", dateList);
+        mmap.put("cntList", cntList);
+        return prefix + "/feedbackchart";
     }
 
 }

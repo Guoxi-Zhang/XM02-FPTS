@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增反馈')" />
+    <th:block th:include="include :: header('用户反馈图表')" />
     <th:block th:include="include :: datetimepicker-css" />
     <!-- bootstrap-table 表格插件样式 -->
 
@@ -10,28 +10,33 @@
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
 <div id="main" style="width: 800px;height:500px;"></div>
 <script th:src="@{/js/echarts.js}"></script>
-<<script type="text/javascript">
+<script th:inline="javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
+    var cntList = [[${cntList}]];
+    console.log(cntList);
+
+    var dateList = [[${dateList}]];
+    console.log(dateList);
 
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '用户反馈表'
+            text: '用户反馈创建时间统计'
         },
         tooltip: {},
         legend: {
-            data: ['反馈数']
+            data: ['用户反馈个数']
         },
         xAxis: {
-            data: ['0：00-8：00', '8：00-16：00', '16：00-24：00', ]
+            data: dateList
         },
         yAxis: {},
         series: [
             {
-                name: '反馈数',
-                type: 'bar',
-                data: [5, 6, 3, ]
+                name: '截止反馈个数',
+                type: 'line',
+                data: cntList
             }
         ]
     };
