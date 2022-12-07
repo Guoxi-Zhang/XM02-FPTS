@@ -151,7 +151,7 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(\'' + row.id + '\')"><i class="fa fa-jpy"></i>买入</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(' + row.productId + ',' + row.newPrice + ',' + row.type + ')"><i class="fa fa-jpy"></i>买入</a>');
                         actions.push('<a class="btn btn-info btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>取消收藏</a>');
                         return actions.join('');
                     }
@@ -159,6 +159,17 @@
             };
             $.table.init(options);
         });
+
+        function buy(pid, newprice, type) {
+            localStorage.setItem("productId", pid);
+            localStorage.setItem("productPrice", newprice);
+            localStorage.setItem("productType", type);
+            console.log(pid);
+            console.log(newprice);
+            console.log(type);
+            table.set();
+            $.modal.open(table.options.modalName + "新增交易", "/finance_query/finance_query/addTransactionRecord")
+        }
     </script>
 </body>
 </html>

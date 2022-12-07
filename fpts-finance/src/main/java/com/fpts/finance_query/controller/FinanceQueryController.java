@@ -1,13 +1,19 @@
 package com.fpts.finance_query.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import com.fpts.common.utils.security.PermissionUtils;
 import com.fpts.finance_collection.domain.FinanceCollection;
 import com.fpts.finance_collection.service.IFinanceCollectionService;
+import com.fpts.record.domain.TradingRecord;
+import com.fpts.record.service.ITradingRecordService;
+import org.apache.ibatis.transaction.Transaction;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -46,6 +52,8 @@ public class FinanceQueryController extends BaseController
     private IFinanceQueryService financeQueryService;
     @Autowired
     private IFinanceCollectionService financeCollectionService;
+    @Autowired
+    private ITradingRecordService tradingRecordService;
 
     @RequiresPermissions("finance_query:finance_query:view")
     @GetMapping()
@@ -149,6 +157,23 @@ public class FinanceQueryController extends BaseController
         System.out.println(productId);
         financeCollection = new FinanceCollection(userId, productId);
         return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
+    }
+
+    @GetMapping("/addTransactionRecord")
+    public String addTransactionRecord()
+    {
+        return prefix + "/addTransactionRecord";
+    }
+
+    /**
+     * 新增交易记录
+    */
+    @RequiresPermissions("finance_query:finance_query:addaddTransactionRecord")
+    @Log(title = "交易记录", businessType = BusinessType.INSERT)
+    @PostMapping("/addTransactionRecord")
+    @ResponseBody
+    public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
 
     /**

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
 import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
+import com.fpts.record.domain.TradingRecord;
+import com.fpts.record.service.ITradingRecordService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.utils.poi.ExcelUtil;
 import com.fpts.common.core.page.TableDataInfo;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.springframework.core.annotation.AliasFor;
 
 /**
  * 产品收藏Controller
@@ -39,6 +44,9 @@ public class FinanceCollectionController extends BaseController
 
     @Autowired
     private IFinanceWarehouseService financeWarehouseServiceImpl;
+
+    @Autowired
+    private ITradingRecordService tradingRecordService;
 
     @RequiresPermissions("finance_collection:collection:view")
     @GetMapping()
@@ -129,5 +137,22 @@ public class FinanceCollectionController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(financeCollectionService.deleteFinanceCollectionByIds(ids));
+    }
+
+    @GetMapping("/addTransactionRecord")
+    public String addTransactionRecord()
+    {
+        return prefix + "/addTransactionRecord";
+    }
+
+    /**
+     * 新增交易记录
+     */
+    @RequiresPermissions("finance_collection:collection:addaddTransactionRecord")
+    @Log(title = "交易记录", businessType = BusinessType.INSERT)
+    @PostMapping("/addTransactionRecord")
+    @ResponseBody
+    public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
 }

@@ -16,6 +16,10 @@
             <groupId>com.fpts</groupId>
             <artifactId>fpts-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-assets</artifactId>
+        </dependency>
 
     </dependencies>
 
