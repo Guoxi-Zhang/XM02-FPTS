@@ -14,10 +14,10 @@ public interface AccountInfoMapper
     /**
      * 查询银行账户管理
      * 
-     * @param userId 银行账户管理主键
+     * @param id 银行账户管理主键
      * @return 银行账户管理
      */
-    public AccountInfo selectAccountInfoByUserId(Long userId);
+    public AccountInfo selectAccountInfoById(Long id);
 
     /**
      * 查询银行账户管理列表
@@ -46,16 +46,16 @@ public interface AccountInfoMapper
     /**
      * 删除银行账户管理
      * 
-     * @param userId 银行账户管理主键
+     * @param id 银行账户管理主键
      * @return 结果
      */
-    public int deleteAccountInfoByUserId(Long userId);
+    public int deleteAccountInfoById(Long id);
 
     /**
      * 批量删除银行账户管理
      * 
-     * @param userIds 需要删除的数据主键集合
+     * @param ids 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAccountInfoByUserIds(String[] userIds);
+    public int deleteAccountInfoByIds(String[] ids);
 }

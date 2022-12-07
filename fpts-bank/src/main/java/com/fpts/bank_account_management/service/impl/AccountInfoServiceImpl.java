@@ -23,13 +23,13 @@ public class AccountInfoServiceImpl implements IAccountInfoService
     /**
      * 查询银行账户管理
      * 
-     * @param userId 银行账户管理主键
+     * @param id 银行账户管理主键
      * @return 银行账户管理
      */
     @Override
-    public AccountInfo selectAccountInfoByUserId(Long userId)
+    public AccountInfo selectAccountInfoById(Long id)
     {
-        return accountInfoMapper.selectAccountInfoByUserId(userId);
+        return accountInfoMapper.selectAccountInfoById(id);
     }
 
     /**
@@ -71,24 +71,24 @@ public class AccountInfoServiceImpl implements IAccountInfoService
     /**
      * 批量删除银行账户管理
      * 
-     * @param userIds 需要删除的银行账户管理主键
+     * @param ids 需要删除的银行账户管理主键
      * @return 结果
      */
     @Override
-    public int deleteAccountInfoByUserIds(String userIds)
+    public int deleteAccountInfoByIds(String ids)
     {
-        return accountInfoMapper.deleteAccountInfoByUserIds(Convert.toStrArray(userIds));
+        return accountInfoMapper.deleteAccountInfoByIds(Convert.toStrArray(ids));
     }
 
     /**
      * 删除银行账户管理信息
      * 
-     * @param userId 银行账户管理主键
+     * @param id 银行账户管理主键
      * @return 结果
      */
     @Override
-    public int deleteAccountInfoByUserId(Long userId)
+    public int deleteAccountInfoById(Long id)
     {
-        return accountInfoMapper.deleteAccountInfoByUserId(userId);
+        return accountInfoMapper.deleteAccountInfoById(id);
     }
 }

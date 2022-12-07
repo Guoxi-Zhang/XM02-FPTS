@@ -93,10 +93,10 @@ public class AccountInfoController extends BaseController
      * 修改银行账户管理
      */
     @RequiresPermissions("bank_account_management:manage:edit")
-    @GetMapping("/edit/{userId}")
-    public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
-        AccountInfo accountInfo = accountInfoService.selectAccountInfoByUserId(userId);
+        AccountInfo accountInfo = accountInfoService.selectAccountInfoById(id);
         mmap.put("accountInfo", accountInfo);
         return prefix + "/edit";
     }
@@ -122,6 +122,6 @@ public class AccountInfoController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(accountInfoService.deleteAccountInfoByUserIds(ids));
+        return toAjax(accountInfoService.deleteAccountInfoByIds(ids));
     }
 }

@@ -18,6 +18,9 @@ public class AccountInfo extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    /** id */
+    private Long id;
+
     /** 用户ID */
     @Excel(name = "用户ID")
     private Long userId;
@@ -60,6 +63,15 @@ public class AccountInfo extends BaseEntity
     @Excel(name = "账户最后一次使用时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date accountLastUsedTime;
 
+    public void setId(Long id) 
+    {
+        this.id = id;
+    }
+
+    public Long getId() 
+    {
+        return id;
+    }
     public void setUserId(Long userId) 
     {
         this.userId = userId;
@@ -154,6 +166,7 @@ public class AccountInfo extends BaseEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("id", getId())
             .append("userId", getUserId())
             .append("accountId", getAccountId())
             .append("accountType", getAccountType())
