@@ -39,6 +39,7 @@ public class FinanceCollectionController extends BaseController
 
     @Autowired
     private IFinanceWarehouseService financeWarehouseServiceImpl;
+
     @RequiresPermissions("finance_collection:collection:view")
     @GetMapping()
     public String collection()

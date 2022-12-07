@@ -124,7 +124,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="selectFinanceWarehouseListTocoll" parameterType="FinanceWarehouse" resultMap="FinanceWarehouseResult">
-        SELECT su.user_id as userId, fs.* from finance_collection  fc left join sys_user su  on fc.user_id = su.user_id
+        SELECT fc.id as id, fc.user_id as userId,
+        fs.product_id, fs.`name`, fs.type, fs.new_price, fs.open_price, fs.yesterday_price, fs.max_price, fs.min_price, fs.increase, fs.increase_rate, fs.turnover_rate
+        from finance_collection fc
         LEFT JOIN  finance_summary fs  on fc.product_id = fs.product_id
         <where>
             <if test="productId != null  and productId != ''"> and fs.product_id = #{productId}</if>
