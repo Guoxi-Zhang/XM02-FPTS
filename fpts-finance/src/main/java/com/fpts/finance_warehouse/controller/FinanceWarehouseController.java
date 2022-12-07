@@ -1,6 +1,9 @@
 package com.fpts.finance_warehouse.controller;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import com.fpts.finance_news.domain.FinanceNews;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -129,7 +132,30 @@ public class FinanceWarehouseController extends BaseController
      * 统计报表
      */
     @RequestMapping("/chart")
-    public String showChart(){
+
+    public String showChart(ModelMap mmap){
+        List<FinanceWarehouse> list = financeWarehouseService.selectFinanceWarehouseList(new FinanceWarehouse());
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+
+        for(FinanceWarehouse f: list){
+            String type = f.getType();
+
+            if(map.containsKey(type)){
+                int cnt = map.get(type);
+                map.replace(type, cnt, cnt + 1);
+            }else{
+                map.put(type, 1);
+            }
+        }
+        String[] typeSet = map.keySet().toArray(new String[0]);
+        List<String> typeList= Arrays.asList(typeSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
+
+        System.out.println(typeList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("typeList", typeList);
+        mmap.put("cntList", cntList);
         return prefix + "/chart";
     }
 }

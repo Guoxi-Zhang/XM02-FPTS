@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增金融信息图表')" />
+    <th:block th:include="include :: header('金融信息图表')" />
     <th:block th:include="include :: datetimepicker-css" />
     <!-- bootstrap-table 表格插件样式 -->
 
 </head>
 <body class="white-bg">
 <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
-<div id="main" style="width: 600px;height:400px;"></div>
+<div id="main" style="width: 800px;height:500px;"></div>
 <script th:src="@{/js/echarts.js}"></script>
 
 <<script type="text/javascript">
@@ -16,24 +16,33 @@
     //var chartDom = document.getElementById('quotations-count-container');
     var myChart = echarts.init(document.getElementById('main'));
 
+    let cntList = [[${cntList}]];
+    console.log(cntList);
+
+    let typeList = [[${typeList}]];
+    console.log(typeList);
+
+
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '数据仓库更新时间图'
+            text: '数据仓库分类统计图'
         },
         tooltip: {},
         legend: {
-            data: ['销量']
+            data: ['产品数量']
         },
         xAxis: {
-            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            //data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            name: '产品种类',
+            data: ['A股','B股','债券','基金']
         },
         yAxis: {},
         series: [
             {
-                name: '销量',
+                name: '产品数量',
                 type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
+                data: cntList
             }
         ]
     };
