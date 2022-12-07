@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.bank_account_management.mapper.AccountInfoMapper">
+    
+    <resultMap type="AccountInfo" id="AccountInfoResult">
+        <result property="userId"    column="user_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="accountType"    column="account_type"    />
+        <result property="accountStatus"    column="account_status"    />
+        <result property="accountSuspendReason"    column="account_suspend_reason"    />
+        <result property="accountDailyTransactionLimit"    column="account_daily_transaction_limit"    />
+        <result property="accountBalance"    column="account_balance"    />
+        <result property="accountBalanceUnit"    column="account_balance_unit"    />
+        <result property="accountCreateTime"    column="account_create_time"    />
+        <result property="accountLastUsedTime"    column="account_last_used_time"    />
+    </resultMap>
+
+    <sql id="selectAccountInfoVo">
+        select user_id, account_id, account_type, account_status, account_suspend_reason, account_daily_transaction_limit, account_balance, account_balance_unit, account_create_time, account_last_used_time from account_info
+    </sql>
+
+    <select id="selectAccountInfoList" parameterType="AccountInfo" resultMap="AccountInfoResult">
+        <include refid="selectAccountInfoVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="accountType != null  and accountType != ''"> and account_type = #{accountType}</if>
+            <if test="accountStatus != null  and accountStatus != ''"> and account_status = #{accountStatus}</if>
+            <if test="accountSuspendReason != null  and accountSuspendReason != ''"> and account_suspend_reason = #{accountSuspendReason}</if>
+            <if test="accountDailyTransactionLimit != null "> and account_daily_transaction_limit = #{accountDailyTransactionLimit}</if>
+            <if test="accountBalance != null "> and account_balance = #{accountBalance}</if>
+            <if test="accountBalanceUnit != null  and accountBalanceUnit != ''"> and account_balance_unit = #{accountBalanceUnit}</if>
+            <if test="accountCreateTime != null "> and account_create_time = #{accountCreateTime}</if>
+            <if test="accountLastUsedTime != null "> and account_last_used_time = #{accountLastUsedTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectAccountInfoByUserId" parameterType="Long" resultMap="AccountInfoResult">
+        <include refid="selectAccountInfoVo"/>
+        where user_id = #{userId}
+    </select>
+        
+    <insert id="insertAccountInfo" parameterType="AccountInfo">
+        insert into account_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="accountId != null and accountId != ''">account_id,</if>
+            <if test="accountType != null and accountType != ''">account_type,</if>
+            <if test="accountStatus != null and accountStatus != ''">account_status,</if>
+            <if test="accountSuspendReason != null and accountSuspendReason != ''">account_suspend_reason,</if>
+            <if test="accountDailyTransactionLimit != null">account_daily_transaction_limit,</if>
+            <if test="accountBalance != null">account_balance,</if>
+            <if test="accountBalanceUnit != null and accountBalanceUnit != ''">account_balance_unit,</if>
+            <if test="accountCreateTime != null">account_create_time,</if>
+            <if test="accountLastUsedTime != null">account_last_used_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="accountType != null and accountType != ''">#{accountType},</if>
+            <if test="accountStatus != null and accountStatus != ''">#{accountStatus},</if>
+            <if test="accountSuspendReason != null and accountSuspendReason != ''">#{accountSuspendReason},</if>
+            <if test="accountDailyTransactionLimit != null">#{accountDailyTransactionLimit},</if>
+            <if test="accountBalance != null">#{accountBalance},</if>
+            <if test="accountBalanceUnit != null and accountBalanceUnit != ''">#{accountBalanceUnit},</if>
+            <if test="accountCreateTime != null">#{accountCreateTime},</if>
+            <if test="accountLastUsedTime != null">#{accountLastUsedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAccountInfo" parameterType="AccountInfo">
+        update account_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
+            <if test="accountType != null and accountType != ''">account_type = #{accountType},</if>
+            <if test="accountStatus != null and accountStatus != ''">account_status = #{accountStatus},</if>
+            <if test="accountSuspendReason != null and accountSuspendReason != ''">account_suspend_reason = #{accountSuspendReason},</if>
+            <if test="accountDailyTransactionLimit != null">account_daily_transaction_limit = #{accountDailyTransactionLimit},</if>
+            <if test="accountBalance != null">account_balance = #{accountBalance},</if>
+            <if test="accountBalanceUnit != null and accountBalanceUnit != ''">account_balance_unit = #{accountBalanceUnit},</if>
+            <if test="accountCreateTime != null">account_create_time = #{accountCreateTime},</if>
+            <if test="accountLastUsedTime != null">account_last_used_time = #{accountLastUsedTime},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteAccountInfoByUserId" parameterType="Long">
+        delete from account_info where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteAccountInfoByUserIds" parameterType="String">
+        delete from account_info where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+</mapper>

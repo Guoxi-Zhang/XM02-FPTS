@@ -220,6 +220,12 @@
                 <version>${fpts.version}</version>
             </dependency>
 
+            <!-- 银行账户管理-->
+            <dependency>
+                <groupId>com.fpts</groupId>
+                <artifactId>fpts-bank</artifactId>
+                <version>${fpts.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -234,6 +240,7 @@
         <module>fpts-finance</module>
         <module>fpts-transaction</module>
         <module>fpts-assets</module>
+        <module>fpts-bank</module>
     </modules>
     <packaging>pom</packaging>
 
