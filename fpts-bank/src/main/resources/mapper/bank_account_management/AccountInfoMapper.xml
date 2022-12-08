@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="AccountInfo" id="AccountInfoResult">
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
         <result property="accountId"    column="account_id"    />
         <result property="accountType"    column="account_type"    />
         <result property="accountStatus"    column="account_status"    />
@@ -19,13 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAccountInfoVo">
-        select id, user_id, account_id, account_type, account_status, account_suspend_reason, account_daily_transaction_limit, account_balance, account_balance_unit, account_create_time, account_last_used_time from account_info
+        select id, user_id, dept_id, account_id, account_type, account_status, account_suspend_reason, account_daily_transaction_limit, account_balance, account_balance_unit, account_create_time, account_last_used_time from account_info
     </sql>
 
     <select id="selectAccountInfoList" parameterType="AccountInfo" resultMap="AccountInfoResult">
         <include refid="selectAccountInfoVo"/>
-        <where>  
+        <where> 1=1
             <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
             <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
             <if test="accountType != null  and accountType != ''"> and account_type = #{accountType}</if>
             <if test="accountStatus != null  and accountStatus != ''"> and account_status = #{accountStatus}</if>
@@ -36,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="accountCreateTime != null "> and account_create_time = #{accountCreateTime}</if>
             <if test="accountLastUsedTime != null "> and account_last_used_time = #{accountLastUsedTime}</if>
         </where>
+        ${params.dataScope}
     </select>
     
     <select id="selectAccountInfoById" parameterType="Long" resultMap="AccountInfoResult">
@@ -47,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into account_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
             <if test="accountId != null and accountId != ''">account_id,</if>
             <if test="accountType != null and accountType != ''">account_type,</if>
             <if test="accountStatus != null and accountStatus != ''">account_status,</if>
@@ -59,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
             <if test="accountId != null and accountId != ''">#{accountId},</if>
             <if test="accountType != null and accountType != ''">#{accountType},</if>
             <if test="accountStatus != null and accountStatus != ''">#{accountStatus},</if>
@@ -75,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update account_info
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
             <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
             <if test="accountType != null and accountType != ''">account_type = #{accountType},</if>
             <if test="accountStatus != null and accountStatus != ''">account_status = #{accountStatus},</if>

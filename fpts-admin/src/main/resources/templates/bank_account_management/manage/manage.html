@@ -15,6 +15,10 @@
                                 <input type="text" name="userId"/>
                             </li>
                             <li>
+                                <label>部门ID：</label>
+                                <input type="text" name="deptId"/>
+                            </li>
+                            <li>
                                 <label>用户银行账户ID：</label>
                                 <input type="text" name="accountId"/>
                             </li>
@@ -74,6 +78,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('bank_account_management:manage:edit')}]];
         var removeFlag = [[${@permission.hasPermi('bank_account_management:manage:remove')}]];
+        var idDatas = [[${@dict.getType('${column.dictType}')}]];
         var prefix = ctx + "bank_account_management/manage";
 
         $(function() {
@@ -95,6 +100,10 @@
                 {
                     field: 'userId',
                     title: '用户ID'
+                },
+                {
+                    field: 'deptId',
+                    title: '部门ID'
                 },
                 {
                     field: 'accountId',

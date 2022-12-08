@@ -7,7 +7,7 @@ import com.fpts.bank_account_management.domain.AccountInfo;
  * 银行账户管理Mapper接口
  * 
  * @author ruoyi
- * @date 2022-12-07
+ * @date 2022-12-08
  */
 public interface AccountInfoMapper 
 {

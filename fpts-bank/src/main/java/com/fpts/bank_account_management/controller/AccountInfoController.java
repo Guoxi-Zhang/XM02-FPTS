@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 银行账户管理Controller
  * 
  * @author ruoyi
- * @date 2022-12-07
+ * @date 2022-12-08
  */
 @Controller
 @RequestMapping("/bank_account_management/manage")

@@ -1,6 +1,8 @@
 package com.fpts.bank_account_management.service.impl;
 
 import java.util.List;
+
+import com.fpts.common.annotation.DataScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.bank_account_management.mapper.AccountInfoMapper;
@@ -12,7 +14,7 @@ import com.fpts.common.core.text.Convert;
  * 银行账户管理Service业务层处理
  * 
  * @author ruoyi
- * @date 2022-12-07
+ * @date 2022-12-08
  */
 @Service
 public class AccountInfoServiceImpl implements IAccountInfoService 
@@ -27,6 +29,7 @@ public class AccountInfoServiceImpl implements IAccountInfoService
      * @return 银行账户管理
      */
     @Override
+    @DataScope(deptAlias = "account_info", userAlias = "account_info")
     public AccountInfo selectAccountInfoById(Long id)
     {
         return accountInfoMapper.selectAccountInfoById(id);
@@ -39,6 +42,7 @@ public class AccountInfoServiceImpl implements IAccountInfoService
      * @return 银行账户管理
      */
     @Override
+    @DataScope(deptAlias = "account_info", userAlias = "account_info")
     public List<AccountInfo> selectAccountInfoList(AccountInfo accountInfo)
     {
         return accountInfoMapper.selectAccountInfoList(accountInfo);
@@ -51,6 +55,7 @@ public class AccountInfoServiceImpl implements IAccountInfoService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_info", userAlias = "account_info")
     public int insertAccountInfo(AccountInfo accountInfo)
     {
         return accountInfoMapper.insertAccountInfo(accountInfo);
@@ -63,6 +68,7 @@ public class AccountInfoServiceImpl implements IAccountInfoService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_info", userAlias = "account_info")
     public int updateAccountInfo(AccountInfo accountInfo)
     {
         return accountInfoMapper.updateAccountInfo(accountInfo);
@@ -75,6 +81,7 @@ public class AccountInfoServiceImpl implements IAccountInfoService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_info", userAlias = "account_info")
     public int deleteAccountInfoByIds(String ids)
     {
         return accountInfoMapper.deleteAccountInfoByIds(Convert.toStrArray(ids));
@@ -87,6 +94,7 @@ public class AccountInfoServiceImpl implements IAccountInfoService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_info", userAlias = "account_info")
     public int deleteAccountInfoById(Long id)
     {
         return accountInfoMapper.deleteAccountInfoById(id);

@@ -12,7 +12,7 @@ import com.fpts.common.core.domain.BaseEntity;
  * 银行账户管理对象 account_info
  * 
  * @author ruoyi
- * @date 2022-12-07
+ * @date 2022-12-08
  */
 public class AccountInfo extends BaseEntity
 {
@@ -24,6 +24,10 @@ public class AccountInfo extends BaseEntity
     /** 用户ID */
     @Excel(name = "用户ID")
     private Long userId;
+
+    /** 部门ID */
+    @Excel(name = "部门ID")
+    private Long deptId;
 
     /** 用户银行账户ID */
     @Excel(name = "用户银行账户ID")
@@ -80,6 +84,15 @@ public class AccountInfo extends BaseEntity
     public Long getUserId() 
     {
         return userId;
+    }
+    public void setDeptId(Long deptId) 
+    {
+        this.deptId = deptId;
+    }
+
+    public Long getDeptId() 
+    {
+        return deptId;
     }
     public void setAccountId(String accountId) 
     {
@@ -168,6 +181,7 @@ public class AccountInfo extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("userId", getUserId())
+            .append("deptId", getDeptId())
             .append("accountId", getAccountId())
             .append("accountType", getAccountType())
             .append("accountStatus", getAccountStatus())
