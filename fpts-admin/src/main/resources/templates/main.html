@@ -60,14 +60,17 @@
 		<div class="col-sm-3">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<span class="label label-danger pull-right">最近一个月</span>
-					<h5>活跃用户</h5>
+<!--					<a class="btn btn-primary btn-rounded btn-sm pull-right" onclick="searchWeather()"><i class="fa fa-search"></i>&nbsp;搜索该城市天气</a>-->
+					<span class="label label-primary pull-right" id="searchBtn" onclick="searchWeather()"><i class="fa fa-search"></i></span>
+					<h5>天气&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;</h5>
+					<input type="text" id="searchCity" style="width: 50px"/>
 				</div>
 				<div class="ibox-content">
-					<h1 class="no-margins">80,600</h1>
-					<div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i>
-					</div>
-					<small>12月</small>
+					<h1 class="no-margins" id = "weather">阴，8-11度</h1>
+
+<!--					<div class="stat-percent font-bold text-danger"> <i class="fa fa-level-down"></i>-->
+<!--					</div>-->
+					<small id = "date">12月8日</small>
 				</div>
 			</div>
 		</div>
@@ -218,6 +221,23 @@
 
 <th:block th:include="include :: sparkline-js" />
 <script type="text/javascript">
+	function searchWeather() {
+		console.log("searchWeather");
+		var city = document.getElementById("searchCity").value;
+		console.log("city:" + city);
+		document.getElementById("searchBtn").innerHTML= "<i class=\"fa fa-search\"></i>" + city;
+		var url = "/weathers/cityWeathers/search/" +city;
+		var myDate=new Date();
+		$.post(url,function(data){
+			var str = data.weatherDay + ", "  + data.temperatureLow +" - " +data.temperatureHigh +"度";
+			console.log(data);
+			console.log(str);
+			document.getElementById("weather").innerText=str;
+			document.getElementById("date").innerText = myDate.toLocaleDateString();
+		});
+
+	}
+
 	$(document).ready(function () {
 		var data2 = [
 			[gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
