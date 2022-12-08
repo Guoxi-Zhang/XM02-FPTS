@@ -2,8 +2,11 @@ package com.fpts.finance_collection.controller;
 
 import java.util.List;
 
+import com.fpts.record.domain.TradingRecord;
+import com.fpts.record.service.ITradingRecordService;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
 import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
+import com.fpts.record.service.ITradingRecordService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +42,10 @@ public class FinanceCollectionController extends BaseController
 
     @Autowired
     private IFinanceWarehouseService financeWarehouseServiceImpl;
+
+    @Autowired
+    private ITradingRecordService tradingRecordService;
+
 
     @RequiresPermissions("finance_collection:collection:view")
     @GetMapping()
@@ -152,4 +159,20 @@ public class FinanceCollectionController extends BaseController
         return getDataTable(list);
     }
 
+    @GetMapping("/addTransactionRecord")
+    public String addTransactionRecord()
+    {
+        return prefix + "/addTransactionRecord";
+    }
+
+    /**
+     * 新增交易记录
+     */
+    @RequiresPermissions("finance_collection:collection:addaddTransactionRecord")
+    @Log(title = "交易记录", businessType = BusinessType.INSERT)
+    @PostMapping("/addTransactionRecord")
+    @ResponseBody
+    public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
+    }
 }

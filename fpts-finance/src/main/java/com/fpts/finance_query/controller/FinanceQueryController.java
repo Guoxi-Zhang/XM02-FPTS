@@ -2,7 +2,9 @@ package com.fpts.finance_query.controller;
 
 import java.lang.reflect.Array;
 import java.util.*;
-
+import com.fpts.record.domain.TradingRecord;
+import com.fpts.record.service.ITradingRecordService;
+import org.apache.ibatis.transaction.Transaction;
 import com.fpts.common.utils.security.PermissionUtils;
 import com.fpts.finance_collection.domain.FinanceCollection;
 import com.fpts.finance_collection.service.IFinanceCollectionService;
@@ -48,6 +50,8 @@ public class FinanceQueryController extends BaseController
     private IFinanceQueryService financeQueryService;
     @Autowired
     private IFinanceCollectionService financeCollectionService;
+    @Autowired
+    private ITradingRecordService tradingRecordService;
 
     @RequiresPermissions("finance_query:finance_query:view")
     @GetMapping()
@@ -151,6 +155,23 @@ public class FinanceQueryController extends BaseController
         System.out.println(productId);
         financeCollection = new FinanceCollection(userId, productId);
         return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
+    }
+
+    @GetMapping("/addTransactionRecord")
+    public String addTransactionRecord()
+    {
+        return prefix + "/addTransactionRecord";
+    }
+
+    /**
+     * 新增交易记录
+     */
+    @RequiresPermissions("finance_query:finance_query:addaddTransactionRecord")
+    @Log(title = "交易记录", businessType = BusinessType.INSERT)
+    @PostMapping("/addTransactionRecord")
+    @ResponseBody
+    public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
 
     /**
