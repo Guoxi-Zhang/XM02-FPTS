@@ -31,6 +31,10 @@ public class FinanceCollection extends BaseEntity
         this.productId = productId;
     }
 
+    public FinanceCollection() {
+
+    }
+
     public void setId(Long id) 
     {
         this.id = id;

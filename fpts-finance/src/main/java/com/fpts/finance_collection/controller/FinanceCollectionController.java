@@ -130,4 +130,26 @@ public class FinanceCollectionController extends BaseController
     {
         return toAjax(financeCollectionService.deleteFinanceCollectionByIds(ids));
     }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(FinanceWarehouse financeWarehouse)
+    {
+//        startPage();
+        List<FinanceWarehouse> list = financeWarehouseServiceImpl.selectFinanceWarehouseListTocoll(financeWarehouse);
+        return getDataTable(list);
+    }
+
 }

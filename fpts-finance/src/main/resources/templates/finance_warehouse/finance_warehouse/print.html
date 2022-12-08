@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增行情查询')" />
+    <th:block th:include="include :: header('数据仓库')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body>
@@ -12,13 +12,13 @@
 
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var prefix = ctx + "finance_query/finance_query";
+    var prefix = ctx + "finance_warehouse/finance_warehouse";
     var typeDatas = [[${@dict.getType('product_type')}]];
     $(function() {
         var options = {
             url: prefix + "/printToHtml",
 
-            modalName: "行情查询",
+            modalName: "数据仓库",
             striped:true,
             pagination:false,
             search:false,
@@ -83,21 +83,6 @@
                     field: 'turnoverRate',
                     title: '换手率'
                 },
-                // {
-                //     title: '操作',
-                //     align: 'center',
-                //     formatter: function(value, row, index) {
-                //         var actions = [];
-                //         let m = {
-                //             productId: row.productId ,
-                //             type: row.type ,
-                //         }
-                //         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="kgraph(\'' + row.productId + row.type + '\')"><i class="fa fa-line-chart"></i>K线图</a> ');
-                //         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(\'' + row.id + '\')"><i class="fa fa-jpy"></i>买入</a>');
-                //         actions.push('<a class="btn btn-info btn-xs ' +  '" href="javascript:void(0)" onclick="collect(\'' + row.productId + '\')"><i class="fa fa-star"></i>收藏</a>');
-                //         return actions.join('');
-                //     }
-                // }
             ]
         };
         $.table.init(options);

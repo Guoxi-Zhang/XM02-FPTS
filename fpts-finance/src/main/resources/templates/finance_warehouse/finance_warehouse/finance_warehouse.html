@@ -50,6 +50,9 @@
                 <a class="btn btn-success" onclick="warehouseAddChart()" >
                     <i class="fa fa-bar-chart"></i> 统计图表
                 </a>
+                <a class="btn btn-warning" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -67,6 +70,10 @@
             //table.set();
             $.modal.open(table.options.modalName + "统计图表", "/finance_warehouse/finance_warehouse/chart");
         }
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/finance_warehouse/finance_warehouse/print");
+        }
+
         $(function() {
             var options = {
                 url: prefix + "/list",
