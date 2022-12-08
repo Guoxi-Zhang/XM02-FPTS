@@ -10,16 +10,17 @@ import com.fpts.common.core.domain.BaseEntity;
  * 查看资产对象 account_assets
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-08
  */
 public class AccountAssets extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 序号 */
-    private Integer No;
+    private Long no;
 
     /** 用户ID */
+    @Excel(name = "用户ID")
     private String userId;
 
     /** 账户ID */
@@ -30,30 +31,34 @@ public class AccountAssets extends BaseEntity
     @Excel(name = "账户余额")
     private BigDecimal accountBalance;
 
-    /** 总资产数 */
-    @Excel(name = "总资产数")
+    /** 用户的资产数额 */
+    @Excel(name = "用户的资产数额")
     private BigDecimal totalAssets;
 
-    /** 股票总资产 */
-    @Excel(name = "股票总资产")
-    private BigDecimal stockAssets;
+    /** A股总资产 */
+    @Excel(name = "A股总资产")
+    private BigDecimal astockAssets;
 
-    /** 黄金总资产 */
-    @Excel(name = "黄金总资产")
-    private BigDecimal goldAssets;
+    /** B股总资产 */
+    @Excel(name = "B股总资产")
+    private BigDecimal bstockAssets;
 
-    /** 期货总资产 */
-    @Excel(name = "期货总资产")
-    private BigDecimal futureAssets;
+    /** 债券总资产 */
+    @Excel(name = "债券总资产")
+    private BigDecimal bonfAssets;
 
-    public void setNo(Integer No) 
+    /** 基金总资产 */
+    @Excel(name = "基金总资产")
+    private BigDecimal fundAssets;
+
+    public void setNo(Long no) 
     {
-        this.No = No;
+        this.no = no;
     }
 
-    public Integer getNo() 
+    public Long getNo() 
     {
-        return No;
+        return no;
     }
     public void setUserId(String userId) 
     {
@@ -91,45 +96,55 @@ public class AccountAssets extends BaseEntity
     {
         return totalAssets;
     }
-    public void setStockAssets(BigDecimal stockAssets) 
+    public void setAstockAssets(BigDecimal astockAssets) 
     {
-        this.stockAssets = stockAssets;
+        this.astockAssets = astockAssets;
     }
 
-    public BigDecimal getStockAssets() 
+    public BigDecimal getAstockAssets() 
     {
-        return stockAssets;
+        return astockAssets;
     }
-    public void setGoldAssets(BigDecimal goldAssets) 
+    public void setBstockAssets(BigDecimal bstockAssets) 
     {
-        this.goldAssets = goldAssets;
-    }
-
-    public BigDecimal getGoldAssets() 
-    {
-        return goldAssets;
-    }
-    public void setFutureAssets(BigDecimal futureAssets) 
-    {
-        this.futureAssets = futureAssets;
+        this.bstockAssets = bstockAssets;
     }
 
-    public BigDecimal getFutureAssets() 
+    public BigDecimal getBstockAssets() 
     {
-        return futureAssets;
+        return bstockAssets;
+    }
+    public void setBonfAssets(BigDecimal bonfAssets) 
+    {
+        this.bonfAssets = bonfAssets;
+    }
+
+    public BigDecimal getBonfAssets() 
+    {
+        return bonfAssets;
+    }
+    public void setFundAssets(BigDecimal fundAssets) 
+    {
+        this.fundAssets = fundAssets;
+    }
+
+    public BigDecimal getFundAssets() 
+    {
+        return fundAssets;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("No", getNo())
+            .append("no", getNo())
             .append("userId", getUserId())
             .append("accountId", getAccountId())
             .append("accountBalance", getAccountBalance())
             .append("totalAssets", getTotalAssets())
-            .append("stockAssets", getStockAssets())
-            .append("goldAssets", getGoldAssets())
-            .append("futureAssets", getFutureAssets())
+            .append("astockAssets", getAstockAssets())
+            .append("bstockAssets", getBstockAssets())
+            .append("bonfAssets", getBonfAssets())
+            .append("fundAssets", getFundAssets())
             .append("createBy", getCreateBy())
             .append("createTime", getCreateTime())
             .toString();

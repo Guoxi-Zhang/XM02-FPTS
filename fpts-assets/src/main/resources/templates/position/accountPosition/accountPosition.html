@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('查看资产列表')" />
+    <th:block th:include="include :: header('账户持仓列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -19,28 +19,23 @@
                                 <input type="text" name="accountId"/>
                             </li>
                             <li>
-                                <label>账户余额：</label>
-                                <input type="text" name="accountBalance"/>
+                                <label>金融产品ID：</label>
+                                <input type="text" name="productId"/>
                             </li>
                             <li>
-                                <label>总资产数：</label>
-                                <input type="text" name="totalAssets"/>
+                                <label>产品类型：</label>
+                                <select name="productType" th:with="type=${@dict.getType('product_type')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
                             <li>
-                                <label>A股资产：</label>
-                                <input type="text" name="astockAssets"/>
+                                <label>产品资产数额：</label>
+                                <input type="text" name="productAssets"/>
                             </li>
                             <li>
-                                <label>B股资产：</label>
-                                <input type="text" name="bstockAssets"/>
-                            </li>
-                            <li>
-                                <label>债券资产：</label>
-                                <input type="text" name="bonfAssets"/>
-                            </li>
-                            <li>
-                                <label>基金资产：</label>
-                                <input type="text" name="fundAssets"/>
+                                <label>最近下单时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择最近下单时间" name="lastOrderTime"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -52,16 +47,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="assets:account_assets:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="position:accountPosition:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="assets:account_assets:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="position:accountPosition:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="assets:account_assets:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="position:accountPosition:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="assets:account_assets:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="position:accountPosition:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -72,12 +67,10 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('assets:account_assets:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('assets:account_assets:remove')}]];
-        var noDatas = [[${@dict.getType('${column.dictType}')}]];
-        var createByDatas = [[${@dict.getType('${column.dictType}')}]];
-        var createTimeDatas = [[${@dict.getType('${column.dictType}')}]];
-        var prefix = ctx + "assets/account_assets";
+        var editFlag = [[${@permission.hasPermi('position:accountPosition:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('position:accountPosition:remove')}]];
+        var productTypeDatas = [[${@dict.getType('product_type')}]];
+        var prefix = ctx + "position/accountPosition";
 
         $(function() {
             var options = {
@@ -86,7 +79,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "查看资产",
+                modalName: "账户持仓",
                 columns: [{
                     checkbox: true
                 },
@@ -104,28 +97,23 @@
                     title: '账户ID'
                 },
                 {
-                    field: 'accountBalance',
-                    title: '账户余额'
+                    field: 'productId',
+                    title: '金融产品ID'
                 },
                 {
-                    field: 'totalAssets',
-                    title: '用户的资产数额'
+                    field: 'productType',
+                    title: '产品类型',
+                    formatter: function(value, row, index) {
+                       return $.table.selectDictLabel(productTypeDatas, value);
+                    }
                 },
                 {
-                    field: 'astockAssets',
-                    title: 'A股总资产'
+                    field: 'productAssets',
+                    title: '产品资产数额'
                 },
                 {
-                    field: 'bstockAssets',
-                    title: 'B股总资产'
-                },
-                {
-                    field: 'bonfAssets',
-                    title: '债券总资产'
-                },
-                {
-                    field: 'fundAssets',
-                    title: '基金总资产'
+                    field: 'lastOrderTime',
+                    title: '最近下单时间'
                 },
                 {
                     title: '操作',

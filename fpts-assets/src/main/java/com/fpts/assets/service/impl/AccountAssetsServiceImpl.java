@@ -13,7 +13,7 @@ import com.fpts.common.core.text.Convert;
  * 查看资产Service业务层处理
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-08
  */
 @Service
 public class AccountAssetsServiceImpl implements IAccountAssetsService 
@@ -24,13 +24,13 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
     /**
      * 查询查看资产
      * 
-     * @param No 查看资产主键
+     * @param no 查看资产主键
      * @return 查看资产
      */
     @Override
-    public AccountAssets selectAccountAssetsByNo(Integer No)
+    public AccountAssets selectAccountAssetsByNo(Long no)
     {
-        return accountAssetsMapper.selectAccountAssetsByNo(No);
+        return accountAssetsMapper.selectAccountAssetsByNo(no);
     }
 
     /**
@@ -73,24 +73,24 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
     /**
      * 批量删除查看资产
      * 
-     * @param Nos 需要删除的查看资产主键
+     * @param nos 需要删除的查看资产主键
      * @return 结果
      */
     @Override
-    public int deleteAccountAssetsByNos(String Nos)
+    public int deleteAccountAssetsByNos(String nos)
     {
-        return accountAssetsMapper.deleteAccountAssetsByNos(Convert.toStrArray(Nos));
+        return accountAssetsMapper.deleteAccountAssetsByNos(Convert.toStrArray(nos));
     }
 
     /**
      * 删除查看资产信息
      * 
-     * @param No 查看资产主键
+     * @param no 查看资产主键
      * @return 结果
      */
     @Override
-    public int deleteAccountAssetsByNo(Integer No)
+    public int deleteAccountAssetsByNo(Long no)
     {
-        return accountAssetsMapper.deleteAccountAssetsByNo(No);
+        return accountAssetsMapper.deleteAccountAssetsByNo(no);
     }
 }

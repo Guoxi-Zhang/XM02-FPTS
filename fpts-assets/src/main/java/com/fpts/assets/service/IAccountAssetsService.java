@@ -7,17 +7,17 @@ import com.fpts.assets.domain.AccountAssets;
  * 查看资产Service接口
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-08
  */
 public interface IAccountAssetsService 
 {
     /**
      * 查询查看资产
      * 
-     * @param No 查看资产主键
+     * @param no 查看资产主键
      * @return 查看资产
      */
-    public AccountAssets selectAccountAssetsByNo(Integer No);
+    public AccountAssets selectAccountAssetsByNo(Long no);
 
     /**
      * 查询查看资产列表
@@ -46,16 +46,16 @@ public interface IAccountAssetsService
     /**
      * 批量删除查看资产
      * 
-     * @param Nos 需要删除的查看资产主键集合
+     * @param nos 需要删除的查看资产主键集合
      * @return 结果
      */
-    public int deleteAccountAssetsByNos(String Nos);
+    public int deleteAccountAssetsByNos(String nos);
 
     /**
      * 删除查看资产信息
      * 
-     * @param No 查看资产主键
+     * @param no 查看资产主键
      * @return 结果
      */
-    public int deleteAccountAssetsByNo(Integer No);
+    public int deleteAccountAssetsByNo(Long no);
 }

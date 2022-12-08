@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 查看资产Controller
  * 
  * @author lzy
- * @date 2022-11-27
+ * @date 2022-12-08
  */
 @Controller
 @RequestMapping("/assets/account_assets")
@@ -93,10 +93,10 @@ public class AccountAssetsController extends BaseController
      * 修改查看资产
      */
     @RequiresPermissions("assets:account_assets:edit")
-    @GetMapping("/edit/{No}")
-    public String edit(@PathVariable("No") Integer No, ModelMap mmap)
+    @GetMapping("/edit/{no}")
+    public String edit(@PathVariable("no") Long no, ModelMap mmap)
     {
-        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo(No);
+        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo(no);
         mmap.put("accountAssets", accountAssets);
         return prefix + "/edit";
     }
