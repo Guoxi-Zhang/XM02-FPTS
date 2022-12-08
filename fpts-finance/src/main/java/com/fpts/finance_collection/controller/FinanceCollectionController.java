@@ -2,8 +2,11 @@ package com.fpts.finance_collection.controller;
 
 import java.util.List;
 
+import com.fpts.record.domain.TradingRecord;
+import com.fpts.record.service.ITradingRecordService;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
 import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
+import com.fpts.record.service.ITradingRecordService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,7 @@ import com.fpts.common.core.page.TableDataInfo;
 
 /**
  * 产品收藏Controller
- * 
+ *
  * @author laybxc
  * @date 2022-11-30
  */
@@ -39,6 +42,10 @@ public class FinanceCollectionController extends BaseController
 
     @Autowired
     private IFinanceWarehouseService financeWarehouseServiceImpl;
+
+    @Autowired
+    private ITradingRecordService tradingRecordService;
+
 
     @RequiresPermissions("finance_collection:collection:view")
     @GetMapping()
@@ -129,5 +136,43 @@ public class FinanceCollectionController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(financeCollectionService.deleteFinanceCollectionByIds(ids));
+    }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(FinanceWarehouse financeWarehouse)
+    {
+//        startPage();
+        List<FinanceWarehouse> list = financeWarehouseServiceImpl.selectFinanceWarehouseListTocoll(financeWarehouse);
+        return getDataTable(list);
+    }
+
+    @GetMapping("/addTransactionRecord")
+    public String addTransactionRecord()
+    {
+        return prefix + "/addTransactionRecord";
+    }
+
+    /**
+     * 新增交易记录
+     */
+    @RequiresPermissions("finance_collection:collection:addaddTransactionRecord")
+    @Log(title = "交易记录", businessType = BusinessType.INSERT)
+    @PostMapping("/addTransactionRecord")
+    @ResponseBody
+    public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
 }

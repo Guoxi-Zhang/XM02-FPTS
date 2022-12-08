@@ -68,8 +68,8 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="record:transaction_record:add">
-                    <i class="fa fa-plus"></i> 添加
+                <a class="btn btn-success" methods="post" onclick="addNewTransaction()">
+                    <i class="fa fa-plus"></i> 进行交易
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="record:transaction_record:edit">
                     <i class="fa fa-edit"></i> 修改
@@ -99,8 +99,11 @@
         var orderSituationDatas = [[${@dict.getType('transaction_situation')}]];
         var prefix = ctx + "record/transaction_record";
 
+        function addNewTransaction(){
+            window.location.href = "/finance_query/finance_query"
+        }
         function printToHtml(){
-            $.modal.openFull(table.options.modalName + "打印", "/record/transaction_record/print");
+            $.modal.open(table.options.modalName + "打印", "/record/transaction_record/print");
         }
 
         $(function() {

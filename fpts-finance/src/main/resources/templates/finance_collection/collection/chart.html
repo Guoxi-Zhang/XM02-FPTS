@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('行情查询图表')" />
+    <th:block th:include="include :: header('金融信息图表')" />
     <th:block th:include="include :: datetimepicker-css" />
     <!-- bootstrap-table 表格插件样式 -->
 
@@ -22,22 +22,19 @@
     let pIdList = [[${pIdList}]];
     console.log(pIdList);
 
-
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '行情查询分类统计图'
+            text: '数据仓库分类统计图'
         },
         tooltip: {},
         legend: {
             data: ['收藏数量']
         },
         xAxis: {
-            name: '产品种类',
-            data: pIdList,
-            axisLabel: { // 如果显示字符过长 就间隔1 设为0
-                interval:0
-            }
+            //data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            name: '产品代码',
+            data: pIdList
         },
         yAxis: {},
         series: [

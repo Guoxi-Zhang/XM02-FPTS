@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.fpts.finance_news.domain.FinanceNews;
+import com.fpts.finance_query.domain.FinanceQuery;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -157,5 +158,26 @@ public class FinanceWarehouseController extends BaseController
         mmap.put("typeList", typeList);
         mmap.put("cntList", cntList);
         return prefix + "/chart";
+    }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(FinanceWarehouse financeWarehouse)
+    {
+//        startPage();
+        List<FinanceWarehouse> list = financeWarehouseService.selectFinanceWarehouseList(financeWarehouse);
+        return getDataTable(list);
     }
 }

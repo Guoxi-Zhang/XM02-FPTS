@@ -1,10 +1,14 @@
 package com.fpts.finance_query.controller;
 
-import java.util.List;
-
+import java.lang.reflect.Array;
+import java.util.*;
+import com.fpts.record.domain.TradingRecord;
+import com.fpts.record.service.ITradingRecordService;
+import org.apache.ibatis.transaction.Transaction;
 import com.fpts.common.utils.security.PermissionUtils;
 import com.fpts.finance_collection.domain.FinanceCollection;
 import com.fpts.finance_collection.service.IFinanceCollectionService;
+import com.fpts.finance_warehouse.domain.FinanceWarehouse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,8 @@ public class FinanceQueryController extends BaseController
     private IFinanceQueryService financeQueryService;
     @Autowired
     private IFinanceCollectionService financeCollectionService;
+    @Autowired
+    private ITradingRecordService tradingRecordService;
 
     @RequiresPermissions("finance_query:finance_query:view")
     @GetMapping()
@@ -151,11 +157,71 @@ public class FinanceQueryController extends BaseController
         return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
     }
 
+    @GetMapping("/addTransactionRecord")
+    public String addTransactionRecord()
+    {
+        return prefix + "/addTransactionRecord";
+    }
+
+    /**
+     * 新增交易记录
+     */
+    @RequiresPermissions("finance_query:finance_query:addaddTransactionRecord")
+    @Log(title = "交易记录", businessType = BusinessType.INSERT)
+    @PostMapping("/addTransactionRecord")
+    @ResponseBody
+    public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
+    }
+
     /**
      * K线图
      */
-    @RequestMapping("/chart")
+    @RequestMapping("/k_line_graph")
     public String showChart(){
+        return prefix + "/k_line_graph";
+    }
+
+    /**
+     * 统计报表
+     */
+    @RequestMapping("/chart")
+
+    public String showChart(ModelMap mmap){
+        List<FinanceCollection> list = financeCollectionService.selectFinanceCollectionList(new FinanceCollection());
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+
+        for(FinanceCollection f: list){
+            String pId = f.getProductId();
+
+            if(map.containsKey(pId)){
+                int cnt = map.get(pId);
+                map.replace(pId, cnt, cnt + 1);
+            }else{
+                map.put(pId, 1);
+            }
+        }
+
+        List<Map.Entry<String,Integer>> list1= new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
+        Collections.sort(list1,new Comparator<Map.Entry<String, Integer>>() {
+            //降序排序
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        List<String> pIdList = new ArrayList<String>();   //= Arrays.asList(pIdSet);
+        List<Integer> cntList = new ArrayList<Integer>();
+        for (Map.Entry<String, Integer> a: list1){
+            pIdList.add(a.getKey());
+            cntList.add(a.getValue());
+        }
+
+        System.out.println(pIdList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("pIdList", pIdList);
+        mmap.put("cntList", cntList);
         return prefix + "/chart";
     }
 
@@ -177,7 +243,6 @@ public class FinanceQueryController extends BaseController
     {
 //        startPage();
         List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(financeQuery);
-
         return getDataTable(list);
     }
 }

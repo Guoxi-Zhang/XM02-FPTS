@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增行情查询')" />
+    <th:block th:include="include :: header('产品收藏')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body>
@@ -12,7 +12,7 @@
 
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var prefix = ctx + "finance_query/finance_query";
+    var prefix = ctx + "finance_collection/collection";
     var typeDatas = [[${@dict.getType('product_type')}]];
     $(function() {
         var options = {
@@ -37,12 +37,17 @@
                     visible: false
                 },
                 {
+                    field: 'userId',
+                    title: '收藏用户',
+                    visible: true
+                },
+                {
                     field: 'productId',
-                    title: '代码'
+                    title: '代码',
                 },
                 {
                     field: 'name',
-                    title: '名称'
+                    title: '名称',
                 },
                 {
                     field: 'type',
@@ -53,7 +58,7 @@
                 },
                 {
                     field: 'newPrice',
-                    title: '最新价'
+                    title: '最新价',
                 },
                 {
                     field: 'openPrice',
@@ -65,23 +70,23 @@
                 },
                 {
                     field: 'maxPrice',
-                    title: '最高价'
+                    title: '最高价',
                 },
                 {
                     field: 'minPrice',
-                    title: '最低价'
+                    title: '最低价',
                 },
                 {
                     field: 'increase',
-                    title: '涨幅'
+                    title: '涨幅',
                 },
                 {
                     field: 'increaseRate',
-                    title: '涨速'
+                    title: '涨速',
                 },
                 {
                     field: 'turnoverRate',
-                    title: '换手率'
+                    title: '换手率',
                 },
                 // {
                 //     title: '操作',

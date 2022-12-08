@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.position.mapper.AccountPositionMapper">
+    
+    <resultMap type="AccountPosition" id="AccountPositionResult">
+        <result property="no"    column="no"    />
+        <result property="userId"    column="user_id"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="productType"    column="product_type"    />
+        <result property="productAssets"    column="product_assets"    />
+        <result property="lastOrderTime"    column="last_order_time"    />
+    </resultMap>
+
+    <sql id="selectAccountPositionVo">
+        select no, user_id, account_id, product_id, product_type, product_assets, last_order_time from account_position
+    </sql>
+
+    <select id="selectAccountPositionList" parameterType="AccountPosition" resultMap="AccountPositionResult">
+        <include refid="selectAccountPositionVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+            <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
+            <if test="productAssets != null "> and product_assets = #{productAssets}</if>
+            <if test="lastOrderTime != null "> and last_order_time = #{lastOrderTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectAccountPositionByNo" parameterType="Long" resultMap="AccountPositionResult">
+        <include refid="selectAccountPositionVo"/>
+        where no = #{no}
+    </select>
+        
+    <insert id="insertAccountPosition" parameterType="AccountPosition" useGeneratedKeys="true" keyProperty="no">
+        insert into account_position
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="accountId != null and accountId != ''">account_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="productType != null">product_type,</if>
+            <if test="productAssets != null">product_assets,</if>
+            <if test="lastOrderTime != null">last_order_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="accountId != null and accountId != ''">#{accountId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="productType != null">#{productType},</if>
+            <if test="productAssets != null">#{productAssets},</if>
+            <if test="lastOrderTime != null">#{lastOrderTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAccountPosition" parameterType="AccountPosition">
+        update account_position
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="productType != null">product_type = #{productType},</if>
+            <if test="productAssets != null">product_assets = #{productAssets},</if>
+            <if test="lastOrderTime != null">last_order_time = #{lastOrderTime},</if>
+        </trim>
+        where no = #{no}
+    </update>
+
+    <delete id="deleteAccountPositionByNo" parameterType="Long">
+        delete from account_position where no = #{no}
+    </delete>
+
+    <delete id="deleteAccountPositionByNos" parameterType="String">
+        delete from account_position where no in 
+        <foreach item="no" collection="array" open="(" separator="," close=")">
+            #{no}
+        </foreach>
+    </delete>
+
+</mapper>

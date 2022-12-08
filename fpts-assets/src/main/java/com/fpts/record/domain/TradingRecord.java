@@ -62,6 +62,22 @@ public class TradingRecord extends BaseEntity
     @Excel(name = "订单完成情况", readConverterExp = "0=未完成，1完成")
     private String orderSituation;
 
+    public TradingRecord(){
+
+    }
+
+    public TradingRecord(String userId, String accountId, Integer pruductAmount, String orderPattern, Date datetime, Double productPrice, String productId, String orderDirection, String productType) {
+        setAccountId(accountId);
+        setOrderDirection(orderDirection);
+        setOrderId(orderId);
+        setUserId(userId);
+        setOrderSituation(orderSituation);
+        setOrderPattern(orderPattern);
+        setOrderTime(datetime);
+        setProductPrice(productPrice);
+        setPruductAmount(pruductAmount);
+    }
+
     public void setOrderId(Long orderId) 
     {
         this.orderId = orderId;
@@ -112,7 +128,7 @@ public class TradingRecord extends BaseEntity
         this.pruductAmount = pruductAmount;
     }
 
-    public Integer getPruductAmount() 
+    public Integer getPruductAmount()
     {
         return pruductAmount;
     }

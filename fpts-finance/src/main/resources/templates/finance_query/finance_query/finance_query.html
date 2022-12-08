@@ -43,13 +43,19 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-
+                <a class="btn btn-success" onclick="queryAddChart()" >
+                    <i class="fa fa-bar-chart"></i> 统计图表
+                </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_query:finance_query:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
                 <a class="btn btn-warning" onclick="printToHtml()">
                     <i class="fa fa-download"></i> 打印HTML
                 </a>
+                <a class="btn btn-primary" onclick="TransactionRecordList()">
+                    <i class="fa fa-server"></i> 查看交易记录
+                </a>
+
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -60,15 +66,20 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('finance_query:finance_query:edit')}]];
         var removeFlag = [[${@permission.hasPermi('finance_query:finance_query:remove')}]];
-        var collectFlag = [[${@permission.hasPermi('finance_collection:finance_collection:collect')}]];
-
         var typeDatas = [[${@dict.getType('product_type')}]];
         var prefix = ctx + "finance_query/finance_query";
+
+        function queryAddChart() {
+            //table.set();
+            $.modal.open(table.options.modalName + "统计图表", "/finance_query/finance_query/chart");
+        }
 
         function printToHtml(){
             $.modal.openFull(table.options.modalName + "打印", "/finance_query/finance_query/print");
         }
-
+        function TransactionRecordList(){
+            window.location.href = "/record/transaction_record"
+        }
         function collect(pId){
             var productId=pId;
             var config = {
@@ -86,16 +97,6 @@
                 }
             };
             $.ajax(config);
-            /*
-            var productId=pId;
-            var userId = [[${@permission.getPrincipalProperty('userId')}]];
-            console.log("product_id:"+ productId);
-            console.log("user_id:"+ userId);
-            var url= "/finance_query/finance_query" + "/collect/" + productId;
-            $.post(url,function(data){
-                console.log(data);
-            });
-            */
         }
 
 
@@ -105,7 +106,7 @@
             localStorage.setItem("MyproductID", m.substring(0,6));
             localStorage.setItem("Type", m.substring(6,7));
             table.set();
-            $.modal.open(table.options.modalName + "统计图表", "/finance_query/finance_query/chart");
+            $.modal.open(table.options.modalName + "统计图表", "/finance_query/finance_query/k_line_graph");
         }
 
         $(function() {
@@ -185,12 +186,8 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        let m = {
-                            productId: row.productId ,
-                            type: row.type ,
-                        }
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="kgraph(\'' + row.productId + row.type + '\')"><i class="fa fa-line-chart"></i>K线图</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(\'' + row.id + '\')"><i class="fa fa-jpy"></i>买入</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(' + row.productId + ',' + row.newPrice + ',' + row.type + ')"><i class="fa fa-jpy"></i>买入</a>');
                         actions.push('<a class="btn btn-info btn-xs ' +  '" href="javascript:void(0)" onclick="collect(\'' + row.productId + '\')"><i class="fa fa-star"></i>收藏</a>');
                         return actions.join('');
                     }
@@ -199,6 +196,16 @@
             $.table.init(options);
         });
 
+        function buy(pid, newprice, type) {
+            localStorage.setItem("productId", pid);
+            localStorage.setItem("productPrice", newprice);
+            localStorage.setItem("productType", type);
+            console.log(pid);
+            console.log(newprice);
+            console.log(type);
+            table.set();
+            $.modal.open(table.options.modalName + "新增交易", "/finance_query/finance_query/addTransactionRecord")
+        }
     </script>
 </body>
 </html>
