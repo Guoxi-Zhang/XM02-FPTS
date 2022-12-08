@@ -24,7 +24,7 @@ import com.fpts.common.core.page.TableDataInfo;
 
 /**
  * 产品收藏Controller
- * 
+ *
  * @author laybxc
  * @date 2022-11-30
  */
