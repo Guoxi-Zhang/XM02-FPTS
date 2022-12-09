@@ -20,13 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectAccountPositionList" parameterType="AccountPosition" resultMap="AccountPositionResult">
         <include refid="selectAccountPositionVo"/>
-        <where>  
+        <where>  1=1
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
             <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
             <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
             <if test="productAssets != null "> and product_assets = #{productAssets}</if>
             <if test="lastOrderTime != null "> and last_order_time = #{lastOrderTime}</if>
+            ${params.dataScope}
         </where>
     </select>
     

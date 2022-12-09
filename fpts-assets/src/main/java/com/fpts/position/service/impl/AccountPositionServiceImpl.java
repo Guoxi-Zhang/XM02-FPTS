@@ -7,6 +7,7 @@ import com.fpts.position.mapper.AccountPositionMapper;
 import com.fpts.position.domain.AccountPosition;
 import com.fpts.position.service.IAccountPositionService;
 import com.fpts.common.core.text.Convert;
+import com.fpts.common.annotation.DataScope;
 
 /**
  * 账户持仓Service业务层处理
@@ -27,6 +28,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 账户持仓
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public AccountPosition selectAccountPositionByNo(Long no)
     {
         return accountPositionMapper.selectAccountPositionByNo(no);
@@ -39,6 +41,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 账户持仓
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public List<AccountPosition> selectAccountPositionList(AccountPosition accountPosition)
     {
         return accountPositionMapper.selectAccountPositionList(accountPosition);
@@ -51,6 +54,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int insertAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.insertAccountPosition(accountPosition);
@@ -63,6 +67,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int updateAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.updateAccountPosition(accountPosition);
@@ -75,6 +80,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int deleteAccountPositionByNos(String nos)
     {
         return accountPositionMapper.deleteAccountPositionByNos(Convert.toStrArray(nos));
@@ -87,6 +93,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int deleteAccountPositionByNo(Long no)
     {
         return accountPositionMapper.deleteAccountPositionByNo(no);

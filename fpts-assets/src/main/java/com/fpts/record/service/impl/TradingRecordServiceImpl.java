@@ -1,6 +1,8 @@
 package com.fpts.record.service.impl;
 
 import java.util.List;
+
+import com.fpts.common.annotation.DataScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.record.mapper.TradingRecordMapper;
@@ -27,6 +29,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 交易记录
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public TradingRecord selectTradingRecordByOrderId(Long orderId)
     {
         return tradingRecordMapper.selectTradingRecordByOrderId(orderId);
@@ -39,6 +42,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 交易记录
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public List<TradingRecord> selectTradingRecordList(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.selectTradingRecordList(tradingRecord);
@@ -51,6 +55,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 交易记录
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public List<TradingRecord> selectAStockTradingRecordList(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.selectAStockTradingRecordList(tradingRecord);
@@ -63,6 +68,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 交易记录
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public List<TradingRecord> selectBStockTradingRecordList(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.selectBStockTradingRecordList(tradingRecord);
@@ -76,6 +82,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 交易记录
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public List<TradingRecord> selectBondTradingRecordList(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.selectBondTradingRecordList(tradingRecord);
@@ -88,6 +95,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int insertTradingRecord(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.insertTradingRecord(tradingRecord);
@@ -100,6 +108,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int updateTradingRecord(TradingRecord tradingRecord)
     {
         return tradingRecordMapper.updateTradingRecord(tradingRecord);
@@ -112,6 +121,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int deleteTradingRecordByOrderIds(String orderIds)
     {
         return tradingRecordMapper.deleteTradingRecordByOrderIds(Convert.toStrArray(orderIds));
@@ -124,6 +134,7 @@ public class TradingRecordServiceImpl implements ITradingRecordService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int deleteTradingRecordByOrderId(Long orderId)
     {
         return tradingRecordMapper.deleteTradingRecordByOrderId(orderId);

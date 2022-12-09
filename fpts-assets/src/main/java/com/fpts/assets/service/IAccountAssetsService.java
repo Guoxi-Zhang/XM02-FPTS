@@ -7,7 +7,7 @@ import com.fpts.assets.domain.AccountAssets;
  * 查看资产Service接口
  * 
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-10
  */
 public interface IAccountAssetsService 
 {

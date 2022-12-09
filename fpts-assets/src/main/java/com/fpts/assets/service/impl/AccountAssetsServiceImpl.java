@@ -1,6 +1,8 @@
 package com.fpts.assets.service.impl;
 
 import java.util.List;
+
+import com.fpts.common.annotation.DataScope;
 import com.fpts.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import com.fpts.common.core.text.Convert;
  * 查看资产Service业务层处理
  * 
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-10
  */
 @Service
 public class AccountAssetsServiceImpl implements IAccountAssetsService 
@@ -28,6 +30,7 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
      * @return 查看资产
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public AccountAssets selectAccountAssetsByNo(Long no)
     {
         return accountAssetsMapper.selectAccountAssetsByNo(no);
@@ -40,6 +43,7 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
      * @return 查看资产
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public List<AccountAssets> selectAccountAssetsList(AccountAssets accountAssets)
     {
         return accountAssetsMapper.selectAccountAssetsList(accountAssets);
@@ -52,6 +56,7 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int insertAccountAssets(AccountAssets accountAssets)
     {
         accountAssets.setCreateTime(DateUtils.getNowDate());
@@ -65,6 +70,7 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int updateAccountAssets(AccountAssets accountAssets)
     {
         return accountAssetsMapper.updateAccountAssets(accountAssets);
@@ -77,6 +83,7 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int deleteAccountAssetsByNos(String nos)
     {
         return accountAssetsMapper.deleteAccountAssetsByNos(Convert.toStrArray(nos));
@@ -89,6 +96,7 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
     public int deleteAccountAssetsByNo(Long no)
     {
         return accountAssetsMapper.deleteAccountAssetsByNo(no);

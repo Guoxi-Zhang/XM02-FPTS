@@ -10,7 +10,7 @@ import com.fpts.common.core.domain.BaseEntity;
  * 查看资产对象 account_assets
  * 
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-10
  */
 public class AccountAssets extends BaseEntity
 {

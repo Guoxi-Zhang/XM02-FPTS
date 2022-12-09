@@ -23,7 +23,7 @@ import com.fpts.common.core.page.TableDataInfo;
  * 查看资产Controller
  * 
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-10
  */
 @Controller
 @RequestMapping("/assets/account_assets")

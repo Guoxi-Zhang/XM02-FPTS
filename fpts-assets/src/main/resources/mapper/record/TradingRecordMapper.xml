@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
         <include refid="selectTradingRecordVo"/>
-        <where>  
+        <where> 1=1
             <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
             <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
             <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderDirection != null  and orderDirection != ''"> and order_direction = #{orderDirection}</if>
             <if test="orderPattern != null  and orderPattern != ''"> and order_pattern = #{orderPattern}</if>
             <if test="orderSituation != null  and orderSituation != ''"> and order_situation = #{orderSituation}</if>
+            ${params.dataScope}
         </where>
     </select>
 
