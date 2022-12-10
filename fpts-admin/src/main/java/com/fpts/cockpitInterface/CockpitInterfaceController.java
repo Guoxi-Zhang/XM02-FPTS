@@ -3,6 +3,8 @@ package com.fpts.cockpitInterface;
 import com.fpts.common.core.page.TableDataInfo;
 import com.fpts.todo.domain.TodoList;
 import com.fpts.todo.service.ITodoListService;
+import com.fpts.finance_forum.domain.FinanceForum;
+import com.fpts.finance_forum.service.IFinanceForumService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,29 +26,48 @@ public class CockpitInterfaceController {
 
     @Autowired
     private ITodoListService todoListService;
-
+    @Autowired
+    private IFinanceForumService financeForumService;
     @GetMapping()
-    public String cockpitInterface(ModelMap mmap, TodoList todoList)
+    public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum)
     {
         /**
          * 查询待办事项列表
          */
         List<TodoList> list = todoListService.selectTodoListList(todoList);
         mmap.put("todoList", list);
-
+        List<FinanceForum> list1 = financeForumService.selectFinanceForumList(financeForum);
+        mmap.put("financeForum", list1);
 
         //返回视图
         return prefix + "/cockpitInterface";
     }
-
-
-    /**
-     * 查询待办事项列表
-     */
-    @PostMapping("/todo_list")
+    //@PostMapping(value="/todo_list", "finance_forum")
     @ResponseBody
-    public void list(ModelMap mmap, TodoList todoList)
+    public void list(ModelMap mmap, TodoList todoList, FinanceForum financeForum)
     {
 
     }
+//    @GetMapping()
+//    public String cockpitInterface1(ModelMap mmap, FinanceForum financeForum)
+//    {
+//        /**
+//         * 查询待办事项列表
+//         */
+//        List<FinanceForum> list = financeForumService.selectFinanceForumList(financeForum);
+//        mmap.put("financeForum", list);
+//        //返回视图
+//        return prefix + "/cockpitInterface";
+//    }
+//
+//
+//    /**
+//     * 查询待办事项列表
+//     */
+//    @PostMapping("/finance_forum")
+//    @ResponseBody
+//    public void list1(ModelMap mmap, FinanceForum financeForum)
+//    {
+//
+//    }
 }

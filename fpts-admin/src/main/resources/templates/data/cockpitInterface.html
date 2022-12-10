@@ -85,22 +85,43 @@
                 </li>
                 <li>
                     <div class="boxall" style="height:350px">
-                        <div class="alltitle">我的待办事项</div>
+                    <div class="alltitle">我的待办事项</div>
+                    <div class="navboxall">
+                        <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                            <tr>
+                                <th scope="col">任务</th>
+                                <!--                                        <th scope="col">截止日期</th>-->
+                                <!--                                        <th scope="col">状态</th>-->
+                                <th scope="col">细节</th>
+                            </tr>
+                            <tr th:each="todoItem:${todoList}" th:if="${todoItemStat.index} lt 6">
+                                <td th:text="${todoItem.task}"></td>
+                                <!--                                        <td th:text="${todoItem.endTime}"></td>-->
+                                <!--                                        <td th:text="${todoItem.state}"></td>-->
+                                <td th:text="${todoItem.detail}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    <div class="boxall" style="height:350px">
+                        <div class="alltitle">论坛热点</div>
                         <div class="navboxall">
                             <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tbody>
-                                    <tr>
-                                        <th scope="col">任务</th>
-<!--                                        <th scope="col">截止日期</th>-->
-<!--                                        <th scope="col">状态</th>-->
-                                        <th scope="col">细节</th>
-                                    </tr>
-                                    <tr th:each="todoItem:${todoList}" th:if="${todoItemStat.index} lt 6">
-                                        <td th:text="${todoItem.task}"></td>
-<!--                                        <td th:text="${todoItem.endTime}"></td>-->
-<!--                                        <td th:text="${todoItem.state}"></td>-->
-                                        <td th:text="${todoItem.detail}"></td>
-                                    </tr>
+                                <tr>
+                                    <th scope="col">产品</th>
+                                    <!--                                        <th scope="col">截止日期</th>-->
+                                    <!--                                        <th scope="col">状态</th>-->
+                                    <th scope="col">讨论</th>
+                                </tr>
+                                <tr th:each="forumItem:${financeForum}" th:if="${forumItemStat.index} lt 6">
+                                    <td th:text="${forumItem.productId}"></td>
+                                    <!--                                        <td th:text="${todoItem.endTime}"></td>-->
+                                    <!--                                        <td th:text="${todoItem.state}"></td>-->
+                                    <td th:text="${forumItem.content}"></td>
+                                </tr>o
                                 </tbody>
                             </table>
                         </div>
