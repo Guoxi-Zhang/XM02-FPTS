@@ -106,7 +106,7 @@
             localStorage.setItem("MyproductID", m.substring(0,6));
             localStorage.setItem("Type", m.substring(6,7));
             table.set();
-            $.modal.open(table.options.modalName + "统计图表", "/finance_query/finance_query/k_line_graph");
+            $.modal.open("K线图", "/finance_query/finance_query/k_line_graph");
         }
 
         $(function() {

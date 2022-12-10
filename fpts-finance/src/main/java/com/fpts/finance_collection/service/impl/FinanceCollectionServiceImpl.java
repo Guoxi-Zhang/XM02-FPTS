@@ -1,6 +1,8 @@
 package com.fpts.finance_collection.service.impl;
 
 import java.util.List;
+
+import com.fpts.common.annotation.DataScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.finance_collection.mapper.FinanceCollectionMapper;
@@ -27,22 +29,40 @@ public class FinanceCollectionServiceImpl implements IFinanceCollectionService
      * @return 产品收藏
      */
     @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
     public FinanceCollection selectFinanceCollectionById(Long id)
     {
         return financeCollectionMapper.selectFinanceCollectionById(id);
     }
 
     /**
-     * 查询产品收藏列表
+     * 查询产品收藏列表_原
      * 
      * @param financeCollection 产品收藏
      * @return 产品收藏
+     * DataScope 的注解 要与 xml中SQL的 名称或简写 一致！
      */
     @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
     public List<FinanceCollection> selectFinanceCollectionList(FinanceCollection financeCollection)
     {
         return financeCollectionMapper.selectFinanceCollectionList(financeCollection);
     }
+
+    /**
+     * 查询产品收藏列表_改
+     *
+     * @param financeCollection 产品收藏
+     * @return 产品收藏
+     */
+    @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
+    public List<FinanceCollection> selectFinanceCollectionListWithColl(FinanceCollection financeCollection)
+    {
+        List<FinanceCollection> list = financeCollectionMapper.selectFinanceCollectionListWithColl(financeCollection);
+        return list;
+    }
+
 
     /**
      * 新增产品收藏
@@ -51,6 +71,7 @@ public class FinanceCollectionServiceImpl implements IFinanceCollectionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
     public int insertFinanceCollection(FinanceCollection financeCollection)
     {
         return financeCollectionMapper.insertFinanceCollection(financeCollection);
@@ -63,6 +84,7 @@ public class FinanceCollectionServiceImpl implements IFinanceCollectionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
     public int updateFinanceCollection(FinanceCollection financeCollection)
     {
         return financeCollectionMapper.updateFinanceCollection(financeCollection);
@@ -75,6 +97,7 @@ public class FinanceCollectionServiceImpl implements IFinanceCollectionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
     public int deleteFinanceCollectionByIds(String ids)
     {
         return financeCollectionMapper.deleteFinanceCollectionByIds(Convert.toStrArray(ids));
@@ -87,6 +110,7 @@ public class FinanceCollectionServiceImpl implements IFinanceCollectionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "fc", userAlias = "fc")
     public int deleteFinanceCollectionById(Long id)
     {
         return financeCollectionMapper.deleteFinanceCollectionById(id);
