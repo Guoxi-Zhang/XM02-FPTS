@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增公告图表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered"
+           style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "system/notice";
+
+    $(function () {
+        var options = {
+            url: prefix + "/printToHtml",
+            modalName: "公告管理",
+            striped: true,
+            pagination: false,
+            search: false,
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showExport: false,
+            showColumns: false,
+            showPrint: false,
+            cardView: false,
+            detailView: false,
+            columns: [
+                {
+                    field: 'noticeId',
+                    title: '序号',
+                    align: 'center',
+                },
+                {
+                    field: 'noticeTitle',
+                    title: '公告标题',
+                    align: 'center',
+                },
+                // {
+                //     field: 'noticeType',
+                //     title: '公告类型',
+                //     align: 'center',
+                // },
+                {
+                    field: 'status',
+                    title: '状态',
+                    align: 'center',
+                },
+                {
+                    field: 'createBy',
+                    title: '创建者',
+                    align: 'center',
+                },
+                {
+                    field: 'createTime',
+                    title: '创建时间',
+                    align: 'center',
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

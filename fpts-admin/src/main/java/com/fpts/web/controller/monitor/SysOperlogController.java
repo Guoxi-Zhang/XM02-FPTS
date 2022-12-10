@@ -1,6 +1,8 @@
 package com.fpts.web.controller.monitor;
 
 import java.util.List;
+
+import com.fpts.system.domain.SysNotice;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,6 +50,24 @@ public class SysOperlogController extends BaseController
         startPage();
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
         return getDataTable(list);
+    }
+
+    /**
+     * 打印操作日志
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysOperLog operLog) {
+        List<SysOperLog> list = operLogService.selectOperLogList(operLog);
+        return getDataTable(list);
+    }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print() {
+        return prefix + "/print";
     }
 
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)

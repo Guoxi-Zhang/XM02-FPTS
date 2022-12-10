@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增日志图表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered"
+           style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "monitor/operlog";
+
+    $(function () {
+        var options = {
+            url: prefix + "/printToHtml",
+            modalName: "日志管理",
+            striped: true,
+            pagination: false,
+            search: false,
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showExport: false,
+            showColumns: false,
+            showPrint: false,
+            cardView: false,
+            detailView: false,
+            columns: [
+                {
+                    field: 'operId',
+                    title: '日志编号',
+                },
+                {
+                    field: 'title',
+                    title: '系统模块',
+                },
+                {
+                    field: 'businessType',
+                    title: '操作类型',
+                    align: 'center',
+                },
+                {
+                    field: 'operName',
+                    title: '操作人员',
+                },
+                // {
+                //     field: 'deptName',
+                //     title: '部门名称',
+                // },
+                // {
+                //     field: 'operIp',
+                //     title: '主机',
+                // },
+                // {
+                //     field: 'operLocation',
+                //     title: '操作地点',
+                // },
+                {
+                    field: 'status',
+                    title: '操作状态',
+                    align: 'center',
+                },
+                {
+                    field: 'operTime',
+                    title: '操作时间',
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

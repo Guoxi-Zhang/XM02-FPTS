@@ -2,6 +2,7 @@ package com.fpts.web.controller.monitor;
 
 import java.util.List;
 import com.fpts.framework.shiro.service.SysPasswordService;
+import com.fpts.system.domain.SysOperLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +51,24 @@ public class SysLogininforController extends BaseController
         startPage();
         List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
         return getDataTable(list);
+    }
+
+    /**
+     * 打印操作日志
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysLogininfor logininfor) {
+        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+        return getDataTable(list);
+    }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print() {
+        return prefix + "/print";
     }
 
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)

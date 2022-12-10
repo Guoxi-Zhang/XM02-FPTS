@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('新增菜单图表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered"
+           style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "system/menu";
+
+    $(function () {
+        var options = {
+            url: prefix + "/printToHtml",
+            modalName: "菜单管理",
+            striped: true,
+            pagination: false,
+            search: false,
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showExport: false,
+            showColumns: false,
+            showPrint: false,
+            cardView: false,
+            detailView: false,
+            columns: [
+                {
+                    title: '菜单名称',
+                    field: 'menuName',
+                    width: '20',
+                    widthUnit: '%',
+                    align: 'center',
+                },
+                {
+                    title: '类型',
+                    field: 'menuType',
+                    width: '10',
+                    widthUnit: '%',
+                    align: "left",
+                },
+                {
+                    field: 'orderNum',
+                    title: '排序',
+                    width: '10',
+                    widthUnit: '%',
+                    align: "left",
+                },
+                {
+                    field: 'visible',
+                    title: '状态',
+                    width: '10',
+                    widthUnit: '%',
+                    align: "left",
+                },
+            ]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>
