@@ -60,10 +60,16 @@ public class FinanceCollectionController extends BaseController
     @RequiresPermissions("finance_collection:collection:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(FinanceWarehouse financeCollection)
+    /*public TableDataInfo list(FinanceWarehouse financeCollection)
     {
         startPage();
         List<FinanceWarehouse> list = financeWarehouseServiceImpl.selectFinanceWarehouseListTocoll(financeCollection);
+        return getDataTable(list);
+    }*/
+    public TableDataInfo list(FinanceCollection financeCollection)
+    {
+        startPage();
+        List<FinanceCollection> list = financeCollectionService.selectFinanceCollectionListWithColl(financeCollection);
         return getDataTable(list);
     }
 

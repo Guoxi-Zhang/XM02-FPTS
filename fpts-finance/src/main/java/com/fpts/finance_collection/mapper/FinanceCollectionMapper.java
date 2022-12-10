@@ -26,6 +26,7 @@ public interface FinanceCollectionMapper
      * @return 产品收藏集合
      */
     public List<FinanceCollection> selectFinanceCollectionList(FinanceCollection financeCollection);
+    public List<FinanceCollection> selectFinanceCollectionListWithColl(FinanceCollection financeCollection);
 
     /**
      * 新增产品收藏
