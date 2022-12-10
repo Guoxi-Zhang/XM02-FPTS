@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.finance_forum.mapper.FinanceForumMapper">
+    
+    <resultMap type="FinanceForum" id="FinanceForumResult">
+        <result property="id"    column="id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="name"    column="name"    />
+        <result property="createUserid"    column="create_userid"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="content"    column="content"    />
+    </resultMap>
+
+    <sql id="selectFinanceForumVo">
+        select id, product_id, name, create_userid, create_time, content from finance_forum
+    </sql>
+
+    <select id="selectFinanceForumList" parameterType="FinanceForum" resultMap="FinanceForumResult">
+        <include refid="selectFinanceForumVo"/>
+        <where>  
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="createUserid != null "> and create_userid = #{createUserid}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+        </where>
+    </select>
+    
+    <select id="selectFinanceForumById" parameterType="Long" resultMap="FinanceForumResult">
+        <include refid="selectFinanceForumVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFinanceForum" parameterType="FinanceForum">
+        insert into finance_forum
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="name != null">name,</if>
+            <if test="createUserid != null">create_userid,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="content != null">content,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="createUserid != null">#{createUserid},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="content != null">#{content},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFinanceForum" parameterType="FinanceForum">
+        update finance_forum
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="createUserid != null">create_userid = #{createUserid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="content != null">content = #{content},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFinanceForumById" parameterType="Long">
+        delete from finance_forum where id = #{id}
+    </delete>
+
+    <delete id="deleteFinanceForumByIds" parameterType="String">
+        delete from finance_forum where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
