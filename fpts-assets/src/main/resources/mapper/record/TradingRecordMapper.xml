@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="productId"    column="product_id"    />
         <result property="productType"    column="product_type"    />
         <result property="productPrice"    column="product_price"    />
-        <result property="pruductAmount"    column="pruduct_amount"    />
+        <result property="productAmount"    column="product_amount"    />
         <result property="orderTime"    column="order_time"    />
         <result property="orderDirection"    column="order_direction"    />
         <result property="orderPattern"    column="order_pattern"    />
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTradingRecordVo">
-        select order_id, user_id, account_id, product_id, product_type, product_price, pruduct_amount, order_time, order_direction, order_pattern, order_situation from trading_record
+        select order_id, user_id, account_id, product_id, product_type, product_price, product_amount, order_time, order_direction, order_pattern, order_situation from trading_record
     </sql>
 
     <select id="selectTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
             <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
             <if test="productPrice != null "> and product_price = #{productPrice}</if>
-            <if test="pruductAmount != null "> and pruduct_amount = #{pruductAmount}</if>
+            <if test="productAmount != null "> and product_amount = #{productAmount}</if>
             <if test="orderTime != null "> and order_time = #{orderTime}</if>
             <if test="orderDirection != null  and orderDirection != ''"> and order_direction = #{orderDirection}</if>
             <if test="orderPattern != null  and orderPattern != ''"> and order_pattern = #{orderPattern}</if>
@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productId != null and productId != ''">product_id,</if>
             <if test="productType != null and productType != ''">product_type,</if>
             <if test="productPrice != null">product_price,</if>
-            <if test="pruductAmount != null">pruduct_amount,</if>
+            <if test="productAmount != null">product_amount,</if>
             <if test="orderTime != null">order_time,</if>
             <if test="orderDirection != null">order_direction,</if>
             <if test="orderPattern != null">order_pattern,</if>
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productId != null and productId != ''">#{productId},</if>
             <if test="productType != null and productType != ''">#{productType},</if>
             <if test="productPrice != null">#{productPrice},</if>
-            <if test="pruductAmount != null">#{pruductAmount},</if>
+            <if test="productAmount != null">#{productAmount},</if>
             <if test="orderTime != null">#{orderTime},</if>
             <if test="orderDirection != null">#{orderDirection},</if>
             <if test="orderPattern != null">#{orderPattern},</if>
@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productId != null and productId != ''">product_id = #{productId},</if>
             <if test="productType != null and productType != ''">product_type = #{productType},</if>
             <if test="productPrice != null">product_price = #{productPrice},</if>
-            <if test="pruductAmount != null">pruduct_amount = #{pruductAmount},</if>
+            <if test="productAmount != null">product_amount = #{productAmount},</if>
             <if test="orderTime != null">order_time = #{orderTime},</if>
             <if test="orderDirection != null">order_direction = #{orderDirection},</if>
             <if test="orderPattern != null">order_pattern = #{orderPattern},</if>

@@ -64,6 +64,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="assets:account_assets:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-primary" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -79,6 +82,9 @@
         var createTimeDatas = [[${@dict.getType('${column.dictType}')}]];
         var prefix = ctx + "assets/account_assets";
 
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/assets/account_assets/print");
+        }
         $(function() {
             var options = {
                 url: prefix + "/list",

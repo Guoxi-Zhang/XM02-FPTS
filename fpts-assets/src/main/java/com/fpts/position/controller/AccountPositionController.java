@@ -124,4 +124,22 @@ public class AccountPositionController extends BaseController
     {
         return toAjax(accountPositionService.deleteAccountPositionByNos(ids));
     }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/print")
+    public String print(){
+        return prefix + "/print";
+    }
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(AccountPosition accountPosition)
+    {
+        List<AccountPosition> list = accountPositionService.selectAccountPositionList(accountPosition);
+        return getDataTable(list);
+    }
 }

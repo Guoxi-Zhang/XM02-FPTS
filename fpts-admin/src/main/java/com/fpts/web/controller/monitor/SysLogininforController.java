@@ -2,7 +2,6 @@ package com.fpts.web.controller.monitor;
 
 import java.util.List;
 import com.fpts.framework.shiro.service.SysPasswordService;
-import com.fpts.system.domain.SysOperLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

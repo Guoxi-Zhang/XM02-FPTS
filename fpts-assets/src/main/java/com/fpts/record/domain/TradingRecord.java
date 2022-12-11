@@ -43,7 +43,7 @@ public class TradingRecord extends BaseEntity
 
     /** 产品成交数量 */
     @Excel(name = "产品成交数量")
-    private Integer pruductAmount;
+    private Integer productAmount;
 
     /** 下单时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -66,7 +66,7 @@ public class TradingRecord extends BaseEntity
 
     }
 
-    public TradingRecord(String userId, String accountId, Integer pruductAmount, String orderPattern, Date datetime, Double productPrice, String productId, String orderDirection, String productType) {
+    public TradingRecord(String userId, String accountId, Integer productAmount, String orderPattern, Date datetime, Double productPrice, String productId, String orderDirection, String productType) {
         setAccountId(accountId);
         setOrderDirection(orderDirection);
         setOrderId(orderId);
@@ -75,7 +75,7 @@ public class TradingRecord extends BaseEntity
         setOrderPattern(orderPattern);
         setOrderTime(datetime);
         setProductPrice(productPrice);
-        setPruductAmount(pruductAmount);
+        setProductAmount(productAmount);
     }
 
     public void setOrderId(Long orderId) 
@@ -123,14 +123,14 @@ public class TradingRecord extends BaseEntity
     {
         return productPrice;
     }
-    public void setPruductAmount(Integer pruductAmount) 
+    public void setProductAmount(Integer productAmount)
     {
-        this.pruductAmount = pruductAmount;
+        this.productAmount = productAmount;
     }
 
-    public Integer getPruductAmount()
+    public Integer getProductAmount()
     {
-        return pruductAmount;
+        return productAmount;
     }
     public void setOrderTime(Date orderTime) 
     {
@@ -178,7 +178,7 @@ public class TradingRecord extends BaseEntity
             .append("productId", getProductId())
             .append("productType", getProductType())
             .append("productPrice", getProductPrice())
-            .append("pruductAmount", getPruductAmount())
+            .append("productAmount", getProductAmount())
             .append("orderTime", getOrderTime())
             .append("orderDirection", getOrderDirection())
             .append("orderPattern", getOrderPattern())

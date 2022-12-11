@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('账户持仓html打印')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto;"></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "assets/account_assets";
+
+    $(function() {
+        var options = {
+            url: prefix + "/printToHtml",
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showToggle:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            modalName: "查看资产",
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'no',
+                    title: '序号',
+                    visible: false
+                },
+                {
+                    field: 'userId',
+                    title: '用户ID'
+                },
+                {
+                    field: 'accountId',
+                    title: '账户ID'
+                },
+                {
+                    field: 'accountBalance',
+                    title: '账户余额'
+                },
+                {
+                    field: 'totalAssets',
+                    title: '用户的资产数额'
+                },
+                {
+                    field: 'astockAssets',
+                    title: 'A股总资产'
+                },
+                {
+                    field: 'bstockAssets',
+                    title: 'B股总资产'
+                },
+                {
+                    field: 'bonfAssets',
+                    title: '债券总资产'
+                },
+                {
+                    field: 'fundAssets',
+                    title: '基金总资产'
+                }]
+        };
+        $.table.init(options);
+    });
+
+
+</script>
+</body>
+</html>

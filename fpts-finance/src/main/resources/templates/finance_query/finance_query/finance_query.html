@@ -196,7 +196,7 @@
             $.table.init(options);
         });
 
-        function buy(pid, newprice, type) {
+         buy = function(pid, newprice, type) {
             localStorage.setItem("productId", pid);
             localStorage.setItem("productPrice", newprice);
             localStorage.setItem("productType", type);

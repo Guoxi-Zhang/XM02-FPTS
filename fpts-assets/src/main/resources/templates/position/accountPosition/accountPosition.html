@@ -59,6 +59,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="position:accountPosition:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-primary" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -71,6 +74,10 @@
         var removeFlag = [[${@permission.hasPermi('position:accountPosition:remove')}]];
         var productTypeDatas = [[${@dict.getType('product_type')}]];
         var prefix = ctx + "position/accountPosition";
+
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "position/accountPosition/print");
+        }
 
         $(function() {
             var options = {

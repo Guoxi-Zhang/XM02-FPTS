@@ -183,4 +183,24 @@ public class TradingRecordController extends BaseController
         List<TradingRecord> list = tradingRecordService.selectTradingRecordList(tradingRecord);
         return getDataTable(list);
     }
+
+    /**
+     * 统计场所码扫描情况
+
+
+    @GetMapping("/harts")
+    public String statistics(ModelMap mmap)
+    {
+        return prefix + "/chart";
+    }
+
+    @RequiresPermissions("record:transaction_record:chart")
+    @Log(title = "场所码扫描情况统计", businessType = BusinessType.INSERT)
+    @PostMapping("/eCharts")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        List<Integer> list = coderesultService.getMonthlyPlaceScanRecordIncrement();
+        return list;
+    }*/
 }
