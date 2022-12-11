@@ -1203,7 +1203,7 @@ var table = {
                         url = table.options.viewUrl.replace("{id}", row);
                     }
                 }
-                $.modal.openFull("修改" + table.options.modalName, url);
+                $.modal.open("查看" + table.options.modalName, url);
             },
             // 修改访问地址
             editUrl: function(id) {
