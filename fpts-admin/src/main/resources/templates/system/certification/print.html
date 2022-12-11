@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('实名认证列表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered"
+           style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var prefix = ctx + "system/certification";
+
+    $(function () {
+        var options = {
+            url: prefix + "/printToHtml",
+            modalName: "公告管理",
+            striped: true,
+            pagination: false,
+            search: false,
+            showSearch: false,
+            showRefresh: false,
+            showToggle: false,
+            showExport: false,
+            showColumns: false,
+            showPrint: false,
+            cardView: false,
+            detailView: false,
+            columns: [
+                {
+                    field: 'userId',
+                    title: '用户ID',
+                },
+                {
+                    field: 'realName',
+                    title: '真实姓名'
+                },
+                {
+                    field: 'identityCardNumber',
+                    title: '身份证号'
+                },
+            ]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>

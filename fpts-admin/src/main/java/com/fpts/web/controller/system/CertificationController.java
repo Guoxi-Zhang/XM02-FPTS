@@ -1,6 +1,8 @@
 package com.fpts.web.controller.system;
 
 import java.util.List;
+
+import com.fpts.system.domain.SysNotice;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,24 @@ public class CertificationController extends BaseController
         startPage();
         List<Certification> list = certificationService.selectCertificationList(certification);
         return getDataTable(list);
+    }
+
+    /**
+     * 打印实名认证列表
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(Certification certification) {
+        List<Certification> list = certificationService.selectCertificationList(certification);
+        return getDataTable(list);
+    }
+
+    /**
+     * 打印实名认证列表
+     */
+    @RequestMapping("/print")
+    public String print() {
+        return prefix + "/print";
     }
 
     /**
