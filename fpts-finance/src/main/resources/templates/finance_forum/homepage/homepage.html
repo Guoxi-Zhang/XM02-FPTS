@@ -22,10 +22,10 @@
                                 <label>发帖人：</label>
                                 <input type="text" name="createUserid"/>
                             </li>
-                            <li>
-                                <label>创建时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择创建时间" name="createTime"/>
-                            </li>
+<!--                            <li>-->
+<!--                                <label>创建时间：</label>-->
+<!--                                <input type="text" class="time-input" placeholder="请选择创建时间" name="createTime"/>-->
+<!--                            </li>-->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -37,7 +37,7 @@
 
             <div class="btn-group-sm" id="toolbar" role="group">
                 <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="finance_forum:homepage:add">
-                    <i class="fa fa-plus"></i> 添加
+                    <i class="fa fa-plus"></i> 发帖
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="finance_forum:homepage:edit">
                     <i class="fa fa-edit"></i> 修改
@@ -47,6 +47,12 @@
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="finance_forum:homepage:export">
                     <i class="fa fa-download"></i> 导出
+                </a>
+                <a class="btn btn-warning" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
+                <a class="btn btn-success" onclick="forumAddchart()">
+                    <i class="fa fa-bar-chart"></i> 统计图表
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -59,6 +65,15 @@
         var editFlag = [[${@permission.hasPermi('finance_forum:homepage:edit')}]];
         var removeFlag = [[${@permission.hasPermi('finance_forum:homepage:remove')}]];
         var prefix = ctx + "finance_forum/homepage";
+
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/finance_forum/homepage/forumprint");
+        }
+
+        function forumAddchart() {
+            table.set();
+            $.modal.open(table.options.modalName + "统计图表", "/finance_forum/homepage/forumchart");
+        }
 
         $(function() {
             var options = {

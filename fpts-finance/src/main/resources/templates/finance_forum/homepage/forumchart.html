@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('金融论坛图表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <!-- bootstrap-table 表格插件样式 -->
+
+</head>
+<body class="white-bg">
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 800px;height:500px;"></div>
+<script th:src="@{/js/echarts.js}"></script>
+
+<<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    //var chartDom = document.getElementById('quotations-count-container');
+    var myChart = echarts.init(document.getElementById('main'));
+
+    let cntList = [[${cntList}]];
+    console.log(cntList);
+
+    let pIdList = [[${pIdList}]];
+    console.log(pIdList);
+
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '金融论坛分类统计图'
+        },
+        tooltip: {},
+        legend: {
+            data: ['帖子数量']
+        },
+        xAxis: {
+            name: '产品编号',
+            data: pIdList,
+            axisLabel: { // 如果显示字符过长 就间隔1 设为0
+                interval:0
+            }
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '帖子数量',
+                type: 'bar',
+                data: cntList
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

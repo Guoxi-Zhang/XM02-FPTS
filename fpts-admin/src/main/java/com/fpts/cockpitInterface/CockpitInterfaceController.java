@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 可视化大屏幕Controller
  *
- * @author Guoxi Zhang
+ * @author Guoxi Zhang & Yicheng Li
  * @date 2022-12-09
  */
 @Controller
@@ -32,7 +32,7 @@ public class CockpitInterfaceController {
     public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum)
     {
         /**
-         * 查询待办事项列表
+         * 查询待办事项列表和金融论坛
          */
         List<TodoList> list = todoListService.selectTodoListList(todoList);
         mmap.put("todoList", list);
@@ -48,26 +48,4 @@ public class CockpitInterfaceController {
     {
 
     }
-//    @GetMapping()
-//    public String cockpitInterface1(ModelMap mmap, FinanceForum financeForum)
-//    {
-//        /**
-//         * 查询待办事项列表
-//         */
-//        List<FinanceForum> list = financeForumService.selectFinanceForumList(financeForum);
-//        mmap.put("financeForum", list);
-//        //返回视图
-//        return prefix + "/cockpitInterface";
-//    }
-//
-//
-//    /**
-//     * 查询待办事项列表
-//     */
-//    @PostMapping("/finance_forum")
-//    @ResponseBody
-//    public void list1(ModelMap mmap, FinanceForum financeForum)
-//    {
-//
-//    }
 }

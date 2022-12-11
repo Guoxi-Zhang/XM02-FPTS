@@ -1,6 +1,9 @@
 package com.fpts.finance_forum.controller;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import com.fpts.finance_collection.domain.FinanceCollection;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,5 +126,69 @@ public class FinanceForumController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(financeForumService.deleteFinanceForumByIds(ids));
+    }
+
+    /**
+     * 打印跳转
+     */
+    @RequestMapping("/forumprint")
+    public String print(){
+
+        return prefix + "/forumprint";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(FinanceForum financeForum)
+    {
+//      startPage();
+        List<FinanceForum> list = financeForumService.selectFinanceForumList(financeForum);
+
+        return getDataTable(list);
+    }
+    /**
+     * 统计报表
+     */
+
+    @RequestMapping("/forumchart")
+    public String showChart(ModelMap mmap){
+        List<FinanceForum> list = financeForumService.selectFinanceForumList( new FinanceForum());
+        //SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+        for(FinanceForum f: list){
+            String pId = f.getProductId();
+
+            if(map.containsKey(pId)){
+                int cnt = map.get(pId);
+                map.replace(pId, cnt, cnt + 1);
+            }else{
+                map.put(pId, 1);
+            }
+        }
+
+        List<Map.Entry<String,Integer>> list1= new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
+        Collections.sort(list1,new Comparator<Map.Entry<String, Integer>>() {
+            //降序排序
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        List<String> pIdList = new ArrayList<String>();   //= Arrays.asList(pIdSet);
+        List<Integer> cntList = new ArrayList<Integer>();
+        for (Map.Entry<String, Integer> a: list1){
+            pIdList.add(a.getKey());
+            cntList.add(a.getValue());
+        }
+
+        System.out.println(pIdList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("pIdList", pIdList);
+        mmap.put("cntList", cntList);
+        return prefix + "/forumchart";
     }
 }

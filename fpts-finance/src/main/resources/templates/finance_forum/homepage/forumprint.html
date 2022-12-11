@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('金融论坛图表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body>
+
+<div class="col-sm-12 select-table" style="text-align: center; ">
+    <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto; margin: 0 auto;"></table>
+</div>
+
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "finance_forum/homepage";
+
+    $(function() {
+        var options = {
+            url: prefix + "/printToHtml",
+            modalName: "金融论坛",
+            // rowStyle: function(row, index) {                         // 动态修改行的颜色
+            //     if(row.id %2 == 1 ){                                 // 如果值是1，表示已删除，设置行的颜色
+            //         return  {css:{"background-color":'#f2f8fd'}};
+            //     }
+            //     return '';                                           // 注意：即使不改变颜色，也得返回 '' ，否则会报错。
+            // },
+            striped:true,
+            pagination:false,
+            search:false,
+            showSearch:false,
+            showRefresh:false,
+            showToggle:false,
+            showExport:false,
+            showColumns:false,
+            showPrint:false,
+            cardView:false,
+            detailView:false,
+            columns: [{
+                checkbox: true
+            },
+                {
+                    field: 'id',
+                    title: '论坛帖子ID',
+                    visible: false
+                },
+                {
+                    field: 'productId',
+                    title: '产品代码'
+                },
+                {
+                    field: 'name',
+                    title: '产品名称'
+                },
+                {
+                    field: 'createUserid',
+                    title: '发帖人'
+                },
+                {
+                    field: 'content',
+                    title: '帖子内容'
+                }]
+        };
+        $.table.init(options);
+    });
+</script>
+</body>
+</html>
