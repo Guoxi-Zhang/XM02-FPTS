@@ -1,5 +1,9 @@
 package com.fpts.position.service.impl;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,5 +94,27 @@ public class AccountPositionServiceImpl implements IAccountPositionService
     public int deleteAccountPositionByOrderId(Long orderId)
     {
         return accountPositionMapper.deleteAccountPositionByOrderId(orderId);
+    }
+
+    //统计
+    @Override
+    public List<Integer> getMonthlyData() {
+        int len = 12;
+        List<Integer> list = new ArrayList<>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+
+        Calendar c = Calendar.getInstance();
+        List<AccountPosition> accountPositions = accountPositionMapper.selectAccountPositionList(new AccountPosition());
+        for (AccountPosition item:accountPositions) {
+            if ( !"".equals(item.getAccountId())) {
+                c.setTime(item.getOrderTime());
+                int idx = c.get(Calendar.MONTH);
+                int cur = list.get(idx);
+                list.set(idx, 1 + cur);
+            }
+        }
+        return list;
     }
 }

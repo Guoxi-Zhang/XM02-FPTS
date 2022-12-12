@@ -162,6 +162,7 @@ public class AccountPosition extends BaseEntity
         return orderSituation;
     }
 
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)

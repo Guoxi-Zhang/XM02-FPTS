@@ -1,8 +1,11 @@
 package com.fpts.record.service.impl;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.fpts.common.annotation.DataScope;
+import com.fpts.position.domain.AccountPosition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.record.mapper.TradingRecordMapper;
@@ -138,5 +141,27 @@ public class TradingRecordServiceImpl implements ITradingRecordService
     public int deleteTradingRecordByOrderId(Long orderId)
     {
         return tradingRecordMapper.deleteTradingRecordByOrderId(orderId);
+    }
+
+    //统计
+    @Override
+    public List<Integer> getMonthlyData() {
+        int len = 12;
+        List<Integer> list = new ArrayList<>(len);
+        for (int i = 0; i < len; i++) {
+            list.add(0);
+        }
+
+        Calendar c = Calendar.getInstance();
+        List<TradingRecord> tradingRecords = tradingRecordMapper.selectTradingRecordList(new TradingRecord());
+        for (TradingRecord item:tradingRecords) {
+            if ( !"".equals(item.getAccountId())) {
+                c.setTime(item.getOrderTime());
+                int idx = c.get(Calendar.MONTH);
+                int cur = list.get(idx);
+                list.set(idx, 1 + cur);
+            }
+        }
+        return list;
     }
 }

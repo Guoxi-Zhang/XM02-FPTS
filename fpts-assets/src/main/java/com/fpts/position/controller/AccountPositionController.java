@@ -142,4 +142,20 @@ public class AccountPositionController extends BaseController
         List<AccountPosition> list = accountPositionService.selectAccountPositionList(accountPosition);
         return getDataTable(list);
     }
+
+    /**
+     * 统计
+     */
+    @GetMapping("/eCharts")
+    public String statistics()
+    {
+        return prefix + "/eCharts";
+    }
+
+    @PostMapping("/eCharts")
+    @ResponseBody
+    public List<Integer> statisticsData()
+    {
+        return accountPositionService.getMonthlyData();
+    }
 }

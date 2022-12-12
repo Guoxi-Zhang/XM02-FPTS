@@ -51,4 +51,6 @@ public interface IAccountPositionService
      * @return 结果
      */
     public int deleteAccountPositionByOrderId(Long no);
+
+    public List<Integer> getMonthlyData();
 }

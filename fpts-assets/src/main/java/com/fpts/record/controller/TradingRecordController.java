@@ -192,22 +192,18 @@ public class TradingRecordController extends BaseController
         return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
     /**
-     * 统计场所码扫描情况
-
-
-    @GetMapping("/harts")
-    public String statistics(ModelMap mmap)
+     * 统计
+     */
+    @GetMapping("/eCharts")
+    public String statistics()
     {
-        return prefix + "/chart";
+        return prefix + "/eCharts";
     }
 
-    @RequiresPermissions("record:transaction_record:chart")
-    @Log(title = "场所码扫描情况统计", businessType = BusinessType.INSERT)
     @PostMapping("/eCharts")
     @ResponseBody
     public List<Integer> statisticsData()
     {
-        List<Integer> list = coderesultService.getMonthlyPlaceScanRecordIncrement();
-        return list;
-    }*/
+        return tradingRecordService.getMonthlyData();
+    }
 }
