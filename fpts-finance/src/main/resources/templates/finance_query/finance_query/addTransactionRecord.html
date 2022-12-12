@@ -10,7 +10,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label is-required">用户ID：</label>
             <div class="col-sm-8">
-                <input name="accountId" th:value="${@permission.getPrincipalProperty('userId')}" id="userId" class="form-control" type="text" required th:disabled="disabled">
+                <input name="userId" id="userId" class="form-control" type="text" required readonly="readonly">
             </div>
         </div>
         <div class="form-group">
@@ -22,13 +22,13 @@
         <div class="form-group">
             <label class="col-sm-3 control-label is-required">金融产品ID：</label>
             <div class="col-sm-8">
-                <input  name="productId" id="productId" class="form-control" type="text" required th:disabled="disabled">
+                <input  name="productId" id="productId" class="form-control" type="text" required readonly="readonly">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label is-required">产品类型：</label>
             <div class="col-sm-8">
-                <select name="productType" id="productType" class="form-control m-b" th:with="type=${@dict.getType('product_type')}" required th:disabled="disabled">
+                <select name="productType" id="productType" class="form-control m-b" th:with="type=${@dict.getType('product_type')}" required readonly="readonly">
                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                 </select>
             </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label is-required">产品成交价格：</label>
             <div class="col-sm-8">
-                <input name="productPrice" id="productPrice" class="form-control" type="text" required th:disabled="disabled">
+                <input name="productPrice" id="productPrice" class="form-control" type="text" required readonly="readonly">
             </div>
         </div>
         <div class="form-group">
@@ -57,7 +57,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">交易方向：</label>
             <div class="col-sm-8">
-                <select name="orderDirection" id="orderDirection" class="form-control m-b" th:with="type=${@dict.getType('transaction_direction')}" required th:disabled="disabled">
+                <select name="orderDirection" id="orderDirection" class="form-control m-b" th:with="type=${@dict.getType('transaction_direction')}" required readonly="readonly">
                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                 </select>
             </div>
@@ -65,7 +65,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">交易方式：</label>
             <div class="col-sm-8">
-                <select name="orderPattern" id="orderPattern" class="form-control m-b" th:with="type=${@dict.getType('transaction_pattern')}" required th:disabled="disabled">
+                <select name="orderPattern" id="orderPattern" class="form-control m-b" th:with="type=${@dict.getType('transaction_pattern')}" required readonly="readonly">
                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                 </select>
             </div>
@@ -73,7 +73,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">订单完成情况：</label>
             <div class="col-sm-8">
-                <select th:value="1" name="orderSituation" id="orderSituation" class="form-control m-b" th:with="type=${@dict.getType('transaction_situation')}" required>
+                <select th:value="1" name="orderSituation" id="orderSituation" class="form-control m-b" th:with="type=${@dict.getType('transaction_situation')}" required readonly="readonly">
                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                 </select>
             </div>
@@ -86,17 +86,19 @@
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: datetimepicker-js" />
 <script th:inline="javascript">
-    var userId = [[${@permission.getPrincipalProperty('userId')}]];
+    var userid = [[${@permission.getPrincipalProperty('userId')}]];
     /*$(".userId").val(localStorage.getItem("userId"));
     $(".productId").val(localStorage.getItem("productId"));
     $(".productPrice").val(localStorage.getItem("productPrice"));
     $(".productType").val(localStorage.getItem("productType"));*/
+
+    /*var productprice = localStorage.getItem("productPrice");
     var productid = localStorage.getItem("productId");
-    var productprice = localStorage.getItem("productPrice");
-    var producttype = localStorage.getItem("productType");
-    /*document.getElementById("productId").value = productid;
-    document.getElementById("productPrice").value = productprice;
-    document.getElementById("productType").value = producttype;*/
+    var producttype = localStorage.getItem("productType");*/
+    document.getElementById("productId").value = localStorage.getItem("productId");
+    document.getElementById("productPrice").value = localStorage.getItem("productPrice");
+    document.getElementById("productType").value = localStorage.getItem("productType");
+    document.getElementById("userId").value = userid;
 
     /*function getNowFormatTime() {
         var nowDate = new Date();

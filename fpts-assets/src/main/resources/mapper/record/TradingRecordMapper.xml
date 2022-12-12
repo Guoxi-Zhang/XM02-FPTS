@@ -37,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="orderSituation != null  and orderSituation != ''"> and order_situation = #{orderSituation}</if>
             ${params.dataScope}
         </where>
+
     </select>
 
     <select id="selectAStockTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">

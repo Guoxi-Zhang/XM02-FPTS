@@ -167,9 +167,10 @@
         });
 
         function buy(pid, newprice, type) {
-            localStorage.setItem("productId", pid);
+            localStorage.setItem("productId", JSON.stringify(pid));
             localStorage.setItem("productPrice", newprice);
             localStorage.setItem("productType", type);
+            console.log(typeof p);
             console.log(pid);
             console.log(newprice);
             console.log(type);

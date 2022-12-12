@@ -27,8 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
             <if test="productAssets != null "> and product_assets = #{productAssets}</if>
             <if test="lastOrderTime != null "> and last_order_time = #{lastOrderTime}</if>
-            ${params.dataScope}
         </where>
+        ${params.dataScope}
     </select>
     
     <select id="selectAccountPositionByNo" parameterType="Long" resultMap="AccountPositionResult">

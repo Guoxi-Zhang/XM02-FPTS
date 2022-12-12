@@ -181,12 +181,31 @@
                         var actions = [];
                         actions.push('<a class="btn btn-info btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.orderId + '\')"><i class="fa fa-handshake-o"></i>查看交易</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>撤单</a>');
+                        actions.push('<a class="btn btn-info btn-xs ' + '" href="javascript:void(0)" onclick="cancelTrading(\'' + row.id + '\')"><i class="fa fa-check"></i>撤单</a>');
                         return actions.join('');
                     }
                 }]
             };
             $.table.init(options);
         });
+        function todoItemComplete(id) {
+            var config = {
+                url: "/todo/list/complete/" + id,
+                type: "post",
+                dataType: "json",
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍候...");
+                    $.modal.disable();
+                },
+                success: function (result) {
+                    if (typeof callback == "function") {
+                        callback(result);
+                    }
+                    $.operate.successCallback(result);
+                }
+            };
+            $.ajax(config);
+        }
     </script>
 </body>
 </html>

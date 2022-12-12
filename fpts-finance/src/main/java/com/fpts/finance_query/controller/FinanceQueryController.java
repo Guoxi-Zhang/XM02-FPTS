@@ -166,7 +166,7 @@ public class FinanceQueryController extends BaseController
     /**
      * 新增交易记录
      */
-    @RequiresPermissions("finance_query:finance_query:addaddTransactionRecord")
+    @RequiresPermissions("record:transaction_record:add")
     @Log(title = "交易记录", businessType = BusinessType.INSERT)
     @PostMapping("/addTransactionRecord")
     @ResponseBody

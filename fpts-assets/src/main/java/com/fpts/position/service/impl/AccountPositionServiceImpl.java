@@ -28,7 +28,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 账户持仓
      */
     @Override
-    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public AccountPosition selectAccountPositionByNo(Long no)
     {
         return accountPositionMapper.selectAccountPositionByNo(no);
@@ -41,7 +41,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 账户持仓
      */
     @Override
-    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public List<AccountPosition> selectAccountPositionList(AccountPosition accountPosition)
     {
         return accountPositionMapper.selectAccountPositionList(accountPosition);
@@ -54,7 +54,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int insertAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.insertAccountPosition(accountPosition);
@@ -67,7 +67,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int updateAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.updateAccountPosition(accountPosition);
@@ -80,7 +80,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int deleteAccountPositionByNos(String nos)
     {
         return accountPositionMapper.deleteAccountPositionByNos(Convert.toStrArray(nos));
@@ -93,7 +93,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_assets", userAlias = "account_assets")
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int deleteAccountPositionByNo(Long no)
     {
         return accountPositionMapper.deleteAccountPositionByNo(no);
