@@ -4,100 +4,96 @@
     <th:block th:include="include :: header('账户持仓列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <label>用户ID：</label>
-                                <input type="text" name="userId"/>
-                            </li>
-                            <li>
-                                <label>账户ID：</label>
-                                <input type="text" name="accountId"/>
-                            </li>
-                            <li>
-                                <label>金融产品ID：</label>
-                                <input type="text" name="productId"/>
-                            </li>
-                            <li>
-                                <label>产品类型：</label>
-                                <select name="productType" th:with="type=${@dict.getType('product_type')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>产品资产数额：</label>
-                                <input type="text" name="productAssets"/>
-                            </li>
-                            <li>
-                                <label>最近下单时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择最近下单时间" name="lastOrderTime"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+<div class="container-div">
+    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="formId">
+                <div class="select-list">
+                    <ul>
+                        <li>
+                            <label>账户ID：</label>
+                            <input type="text" name="accountId"/>
+                        </li>
+                        <li>
+                            <label>金融产品ID：</label>
+                            <input type="text" name="productId"/>
+                        </li>
+                        <li>
+                            <label>产品类型：</label>
+                            <select name="productType" th:with="type=${@dict.getType('product_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>下单时间：</label>
+                            <input type="text" class="time-input" placeholder="请选择下单时间" name="orderTime"/>
+                        </li>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="position:accountPosition:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="position:accountPosition:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="position:accountPosition:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="position:accountPosition:export">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-                <a class="btn btn-primary" onclick="printToHtml()">
-                    <i class="fa fa-download"></i> 打印HTML
-                </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
+                        <li>
+                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <div class="btn-group-sm" id="toolbar" role="group">
+            <a class="btn btn-success" methods="post" onclick="addNewTransaction()">
+                <i class="fa fa-plus"></i> 进行交易
+            </a>
+            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="position:accountPosition:edit">
+                <i class="fa fa-edit"></i> 修改
+            </a>
+            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="position:accountPosition:remove">
+                <i class="fa fa-remove"></i> 删除
+            </a>
+            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="position:accountPosition:export">
+                <i class="fa fa-download"></i> 导出
+            </a>
+            <a class="btn btn-primary" onclick="printToHtml()">
+                <i class="fa fa-download"></i> 打印HTML
+            </a>
+        </div>
+        <div class="col-sm-12 select-table table-striped">
+            <table id="bootstrap-table"></table>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('position:accountPosition:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('position:accountPosition:remove')}]];
-        var productTypeDatas = [[${@dict.getType('product_type')}]];
-        var prefix = ctx + "position/accountPosition";
+</div>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('position:accountPosition:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('position:accountPosition:remove')}]];
+    var productTypeDatas = [[${@dict.getType('product_type')}]];
+    var orderDirectionDatas = [[${@dict.getType('transaction_direction')}]];
+    var orderPatternDatas = [[${@dict.getType('transaction_pattern')}]];
+    var orderSituationDatas = [[${@dict.getType('transaction_situation')}]];
+    var prefix = ctx + "position/accountPosition";
 
-        function printToHtml(){
-            $.modal.openFull(table.options.modalName + "打印", "position/accountPosition/print");
-        }
+    function addNewTransaction(){
+        window.location.href = "/finance_query/finance_query"
+    }
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "账户持仓",
-                columns: [{
-                    checkbox: true
-                },
+    function printToHtml(){
+        $.modal.openFull(table.options.modalName + "打印", "position/accountPosition/print");
+    }
+
+    $(function() {
+        var options = {
+            url: prefix + "/list",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            modalName: "账户持仓",
+            columns: [{
+                checkbox: true
+            },
                 {
-                    field: 'no',
+                    field: 'orderId',
                     title: '序号',
                     visible: false
-                },
-                {
-                    field: 'userId',
-                    title: '用户ID'
                 },
                 {
                     field: 'accountId',
@@ -111,30 +107,34 @@
                     field: 'productType',
                     title: '产品类型',
                     formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(productTypeDatas, value);
+                        return $.table.selectDictLabel(productTypeDatas, value);
                     }
                 },
                 {
-                    field: 'productAssets',
-                    title: '产品资产数额'
+                    field: 'productPrice',
+                    title: '产品价格'
                 },
                 {
-                    field: 'lastOrderTime',
-                    title: '最近下单时间'
+                    field: 'productAmount',
+                    title: '产品数量'
+                },
+                {
+                    field: 'orderTime',
+                    title: '下单时间'
                 },
                 {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.no + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.no + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.orderId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
                 }]
-            };
-            $.table.init(options);
-        });
-    </script>
+        };
+        $.table.init(options);
+    });
+</script>
 </body>
 </html>

@@ -5,23 +5,23 @@ import com.fpts.position.domain.AccountPosition;
 
 /**
  * 账户持仓Mapper接口
- * 
+ *
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-12
  */
-public interface AccountPositionMapper 
+public interface AccountPositionMapper
 {
     /**
      * 查询账户持仓
-     * 
-     * @param no 账户持仓主键
+     *
+     * @param orderId 账户持仓主键
      * @return 账户持仓
      */
-    public AccountPosition selectAccountPositionByNo(Long no);
+    public AccountPosition selectAccountPositionByOrderId(Long orderId);
 
     /**
      * 查询账户持仓列表
-     * 
+     *
      * @param accountPosition 账户持仓
      * @return 账户持仓集合
      */
@@ -29,7 +29,7 @@ public interface AccountPositionMapper
 
     /**
      * 新增账户持仓
-     * 
+     *
      * @param accountPosition 账户持仓
      * @return 结果
      */
@@ -37,7 +37,7 @@ public interface AccountPositionMapper
 
     /**
      * 修改账户持仓
-     * 
+     *
      * @param accountPosition 账户持仓
      * @return 结果
      */
@@ -45,17 +45,17 @@ public interface AccountPositionMapper
 
     /**
      * 删除账户持仓
-     * 
-     * @param no 账户持仓主键
+     *
+     * @param orderId 账户持仓主键
      * @return 结果
      */
-    public int deleteAccountPositionByNo(Long no);
+    public int deleteAccountPositionByOrderId(Long orderId);
 
     /**
      * 批量删除账户持仓
-     * 
-     * @param nos 需要删除的数据主键集合
+     *
+     * @param orderIds 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteAccountPositionByNos(String[] nos);
+    public int deleteAccountPositionByOrderIds(String[] orderIds);
 }

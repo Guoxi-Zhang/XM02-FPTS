@@ -1,59 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpts.position.mapper.AccountPositionMapper">
-    
+
     <resultMap type="AccountPosition" id="AccountPositionResult">
-        <result property="no"    column="no"    />
+        <result property="orderId"    column="order_id"    />
         <result property="userId"    column="user_id"    />
         <result property="accountId"    column="account_id"    />
         <result property="productId"    column="product_id"    />
         <result property="productType"    column="product_type"    />
-        <result property="productAssets"    column="product_assets"    />
-        <result property="lastOrderTime"    column="last_order_time"    />
+        <result property="productPrice"    column="product_price"    />
+        <result property="productAmount"    column="product_amount"    />
+        <result property="orderTime"    column="order_time"    />
+        <result property="orderDirection"    column="order_direction"    />
+        <result property="orderPattern"    column="order_pattern"    />
+        <result property="orderSituation"    column="order_situation"    />
     </resultMap>
 
     <sql id="selectAccountPositionVo">
-        select no, user_id, account_id, product_id, product_type, product_assets, last_order_time from account_position
+        select order_id, user_id, account_id, product_id, product_type, product_price, product_amount, order_time, order_direction, order_pattern, order_situation from account_position
     </sql>
 
     <select id="selectAccountPositionList" parameterType="AccountPosition" resultMap="AccountPositionResult">
         <include refid="selectAccountPositionVo"/>
-        <where>  1=1
+        <where> 1=1
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
             <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
             <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
-            <if test="productAssets != null "> and product_assets = #{productAssets}</if>
-            <if test="lastOrderTime != null "> and last_order_time = #{lastOrderTime}</if>
+            <if test="productPrice != null "> and product_price = #{productPrice}</if>
+            <if test="productAmount != null "> and product_amount = #{productAmount}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="orderDirection != null  and orderDirection != ''"> and order_direction = #{orderDirection}</if>
+            <if test="orderPattern != null  and orderPattern != ''"> and order_pattern = #{orderPattern}</if>
+            <if test="orderSituation != null  and orderSituation != ''"> and order_situation = #{orderSituation}</if>
         </where>
         ${params.dataScope}
     </select>
-    
-    <select id="selectAccountPositionByNo" parameterType="Long" resultMap="AccountPositionResult">
+
+    <select id="selectAccountPositionByOrderId" parameterType="Long" resultMap="AccountPositionResult">
         <include refid="selectAccountPositionVo"/>
-        where no = #{no}
+        where order_id = #{orderId}
     </select>
-        
-    <insert id="insertAccountPosition" parameterType="AccountPosition" useGeneratedKeys="true" keyProperty="no">
+
+    <insert id="insertAccountPosition" parameterType="AccountPosition" useGeneratedKeys="true" keyProperty="orderId">
         insert into account_position
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
             <if test="accountId != null and accountId != ''">account_id,</if>
             <if test="productId != null">product_id,</if>
             <if test="productType != null">product_type,</if>
-            <if test="productAssets != null">product_assets,</if>
-            <if test="lastOrderTime != null">last_order_time,</if>
-         </trim>
+            <if test="productPrice != null">product_price,</if>
+            <if test="productAmount != null">product_amount,</if>
+            <if test="orderTime != null">order_time,</if>
+            <if test="orderDirection != null">order_direction,</if>
+            <if test="orderPattern != null">order_pattern,</if>
+            <if test="orderSituation != null">order_situation,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
             <if test="accountId != null and accountId != ''">#{accountId},</if>
             <if test="productId != null">#{productId},</if>
             <if test="productType != null">#{productType},</if>
-            <if test="productAssets != null">#{productAssets},</if>
-            <if test="lastOrderTime != null">#{lastOrderTime},</if>
-         </trim>
+            <if test="productPrice != null">#{productPrice},</if>
+            <if test="productAmount != null">#{productAmount},</if>
+            <if test="orderTime != null">#{orderTime},</if>
+            <if test="orderDirection != null">#{orderDirection},</if>
+            <if test="orderPattern != null">#{orderPattern},</if>
+            <if test="orderSituation != null">#{orderSituation},</if>
+        </trim>
     </insert>
 
     <update id="updateAccountPosition" parameterType="AccountPosition">
@@ -63,20 +79,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="accountId != null and accountId != ''">account_id = #{accountId},</if>
             <if test="productId != null">product_id = #{productId},</if>
             <if test="productType != null">product_type = #{productType},</if>
-            <if test="productAssets != null">product_assets = #{productAssets},</if>
-            <if test="lastOrderTime != null">last_order_time = #{lastOrderTime},</if>
+            <if test="productPrice != null">product_price = #{productPrice},</if>
+            <if test="productAmount != null">product_amount = #{productAmount},</if>
+            <if test="orderTime != null">order_time = #{orderTime},</if>
+            <if test="orderDirection != null">order_direction = #{orderDirection},</if>
+            <if test="orderPattern != null">order_pattern = #{orderPattern},</if>
+            <if test="orderSituation != null">order_situation = #{orderSituation},</if>
         </trim>
-        where no = #{no}
+        where order_id = #{orderId}
     </update>
 
-    <delete id="deleteAccountPositionByNo" parameterType="Long">
-        delete from account_position where no = #{no}
+    <delete id="deleteAccountPositionByOrderId" parameterType="Long">
+        delete from account_position where order_id = #{orderId}
     </delete>
 
-    <delete id="deleteAccountPositionByNos" parameterType="String">
-        delete from account_position where no in 
-        <foreach item="no" collection="array" open="(" separator="," close=")">
-            #{no}
+    <delete id="deleteAccountPositionByOrderIds" parameterType="String">
+        delete from account_position where order_id in
+        <foreach item="orderId" collection="array" open="(" separator="," close=")">
+            #{orderId}
         </foreach>
     </delete>
 

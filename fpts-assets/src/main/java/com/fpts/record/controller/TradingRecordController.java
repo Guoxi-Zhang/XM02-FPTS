@@ -184,6 +184,13 @@ public class TradingRecordController extends BaseController
         return getDataTable(list);
     }
 
+    @PostMapping("/cancel/{orderId}")
+    @ResponseBody
+    public AjaxResult toItemComplete(@PathVariable("orderId") Long orderId){
+        TradingRecord tradingRecord = tradingRecordService.selectTradingRecordByOrderId(orderId);
+        tradingRecord.setOrderDirection("1");
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
+    }
     /**
      * 统计场所码扫描情况
 

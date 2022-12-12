@@ -5,70 +5,100 @@
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-accountPosition-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">用户ID：</label>
-                <div class="col-sm-8">
-                    <input name="userId" class="form-control" type="text" required>
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-accountPosition-add">
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">用户ID：</label>
+            <div class="col-sm-8">
+                <input name="userId" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label is-required">账户ID：</label>
+            <div class="col-sm-8">
+                <input name="accountId" class="form-control" type="text" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">金融产品ID：</label>
+            <div class="col-sm-8">
+                <input name="productId" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">产品类型：</label>
+            <div class="col-sm-8">
+                <select name="productType" class="form-control m-b" th:with="type=${@dict.getType('product_type')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">产品价格：</label>
+            <div class="col-sm-8">
+                <input name="productPrice" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">产品数量：</label>
+            <div class="col-sm-8">
+                <input name="productAmount" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">下单时间：</label>
+            <div class="col-sm-8">
+                <div class="input-group date">
+                    <input name="orderTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label is-required">账户ID：</label>
-                <div class="col-sm-8">
-                    <input name="accountId" class="form-control" type="text" required>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">交易方向：</label>
+            <div class="col-sm-8">
+                <select name="orderDirection" class="form-control m-b" th:with="type=${@dict.getType('transaction_direction')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">金融产品ID：</label>
-                <div class="col-sm-8">
-                    <input name="productId" class="form-control" type="text">
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">交易方式：</label>
+            <div class="col-sm-8">
+                <select name="orderPattern" class="form-control m-b" th:with="type=${@dict.getType('transaction_pattern')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">产品类型：</label>
-                <div class="col-sm-8">
-                    <select name="productType" class="form-control m-b" th:with="type=${@dict.getType('product_type')}">
-                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                    </select>
-                </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">交易情况：</label>
+            <div class="col-sm-8">
+                <select name="orderSituation" class="form-control m-b" th:with="type=${@dict.getType('transaction_situation')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">产品资产数额：</label>
-                <div class="col-sm-8">
-                    <input name="productAssets" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">最近下单时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="lastOrderTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <script th:inline="javascript">
-        var prefix = ctx + "position/accountPosition"
-        $("#form-accountPosition-add").validate({
-            focusCleanup: true
-        });
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: datetimepicker-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "position/accountPosition"
+    $("#form-accountPosition-add").validate({
+        focusCleanup: true
+    });
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-accountPosition-add').serialize());
-            }
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/add", $('#form-accountPosition-add').serialize());
         }
+    }
 
-        $("input[name='lastOrderTime']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-    </script>
+    $("input[name='orderTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+</script>
 </body>
 </html>

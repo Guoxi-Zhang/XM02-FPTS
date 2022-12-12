@@ -10,16 +10,16 @@ import com.fpts.common.core.domain.BaseEntity;
 
 /**
  * 账户持仓对象 account_position
- * 
+ *
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-12
  */
 public class AccountPosition extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     /** 序号 */
-    private Long no;
+    private Long orderId;
 
     /** 用户ID */
     @Excel(name = "用户ID")
@@ -37,89 +37,145 @@ public class AccountPosition extends BaseEntity
     @Excel(name = "产品类型")
     private String productType;
 
-    /** 产品资产数额 */
-    @Excel(name = "产品资产数额")
-    private BigDecimal productAssets;
+    /** 产品价格 */
+    @Excel(name = "产品价格")
+    private BigDecimal productPrice;
 
-    /** 最近下单时间 */
+    /** 产品数量 */
+    @Excel(name = "产品数量")
+    private Long productAmount;
+
+    /** 下单时间 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "最近下单时间", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date lastOrderTime;
+    @Excel(name = "下单时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date orderTime;
 
-    public void setNo(Long no) 
+    /** 交易方向 */
+    @Excel(name = "交易方向")
+    private String orderDirection;
+
+    /** 交易方式 */
+    @Excel(name = "交易方式")
+    private String orderPattern;
+
+    /** 交易情况 */
+    @Excel(name = "交易情况")
+    private String orderSituation;
+
+    public void setOrderId(Long orderId)
     {
-        this.no = no;
+        this.orderId = orderId;
     }
 
-    public Long getNo() 
+    public Long getOrderId()
     {
-        return no;
+        return orderId;
     }
-    public void setUserId(Long userId) 
+    public void setUserId(Long userId)
     {
         this.userId = userId;
     }
 
-    public Long getUserId() 
+    public Long getUserId()
     {
         return userId;
     }
-    public void setAccountId(String accountId) 
+    public void setAccountId(String accountId)
     {
         this.accountId = accountId;
     }
 
-    public String getAccountId() 
+    public String getAccountId()
     {
         return accountId;
     }
-    public void setProductId(String productId) 
+    public void setProductId(String productId)
     {
         this.productId = productId;
     }
 
-    public String getProductId() 
+    public String getProductId()
     {
         return productId;
     }
-    public void setProductType(String productType) 
+    public void setProductType(String productType)
     {
         this.productType = productType;
     }
 
-    public String getProductType() 
+    public String getProductType()
     {
         return productType;
     }
-    public void setProductAssets(BigDecimal productAssets) 
+    public void setProductPrice(BigDecimal productPrice)
     {
-        this.productAssets = productAssets;
+        this.productPrice = productPrice;
     }
 
-    public BigDecimal getProductAssets() 
+    public BigDecimal getProductPrice()
     {
-        return productAssets;
+        return productPrice;
     }
-    public void setLastOrderTime(Date lastOrderTime) 
+    public void setProductAmount(Long productAmount)
     {
-        this.lastOrderTime = lastOrderTime;
+        this.productAmount = productAmount;
     }
 
-    public Date getLastOrderTime() 
+    public Long getProductAmount()
     {
-        return lastOrderTime;
+        return productAmount;
+    }
+    public void setOrderTime(Date orderTime)
+    {
+        this.orderTime = orderTime;
+    }
+
+    public Date getOrderTime()
+    {
+        return orderTime;
+    }
+    public void setOrderDirection(String orderDirection)
+    {
+        this.orderDirection = orderDirection;
+    }
+
+    public String getOrderDirection()
+    {
+        return orderDirection;
+    }
+    public void setOrderPattern(String orderPattern)
+    {
+        this.orderPattern = orderPattern;
+    }
+
+    public String getOrderPattern()
+    {
+        return orderPattern;
+    }
+    public void setOrderSituation(String orderSituation)
+    {
+        this.orderSituation = orderSituation;
+    }
+
+    public String getOrderSituation()
+    {
+        return orderSituation;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("no", getNo())
-            .append("userId", getUserId())
-            .append("accountId", getAccountId())
-            .append("productId", getProductId())
-            .append("productType", getProductType())
-            .append("productAssets", getProductAssets())
-            .append("lastOrderTime", getLastOrderTime())
-            .toString();
+                .append("orderId", getOrderId())
+                .append("userId", getUserId())
+                .append("accountId", getAccountId())
+                .append("productId", getProductId())
+                .append("productType", getProductType())
+                .append("productPrice", getProductPrice())
+                .append("productAmount", getProductAmount())
+                .append("orderTime", getOrderTime())
+                .append("orderDirection", getOrderDirection())
+                .append("orderPattern", getOrderPattern())
+                .append("orderSituation", getOrderSituation())
+                .toString();
     }
 }

@@ -21,9 +21,9 @@ import com.fpts.common.core.page.TableDataInfo;
 
 /**
  * 账户持仓Controller
- * 
+ *
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-12
  */
 @Controller
 @RequestMapping("/position/accountPosition")
@@ -93,10 +93,10 @@ public class AccountPositionController extends BaseController
      * 修改账户持仓
      */
     @RequiresPermissions("position:accountPosition:edit")
-    @GetMapping("/edit/{no}")
-    public String edit(@PathVariable("no") Long no, ModelMap mmap)
+    @GetMapping("/edit/{orderId}")
+    public String edit(@PathVariable("orderId") Long orderId, ModelMap mmap)
     {
-        AccountPosition accountPosition = accountPositionService.selectAccountPositionByNo(no);
+        AccountPosition accountPosition = accountPositionService.selectAccountPositionByOrderId(orderId);
         mmap.put("accountPosition", accountPosition);
         return prefix + "/edit";
     }
@@ -122,7 +122,7 @@ public class AccountPositionController extends BaseController
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(accountPositionService.deleteAccountPositionByNos(ids));
+        return toAjax(accountPositionService.deleteAccountPositionByOrderIds(ids));
     }
 
     /**

@@ -7,41 +7,38 @@ import com.fpts.position.mapper.AccountPositionMapper;
 import com.fpts.position.domain.AccountPosition;
 import com.fpts.position.service.IAccountPositionService;
 import com.fpts.common.core.text.Convert;
-import com.fpts.common.annotation.DataScope;
 
 /**
  * 账户持仓Service业务层处理
- * 
+ *
  * @author lzy
- * @date 2022-12-08
+ * @date 2022-12-12
  */
 @Service
-public class AccountPositionServiceImpl implements IAccountPositionService 
+public class AccountPositionServiceImpl implements IAccountPositionService
 {
     @Autowired
     private AccountPositionMapper accountPositionMapper;
 
     /**
      * 查询账户持仓
-     * 
-     * @param no 账户持仓主键
+     *
+     * @param orderId 账户持仓主键
      * @return 账户持仓
      */
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
-    public AccountPosition selectAccountPositionByNo(Long no)
+    public AccountPosition selectAccountPositionByOrderId(Long orderId)
     {
-        return accountPositionMapper.selectAccountPositionByNo(no);
+        return accountPositionMapper.selectAccountPositionByOrderId(orderId);
     }
 
     /**
      * 查询账户持仓列表
-     * 
+     *
      * @param accountPosition 账户持仓
      * @return 账户持仓
      */
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public List<AccountPosition> selectAccountPositionList(AccountPosition accountPosition)
     {
         return accountPositionMapper.selectAccountPositionList(accountPosition);
@@ -49,12 +46,11 @@ public class AccountPositionServiceImpl implements IAccountPositionService
 
     /**
      * 新增账户持仓
-     * 
+     *
      * @param accountPosition 账户持仓
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int insertAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.insertAccountPosition(accountPosition);
@@ -62,12 +58,11 @@ public class AccountPositionServiceImpl implements IAccountPositionService
 
     /**
      * 修改账户持仓
-     * 
+     *
      * @param accountPosition 账户持仓
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int updateAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.updateAccountPosition(accountPosition);
@@ -75,27 +70,25 @@ public class AccountPositionServiceImpl implements IAccountPositionService
 
     /**
      * 批量删除账户持仓
-     * 
-     * @param nos 需要删除的账户持仓主键
+     *
+     * @param orderIds 需要删除的账户持仓主键
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
-    public int deleteAccountPositionByNos(String nos)
+    public int deleteAccountPositionByOrderIds(String orderIds)
     {
-        return accountPositionMapper.deleteAccountPositionByNos(Convert.toStrArray(nos));
+        return accountPositionMapper.deleteAccountPositionByOrderIds(Convert.toStrArray(orderIds));
     }
 
     /**
      * 删除账户持仓信息
-     * 
-     * @param no 账户持仓主键
+     *
+     * @param orderId 账户持仓主键
      * @return 结果
      */
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
-    public int deleteAccountPositionByNo(Long no)
+    public int deleteAccountPositionByOrderId(Long orderId)
     {
-        return accountPositionMapper.deleteAccountPositionByNo(no);
+        return accountPositionMapper.deleteAccountPositionByOrderId(orderId);
     }
 }
