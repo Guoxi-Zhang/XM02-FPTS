@@ -58,4 +58,6 @@ public interface IAccountAssetsService
      * @return 结果
      */
     public int deleteAccountAssetsByNo(Long no);
+
+    public List<AccountAssets> selectAccountId();
 }

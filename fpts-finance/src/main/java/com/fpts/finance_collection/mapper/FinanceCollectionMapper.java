@@ -59,4 +59,5 @@ public interface FinanceCollectionMapper
      * @return 结果
      */
     public int deleteFinanceCollectionByIds(String[] ids);
+
 }

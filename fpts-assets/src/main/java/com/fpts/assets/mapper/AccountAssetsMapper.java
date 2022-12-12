@@ -58,4 +58,9 @@ public interface AccountAssetsMapper
      * @return 结果
      */
     public int deleteAccountAssetsByNos(String[] nos);
+
+    /**
+     * Mapper接口
+     */
+    public List<AccountAssets> selectAccountId();
 }

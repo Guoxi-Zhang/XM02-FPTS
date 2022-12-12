@@ -101,4 +101,15 @@ public class AccountAssetsServiceImpl implements IAccountAssetsService
     {
         return accountAssetsMapper.deleteAccountAssetsByNo(no);
     }
+
+    /**
+     * 查询方法，这里可以到时候做数据验证，避免重复数据
+     *
+     */
+    @Override
+
+    public List<AccountAssets> selectAccountId()
+    {
+        return accountAssetsMapper.selectAccountId();
+    }
 }

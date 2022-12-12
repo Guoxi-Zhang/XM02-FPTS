@@ -2,6 +2,11 @@ package com.fpts.finance_query.controller;
 
 import java.lang.reflect.Array;
 import java.util.*;
+
+import ch.qos.logback.classic.util.LogbackMDCAdapter;
+import com.fpts.assets.domain.AccountAssets;
+import com.fpts.assets.mapper.AccountAssetsMapper;
+import com.fpts.assets.service.IAccountAssetsService;
 import com.fpts.record.domain.TradingRecord;
 import com.fpts.record.service.ITradingRecordService;
 import org.apache.ibatis.transaction.Transaction;
@@ -28,6 +33,8 @@ import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.utils.poi.ExcelUtil;
 import com.fpts.common.core.page.TableDataInfo;
+import org.springframework.ui.Model;
+
 
 /**
  * 行情查询Controller
@@ -52,6 +59,8 @@ public class FinanceQueryController extends BaseController
     private IFinanceCollectionService financeCollectionService;
     @Autowired
     private ITradingRecordService tradingRecordService;
+    @Autowired
+    private IAccountAssetsService accountAssetsService;
 
     @RequiresPermissions("finance_query:finance_query:view")
     @GetMapping()
@@ -160,6 +169,7 @@ public class FinanceQueryController extends BaseController
     @GetMapping("/addTransactionRecord")
     public String addTransactionRecord()
     {
+        
         return prefix + "/addTransactionRecord";
     }
 

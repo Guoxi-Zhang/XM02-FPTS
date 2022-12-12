@@ -16,10 +16,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label is-required">账户ID：</label>
             <div class="col-sm-8">
-                <select id="addProductId" name="addProductId" class="form-control" >
-                    <option value="">---请选择产品---</option>
-                    <option th:each="a:${account_assets}" th:value="${a.account}" th:text="${a.productName}"></option>
-                </select>
+                <input name="accountId" id="accountId" class="form-control" type="text" required>
             </div>
         </div>
         <div class="form-group">
@@ -48,15 +45,7 @@
                 <input name="productAmount" class="form-control" type="number" required onblur="checkProductAmount()">
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">下单时间：</label>
-            <div class="col-sm-8">
-                <div class="input-group date">
-                    <input name="orderTime" id="orderTime" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                </div>
-            </div>
-        </div>
+
         <div class="form-group">
             <label class="col-sm-3 control-label">交易方向：</label>
             <div class="col-sm-8">
@@ -84,13 +73,12 @@
     </form>
 </div>
 <script>
-
 </script>
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: datetimepicker-js" />
 <script th:inline="javascript">
     var userid = [[${@permission.getPrincipalProperty('userId')}]];
-    var productid = Json.toString(localStorage.getItem("productId"));
+    var productid = localStorage.getItem("productId");
     var productprice = localStorage.getItem("productPrice");
     var producttype = localStorage.getItem("productType");
     console.log(typeof productid);
@@ -98,23 +86,19 @@
     document.getElementById("productId").value = productid;
     document.getElementById("productPrice").value = productprice;
     document.getElementById("productType").value = producttype;
-
     function checkProductAmount() {
         var productmount = document.getElementById("productAmount").value;
         console(productmount);
     }
-
     var prefix = ctx + "finance_collection/collection";
     $("#form-transaction_record-add").validate({
         focusCleanup: true
     });
-
     function submitHandler() {
         if ($.validate.form()) {
             $.operate.save(prefix + "/addTransactionRecord", $('#form-transaction_record-add').serialize());
         }
     }
-
     $("input[name='orderTime']").datetimepicker({
         format: "yyyy-mm-dd",
         minView: "month",

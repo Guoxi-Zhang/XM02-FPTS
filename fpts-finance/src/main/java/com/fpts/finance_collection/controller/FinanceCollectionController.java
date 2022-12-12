@@ -2,6 +2,10 @@ package com.fpts.finance_collection.controller;
 
 import java.util.List;
 
+import ch.qos.logback.classic.util.LogbackMDCAdapter;
+import com.fpts.assets.domain.AccountAssets;
+import com.fpts.assets.mapper.AccountAssetsMapper;
+import com.fpts.assets.service.IAccountAssetsService;
 import com.fpts.record.domain.TradingRecord;
 import com.fpts.record.service.ITradingRecordService;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
@@ -10,6 +14,7 @@ import com.fpts.record.service.ITradingRecordService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +44,8 @@ public class FinanceCollectionController extends BaseController
 
     @Autowired
     private IFinanceCollectionService financeCollectionService;
+    @Autowired
+    private IAccountAssetsService accountAssetsService;
 
     @Autowired
     private IFinanceWarehouseService financeWarehouseServiceImpl;
@@ -174,11 +181,22 @@ public class FinanceCollectionController extends BaseController
     /**
      * 新增交易记录
      */
-    @RequiresPermissions("finance_collection:collection:addaddTransactionRecord")
+    @RequiresPermissions("record:transaction_record:add")
     @Log(title = "交易记录", businessType = BusinessType.INSERT)
     @PostMapping("/addTransactionRecord")
     @ResponseBody
     public AjaxResult addTransactionRecordSave(TradingRecord tradingRecord) {
         return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
+
+    
+    /*查询账户信息列表
+    @PostMapping("/accountist")
+    @ResponseBody
+    public TableDataInfo list( chargePile)
+    {
+        startPage();
+        List<ChargePile> list = chargePileService.selectChargePileList(chargePile);
+        return getDataTable(list);
+    }*/
 }
