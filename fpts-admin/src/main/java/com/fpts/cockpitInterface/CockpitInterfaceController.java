@@ -28,6 +28,7 @@ public class CockpitInterfaceController {
     private ITodoListService todoListService;
     @Autowired
     private IFinanceForumService financeForumService;
+
     @GetMapping()
     public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum)
     {
@@ -38,6 +39,7 @@ public class CockpitInterfaceController {
         mmap.put("todoList", list);
         List<FinanceForum> list1 = financeForumService.selectFinanceForumList(financeForum);
         mmap.put("financeForum", list1);
+
 
         //返回视图
         return prefix + "/cockpitInterface";
