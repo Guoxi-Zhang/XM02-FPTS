@@ -22,6 +22,8 @@ import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.utils.poi.ExcelUtil;
 import com.fpts.common.core.page.TableDataInfo;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 查看资产Controller
  * 
@@ -146,33 +148,4 @@ public class AccountAssetsController extends BaseController
         return getDataTable(list);
     }
 
-
-    /**
-     * 统计报表
-     *
-     *
-
-    @RequestMapping("/chart")
-    public String showChart(ModelMap mmap){
-        List<AccountAssets> list = accountAssetsService.selectAccountAssetsList(new AccountAssets());
-        Map<String, Integer> map = new TreeMap<String, Integer>();
-        for(AccountAssets f: list){
-            String type = f.getType();
-            if(map.containsKey(type)){
-                int cnt = map.get(type);
-                map.replace(type, cnt, cnt + 1);
-            }else{
-                map.put(type, 1);
-            }
-        }
-        String[] typeSet = map.keySet().toArray(new String[0]);
-        List<String> typeList= Arrays.asList(typeSet);
-        Integer[] cntSet = map.values().toArray(new Integer[0]);
-        List<Integer> cntList=Arrays.asList(cntSet);
-        System.out.println(typeList.toString());
-        System.out.println(cntList.toString());
-        mmap.put("typeList", typeList);
-        mmap.put("cntList", cntList);
-        return prefix + "/chart";
-    }*/
 }

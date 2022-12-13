@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>请输入卖出的数量</title>
+
+</head>
+<body>
+<form method="post" action="sellPartSave" class="">
+    <table>
+        <tr>
+            <td><input type="hidden" id="orderId" name="orderId"></td>
+        </tr>
+        <tr>
+            <td>卖出数量：</td>
+            <td><input type="text" id="amount" name="amount" required></td>
+        </tr>
+        <tr>
+            <td><input type="submit" onblur="compareAmount"></td>
+            <td><input type="reset"></td>
+        </tr>
+    </table>
+</form>
+<script>
+    document.getElementById("orderId").value = localStorage.getItem("orderId");
+    function compareAmount() {
+        var a = localStorage.getItem("productAmount");
+        if (a < document.getElementById("amount").value) {
+            alert("您输入的数大于您持有的产品数量");
+            document.getElementById("amount").value = "";
+        }
+
+    }
+</script>
+</body>
+</html>
