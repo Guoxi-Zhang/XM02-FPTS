@@ -8,11 +8,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.assets.domain.AccountAssets;
@@ -148,4 +144,73 @@ public class AccountAssetsController extends BaseController
         return getDataTable(list);
     }
 
+    /**
+     * 输入充值金额
+     */
+    @GetMapping("/addBalance/{no}")
+    public String addBalance(ModelMap mmap, @PathVariable("no")  Long id)
+    {
+        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo(id);
+        System.out.println(accountAssets.toString());
+        mmap.put("accountAssets", accountAssets);
+        return prefix + "/addBalance";
+    }
+    /*
+     * 输入充值金额保存
+     */
+    @PostMapping("/addBalance")
+    public String setSellAmountSave(@RequestParam("no") String no, @RequestParam("changedBalance") String changedBalance){
+        Long n = Long.parseLong(no);
+        Long changebalance = Long.parseLong(changedBalance);
+        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo(n);
+        Long newBalance = accountAssets.getAccountBalance() + changebalance;
+        accountAssets.setAccountBalance(newBalance);
+        accountAssetsService.updateAccountAssets(accountAssets);
+        return "assets/account_assets";
+    }
+    @PostMapping("/addBalanceSave")
+    @ResponseBody
+    public AjaxResult toItemCompleteAdd(@RequestParam(value="no")  Long no, @RequestParam(value="changedBalance")  Long changedBalance){
+        //System.out.println(id + " " + sellAmount + " " + productPrice+ " " + productType +" ");
+        AccountAssets accountAssets =  accountAssetsService.selectAccountAssetsByNo(no);
+        accountAssets.setAccountBalance(accountAssets.getAccountBalance() + changedBalance);
+        System.out.println(accountAssets.getAccountBalance());
+        //AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo()
+        return toAjax(accountAssetsService.updateAccountAssets(accountAssets));
+    }
+
+    /**
+     * 输入取出金额
+     */
+    @GetMapping("/decreaseBalance/{no}")
+    public String decreaseBalance(ModelMap mmap, @PathVariable("no")  Long id)
+    {
+        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo(id);
+        System.out.println(accountAssets.toString());
+        mmap.put("accountAssets", accountAssets);
+        return prefix + "/decreaseBalance";
+    }
+    /*
+     * 输入取出金额保存
+     */
+    @PostMapping("/decreaseBalance")
+    public String decreaseBalanceSave(@RequestParam("no") String no, @RequestParam("changedBalance") String changedBalance){
+        Long n = Long.parseLong(no);
+        Long changebalance = Long.parseLong(changedBalance);
+        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo(n);
+        Long newBalance = accountAssets.getAccountBalance() - changebalance;
+        accountAssets.setAccountBalance(newBalance);
+        accountAssetsService.updateAccountAssets(accountAssets);
+        return "assets/account_assets";
+    }
+    @PostMapping("/decreaseBalanceSave")
+    @ResponseBody
+    public AjaxResult toItemCompleteDecrease(@RequestParam(value="no")  Long no, @RequestParam(value="changedBalance")  Long changedBalance){
+        //System.out.println(id + " " + sellAmount + " " + productPrice+ " " + productType +" ");
+        AccountAssets accountAssets =  accountAssetsService.selectAccountAssetsByNo(no);
+        accountAssets.setAccountBalance(accountAssets.getAccountBalance() - changedBalance);
+        System.out.println(accountAssets.getAccountBalance());
+        //AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo()
+        return toAjax(accountAssetsService.updateAccountAssets(accountAssets));
+    }
 }
