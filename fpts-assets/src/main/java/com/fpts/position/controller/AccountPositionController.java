@@ -1,15 +1,14 @@
 package com.fpts.position.controller;
 
 import java.util.List;
+
+import com.fpts.assets.domain.AccountAssets;
+import com.fpts.assets.service.IAccountAssetsService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.position.domain.AccountPosition;
@@ -18,6 +17,8 @@ import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.utils.poi.ExcelUtil;
 import com.fpts.common.core.page.TableDataInfo;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 账户持仓Controller
@@ -33,6 +34,9 @@ public class AccountPositionController extends BaseController
 
     @Autowired
     private IAccountPositionService accountPositionService;
+
+    @Autowired
+    private IAccountAssetsService accountAssetsService;
 
     @RequiresPermissions("position:accountPosition:view")
     @GetMapping()
@@ -157,5 +161,43 @@ public class AccountPositionController extends BaseController
     public List<Integer> statisticsData()
     {
         return accountPositionService.getMonthlyData();
+    }
+
+    /**
+     * 输入卖出数量
+     */
+    @GetMapping("/sellPart/{orderId}")
+    public String setSellAmount(ModelMap mmap, @PathVariable("orderId")  Long id)
+    {
+        AccountPosition accountPosition = accountPositionService.selectAccountPositionByOrderId(id);
+        System.out.println(accountPosition.toString());
+        mmap.put("accountPosition", accountPosition);
+        return prefix + "/sellPart";
+    }
+
+    /**
+     * 输入卖出数量保存
+     */
+    @PostMapping("/sellPartSave")
+    public String setSellAmountSave(@RequestParam("orderId") String orderId, @RequestParam("amount") String amount){
+        Long o = Long.parseLong(orderId);
+        Long a = Long.parseLong(amount);
+        AccountPosition accountPosition = accountPositionService.selectAccountPositionByOrderId(o);
+        Long newAmount = accountPosition.getProductAmount() - a;
+        accountPosition.setProductAmount(newAmount);
+        accountPositionService.updateAccountPosition(accountPosition);
+        return "position/accountPosition";
+    }
+
+    @PostMapping("/sell")
+    @ResponseBody
+    public AjaxResult toItemComplete(@RequestParam(value="orderId")  Long id, @RequestParam(value="sellAmount")  Long sellAmount, @RequestParam(value="productPrice")  Long productPrice, @RequestParam(value="productType")  Long productType ){
+        System.out.println(id + " " + sellAmount + " " + productPrice+ " " + productType +" ");
+        AccountPosition accountPosition =  accountPositionService.selectAccountPositionByOrderId(id);
+        accountPosition.setProductAmount(accountPosition.getProductAmount() - sellAmount);
+        System.out.println(accountPosition.getProductAmount());
+//        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo()
+        return toAjax(accountPositionService.updateAccountPosition(accountPosition));
+
     }
 }

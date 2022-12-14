@@ -46,10 +46,10 @@
             <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="position:accountPosition:export">
                 <i class="fa fa-download"></i> 导出
             </a>
-            <a class="btn btn-primary" onclick="printToHtml()">
-                <i class="fa fa-download"></i> 打印HTML
+            <a class="btn btn-info" onclick="printToHtml()">
+                <i class="fa fa-bars"></i> 打印HTML
             </a>
-            <a class="btn btn-info" onclick="printToChart()">
+            <a class="btn btn-success" onclick="printToChart()">
                 <i class="fa fa-area-chart"></i> 统计图表
             </a>
         </div>
@@ -97,11 +97,13 @@
                 },
                 {
                     field: 'accountId',
-                    title: '账户ID'
+                    title: '账户ID',
+                    sortable: true
                 },
                 {
                     field: 'productId',
-                    title: '金融产品ID'
+                    title: '金融产品ID',
+                    sortable: true
                 },
                 {
                     field: 'productType',
@@ -112,15 +114,18 @@
                 },
                 {
                     field: 'productPrice',
-                    title: '产品价格'
+                    title: '产品价格',
+                    sortable: true
                 },
                 {
                     field: 'productAmount',
-                    title: '产品数量'
+                    title: '产品数量',
+                    sortable: true
                 },
                 {
                     field: 'orderTime',
-                    title: '下单时间'
+                    title: '下单时间',
+                    sortable: true
                 },
                 {
                     title: '操作',
@@ -128,13 +133,19 @@
                     formatter: function(value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.orderId + '\')"><i class="fa fa-edit"></i>查看持仓</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>撤单</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="sellPart(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>部分卖出</a>');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>全部卖出</a>');
                         return actions.join('');
                     }
                 }]
         };
         $.table.init(options);
     });
+    function sellPart(orderId)
+    {
+
+        $.modal.open("选择卖出数量", "/position/accountPosition/sellPart/" + orderId);
+    }
 </script>
 </body>
 </html>

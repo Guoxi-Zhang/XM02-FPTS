@@ -268,11 +268,11 @@
         switch ( Type ) {
             // 情况一
             case '0':
-                url = `http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=${productId}&period=daily&start_date=20220601&end_date=20221201&adjust=hfq`;
+                url = `http://47.108.114.204:8080/api/public/stock_zh_a_hist?symbol=${productId}&period=daily&start_date=20220601&end_date=20221214&adjust=hfq`;
                     break;
             // 情况二
             case '1':
-                url = `http://47.108.114.204:8080/api/public/stock_zh_b_daily?symbol=${city}${productId}&start_date=20220601&end_date=20221201&adjust=hfq`;
+                url = `http://47.108.114.204:8080/api/public/stock_zh_b_daily?symbol=${city}${productId}&start_date=20220601&end_date=20221214&adjust=hfq`;
                     break;
 
             default:

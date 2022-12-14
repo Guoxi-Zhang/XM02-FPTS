@@ -58,6 +58,11 @@ public class TodoListController extends BaseController
         return getDataTable(list);
     }
 
+    @GetMapping("/wxGet")
+    public List<TodoList> get(){
+        return todoListService.selectTodoListList(new TodoList());
+    }
+
     /**
      * 导出待办事项列表
      */

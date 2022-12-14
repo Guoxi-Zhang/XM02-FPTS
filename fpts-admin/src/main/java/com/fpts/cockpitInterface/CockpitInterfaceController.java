@@ -5,6 +5,8 @@ import com.fpts.todo.domain.TodoList;
 import com.fpts.todo.service.ITodoListService;
 import com.fpts.finance_forum.domain.FinanceForum;
 import com.fpts.finance_forum.service.IFinanceForumService;
+import com.fpts.system.domain.SysUserOnline;
+import com.fpts.system.service.ISysUserOnlineService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,7 @@ import java.util.List;
 /**
  * 可视化大屏幕Controller
  *
- * @author Guoxi Zhang & Yicheng Li
+ * @author Guoxi Zhang & Yicheng Li & Chenglong Yu
  * @date 2022-12-09
  */
 @Controller
@@ -28,9 +30,10 @@ public class CockpitInterfaceController {
     private ITodoListService todoListService;
     @Autowired
     private IFinanceForumService financeForumService;
-
+    @Autowired
+    private  ISysUserOnlineService sysUserOnlineService;
     @GetMapping()
-    public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum)
+    public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum, SysUserOnline sysUserOnline)
     {
         /**
          * 查询待办事项列表和金融论坛
@@ -39,15 +42,12 @@ public class CockpitInterfaceController {
         mmap.put("todoList", list);
         List<FinanceForum> list1 = financeForumService.selectFinanceForumList(financeForum);
         mmap.put("financeForum", list1);
+        List<SysUserOnline> list2 = sysUserOnlineService.selectUserOnlineList(sysUserOnline);
+        mmap.put("sysUserOnline", list2);
 
 
         //返回视图
         return prefix + "/cockpitInterface";
     }
-    //@PostMapping(value="/todo_list", "finance_forum")
-    @ResponseBody
-    public void list(ModelMap mmap, TodoList todoList, FinanceForum financeForum)
-    {
 
-    }
 }
