@@ -18,33 +18,14 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">公告内容：</label>
             <div class="col-sm-10">
-                <input id="noticeContent" name="noticeContent" th:field="*{noticeContent}" type="hidden">
-                <div id="editor" class="summernote"></div>
+                <input id="noticeContent" name="noticeContent" th:field="*{noticeContent}" class="form-control" type="text"
+                       required>
             </div>
         </div>
     </form>
 </div>
 <th:block th:include="include :: footer"/>
 <th:block th:include="include :: summernote-js"/>
-<script type="text/javascript">
-    var prefix = ctx + "system/notice";
-
-    $(function () {
-        $('.summernote').summernote({
-            placeholder: '请输入公告内容',
-            height: 192,
-            lang: 'zh-CN',
-            followingToolbar: false,
-            dialogsInBody: true,
-            callbacks: {
-                onImageUpload: function (files) {
-                    sendFile(files[0], this);
-                }
-            }
-        });
-        var content = $("#noticeContent").val();
-        $('#editor').summernote('code', content);
-    });
 </script>
 </body>
 </html>
