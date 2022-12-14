@@ -1,9 +1,11 @@
 package com.fpts.web.controller.system;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.fpts.common.utils.poi.ExcelUtil;
+import com.fpts.finance_warehouse.domain.FinanceWarehouse;
+import com.fpts.todo.domain.TodoList;
 import com.fpts.weathers.domain.WeatherStatistics;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,37 @@ public class SysNoticeController extends BaseController {
         startPage();
         List<SysNotice> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
+    }
+
+    /**
+     * 统计报表
+     */
+    @RequestMapping("/chart")
+    public String showChart(ModelMap mmap){
+        List<SysNotice> list = noticeService.selectNoticeList(new SysNotice());
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+        for(SysNotice n: list){
+            Date tempDate = n.getCreateTime();
+            String date = dateformat.format(tempDate);
+
+            if(map.containsKey(date)){
+                int cnt = map.get(date);
+                map.replace(date, cnt, cnt + 1);
+            }else{
+                map.put(date, 1);
+            }
+        }
+        String[] dateSet = map.keySet().toArray(new String[0]);
+        List<String> dateList=Arrays.asList(dateSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
+
+        System.out.println(dateList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("dateList", dateList);
+        mmap.put("cntList", cntList);
+        return prefix + "/chart";
     }
 
     /**

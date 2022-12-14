@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-  <th:block th:include="include :: header('通知公告图表')" />
+  <th:block th:include="include :: header('操作日志图表')" />
   <th:block th:include="include :: datetimepicker-css" />
   <!-- bootstrap-table 表格插件样式 -->
 
@@ -22,20 +22,20 @@
   // 指定图表的配置项和数据
   var option = {
     title: {
-      text: '通知公告创建时间统计'
+      text: '操作次数统计'
     },
     tooltip: {},
     legend: {
-      data: ['通知公告个数']
+      data: ['操作次数']
     },
     xAxis: {
-      name: '创建日期',
+      name: '操作时间',
       data: dateList
     },
     yAxis: {},
     series: [
       {
-        name: '通知公告个数',
+        name: '操作次数',
         type: 'line',
         data: cntList
       }
