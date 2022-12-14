@@ -61,7 +61,9 @@
     <th:block th:include="include :: datetimepicker-js" />
     <th:block th:include="include :: summernote-js" />
     <script th:inline="javascript">
-        var prefix = ctx + "feedback/feedback"
+        var prefix = ctx + "feedback/feedback";
+        var userid = [[${@permission.getPrincipalProperty('userId')}]];
+        document.getElementById("userId").value = userid;
         $("#form-feedback-add").validate({
             focusCleanup: true
         });

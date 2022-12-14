@@ -80,6 +80,13 @@
         function TransactionRecordList(){
             window.location.href = "/record/transaction_record"
         }
+        function TransactionRecordList(){
+            window.location.href = "/finance_forum/finance_forum"
+        }
+        function getForumData() {
+            let productID = localStorage.getItem("productId");
+
+        }
         function collect(pId){
             var productId=pId;
             var config = {
@@ -98,8 +105,6 @@
             };
             $.ajax(config);
         }
-
-
         function kgraph(m){
             // 字符串处理，截取m前若干位
             //这里其实不需要传参，也可以在别的地方localStorage存储
@@ -189,6 +194,7 @@
                         actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="kgraph(\'' + row.productId + row.type + '\')"><i class="fa fa-line-chart"></i>K线图</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="buy(' + row.productId + ',' + row.newPrice + ',' + row.type + ')"><i class="fa fa-jpy"></i>买入</a>');
                         actions.push('<a class="btn btn-info btn-xs ' +  '" href="javascript:void(0)" onclick="collect(\'' + row.productId + '\')"><i class="fa fa-star"></i>收藏</a>');
+                        actions.push('<a class="btn btn-warning btn-xs ' + '" href="javascript:void(0)" onclick="openFinanceForum(\'' + row.link + '\')"><i class="fa fa-comment"></i>查看论坛</a>');
                         return actions.join('');
                     }
                 }]
