@@ -56,7 +56,7 @@ $(window).load(function () {
 
         function GetData() {
 
-            let url = "http://47.108.114.204:8080/api/public/index_zh_a_hist?symbol=000001&period=daily&start_date=20220601&end_date=20221210";
+            let url = "http://47.108.114.204:8080/api/public/index_zh_a_hist?symbol=000001&period=daily&start_date=20220601&end_date=20221215";
             console.log(url);
             var arr = [];
             $.ajax({
@@ -156,7 +156,7 @@ $(window).load(function () {
                                 coord: ['2013/5/31', 2300],
                                 value: 2300,
                                 itemStyle: {
-                                    color: 'rgb(41,60,85)'
+                                    color: '#fff'
                                 }
                             },
                             {
@@ -321,8 +321,8 @@ $(window).load(function () {
 			
  			xAxis: [{
  				type: 'category',
-				axisLabel:  {textStyle: {color: "rgba(255,255,255,.6)",}},
-				axisLine: {lineStyle: { color: 'rgba(255,255,255,.1)'}},
+				axisLabel:  {textStyle: {color: "#fff",}},
+				axisLine: {lineStyle: { color: 'rgba(255,255,255,.6)'}},
 				data: xdata,
  				}],
  			yAxis: [{
@@ -335,8 +335,8 @@ $(window).load(function () {
  						color: "#2f2a7a"
  					}
  				}, //x轴线
- 				axisLabel: {textStyle: {color: 'rgba(255,255,255,.6)'}},
-				axisLine: {lineStyle: {color: 'rgba(255,255,255,.1)'}},
+ 				axisLabel: {textStyle: {color: '#fff'}},
+				axisLine: {lineStyle: {color: 'rgba(255,255,255,.6)'}},
  			}],
  			"dataZoom": [{
  				"show": true,
@@ -356,7 +356,7 @@ $(window).load(function () {
  				textStyle: {
  					color: "#fff"
  				},
- 				borderColor: "rgba(255,255,255,.3)"
+ 				borderColor: "rgba(255,255,255,.6)"
 
  			}],
  			series: series
