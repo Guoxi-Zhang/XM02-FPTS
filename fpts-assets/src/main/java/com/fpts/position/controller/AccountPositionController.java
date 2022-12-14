@@ -1,6 +1,9 @@
 package com.fpts.position.controller;
 
 import java.util.List;
+
+import com.fpts.assets.domain.AccountAssets;
+import com.fpts.assets.service.IAccountAssetsService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +34,9 @@ public class AccountPositionController extends BaseController
 
     @Autowired
     private IAccountPositionService accountPositionService;
+
+    @Autowired
+    private IAccountAssetsService accountAssetsService;
 
     @RequiresPermissions("position:accountPosition:view")
     @GetMapping()
@@ -160,9 +166,12 @@ public class AccountPositionController extends BaseController
     /**
      * 输入卖出数量
      */
-    @GetMapping("/sellPart")
-    public String setSellAmount()
+    @GetMapping("/sellPart/{orderId}")
+    public String setSellAmount(ModelMap mmap, @PathVariable("orderId")  Long id)
     {
+        AccountPosition accountPosition = accountPositionService.selectAccountPositionByOrderId(id);
+        System.out.println(accountPosition.toString());
+        mmap.put("accountPosition", accountPosition);
         return prefix + "/sellPart";
     }
 
@@ -178,5 +187,17 @@ public class AccountPositionController extends BaseController
         accountPosition.setProductAmount(newAmount);
         accountPositionService.updateAccountPosition(accountPosition);
         return "position/accountPosition";
+    }
+
+    @PostMapping("/sell")
+    @ResponseBody
+    public AjaxResult toItemComplete(@RequestParam(value="orderId")  Long id, @RequestParam(value="sellAmount")  Long sellAmount, @RequestParam(value="productPrice")  Long productPrice, @RequestParam(value="productType")  Long productType ){
+        System.out.println(id + " " + sellAmount + " " + productPrice+ " " + productType +" ");
+        AccountPosition accountPosition =  accountPositionService.selectAccountPositionByOrderId(id);
+        accountPosition.setProductAmount(accountPosition.getProductAmount() - sellAmount);
+        System.out.println(accountPosition.getProductAmount());
+//        AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo()
+        return toAjax(accountPositionService.updateAccountPosition(accountPosition));
+
     }
 }
