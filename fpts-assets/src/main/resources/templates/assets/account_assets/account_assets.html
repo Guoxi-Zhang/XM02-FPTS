@@ -61,8 +61,8 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="assets:account_assets:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
-                <a class="btn btn-primary" onclick="printToHtml()">
-                    <i class="fa fa-download"></i> 打印HTML
+                <a class="btn btn-info" onclick="printToHtml()">
+                    <i class="fa fa-bars"></i> 打印HTML
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -100,35 +100,43 @@
                 },
                 {
                     field: 'userId',
-                    title: '用户ID'
+                    title: '用户ID',
+                    sortable: true
                 },
                 {
                     field: 'accountId',
-                    title: '账户ID'
+                    title: '账户ID',
+                    sortable: true
                 },
                 {
                     field: 'accountBalance',
-                    title: '账户余额'
+                    title: '账户余额',
+                    sortable: true
                 },
                 {
                     field: 'totalAssets',
-                    title: '用户的资产数额'
+                    title: '用户的资产数额',
+                    sortable: true
                 },
                 {
                     field: 'astockAssets',
-                    title: 'A股总资产'
+                    title: 'A股总资产',
+                    sortable: true
                 },
                 {
                     field: 'bstockAssets',
-                    title: 'B股总资产'
+                    title: 'B股总资产',
+                    sortable: true
                 },
                 {
                     field: 'bonfAssets',
-                    title: '债券总资产'
+                    title: '债券总资产',
+                    sortable: true
                 },
                 {
                     field: 'fundAssets',
-                    title: '基金总资产'
+                    title: '基金总资产',
+                    sortable: true
                 },
                 {
                     title: '操作',
