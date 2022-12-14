@@ -80,11 +80,12 @@
         function TransactionRecordList(){
             window.location.href = "/record/transaction_record"
         }
-        function TransactionRecordList(){
-            window.location.href = "/finance_forum/finance_forum"
+        function openFinanceForum(){
+            window.location.href = "/finance_forum/homepage"
         }
         function getForumData() {
             let productID = localStorage.getItem("productId");
+            $.table.search()
 
         }
         function collect(pId){
