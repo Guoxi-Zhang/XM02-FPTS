@@ -1,6 +1,8 @@
 package com.fpts.cockpitInterface;
 
 import com.fpts.common.core.page.TableDataInfo;
+import com.fpts.system.domain.SysNotice;
+import com.fpts.system.service.ISysNoticeService;
 import com.fpts.todo.domain.TodoList;
 import com.fpts.todo.service.ITodoListService;
 import com.fpts.finance_forum.domain.FinanceForum;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -32,8 +35,10 @@ public class CockpitInterfaceController {
     private IFinanceForumService financeForumService;
     @Autowired
     private  ISysUserOnlineService sysUserOnlineService;
+    @Autowired
+    private ISysNoticeService noticeService;
     @GetMapping()
-    public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum, SysUserOnline sysUserOnline)
+    public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum, SysUserOnline sysUserOnline, SysNotice notice)
     {
         /**
          * 查询待办事项列表和金融论坛
@@ -44,7 +49,8 @@ public class CockpitInterfaceController {
         mmap.put("financeForum", list1);
         List<SysUserOnline> list2 = sysUserOnlineService.selectUserOnlineList(sysUserOnline);
         mmap.put("sysUserOnline", list2);
-
+        List<SysNotice> list3 = noticeService.selectNoticeList(notice);
+        mmap.put("notice", list3);
 
         //返回视图
         return prefix + "/cockpitInterface";

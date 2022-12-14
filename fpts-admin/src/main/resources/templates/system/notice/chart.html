@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <th:block th:include="include :: header('公告图表')" />
+  <th:block th:include="include :: datetimepicker-css" />
+  <!-- bootstrap-table 表格插件样式 -->
+
+</head>
+<body class="white-bg">
+
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 800px;height:500px; text-align: center; margin: 0 auto;"></div>
+<script th:src="@{/js/echarts.js}"></script>
+<script type="text/javascript">
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(document.getElementById('main'));
+  //处理后台传过来的参数
+  var tempCityCntList = '[[${cityCntList}]]'.replace('[','').replace(']','').split(",");
+  var tempCityList = '[[${cityList}]]';
+
+  //转化为字符串数组和整数数组
+  var cityList = tempCityList.replace('[','').replace(']','').split(",");
+  var cityCntList = [];
+  tempCityCntList.forEach(function(data,index,arr){
+    cityCntList.push(+data);
+  });
+
+  console.log(cityCntList);
+  console.log(cityList);
+  // 指定图表的配置项和数据
+  var option = {
+    title: {
+      text: '城市天气记录统计数据'
+    },
+    tooltip: {},
+    legend: {
+      data: ['记录条数']
+    },
+    xAxis: {
+      name: '城市名',
+      data: cityList
+    },
+    yAxis: {},
+    series: [
+      {
+        name: '记录条数',
+        type: 'bar',
+        data: cityCntList
+      }
+    ]
+  };
+
+  // 使用刚指定的配置项和数据显示图表。
+  myChart.setOption(option);
+</script>
+</body>
+</html>

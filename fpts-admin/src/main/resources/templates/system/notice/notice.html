@@ -55,7 +55,7 @@
             <a class="btn btn-info" onclick="printToHtml()">
                 <i class="fa fa-bars"></i> 打印
             </a>
-            <a class="btn btn-success" onclick="warehouseAddChart()">
+            <a class="btn btn-success" onclick="addChart()">
                 <i class="fa fa-bar-chart"></i> 统计图表
             </a>
         </div>
@@ -78,7 +78,7 @@
         $.modal.openFull(table.options.modalName + "打印", "/system/notice/print");
     }
 
-    function weatherAddChart() {
+    function addChart() {
         table.set();
         $.modal.open(table.options.modalName + "统计图表", "/system/notice/chart");
     }
