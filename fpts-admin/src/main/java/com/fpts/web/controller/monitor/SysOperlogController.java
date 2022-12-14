@@ -24,13 +24,12 @@ import com.fpts.system.service.ISysOperLogService;
 
 /**
  * 操作日志记录
- * 
+ *
  * @author ruoyi
  */
 @Controller
 @RequestMapping("/monitor/operlog")
-public class SysOperlogController extends BaseController
-{
+public class SysOperlogController extends BaseController {
     private String prefix = "monitor/operlog";
 
     @Autowired
@@ -38,16 +37,14 @@ public class SysOperlogController extends BaseController
 
     @RequiresPermissions("monitor:operlog:view")
     @GetMapping()
-    public String operlog()
-    {
+    public String operlog() {
         return prefix + "/operlog";
     }
 
     @RequiresPermissions("monitor:operlog:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(SysOperLog operLog)
-    {
+    public TableDataInfo list(SysOperLog operLog) {
         startPage();
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
         return getDataTable(list);
@@ -57,25 +54,25 @@ public class SysOperlogController extends BaseController
      * 统计报表
      */
     @RequestMapping("/chart")
-    public String showChart(ModelMap mmap){
+    public String showChart(ModelMap mmap) {
         List<SysOperLog> list = operLogService.selectOperLogList(new SysOperLog());
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
         Map<String, Integer> map = new TreeMap<String, Integer>();
-        for(SysOperLog o: list){
+        for (SysOperLog o : list) {
             Date tempDate = o.getOperTime();
             String date = dateformat.format(tempDate);
 
-            if(map.containsKey(date)){
+            if (map.containsKey(date)) {
                 int cnt = map.get(date);
                 map.replace(date, cnt, cnt + 1);
-            }else{
+            } else {
                 map.put(date, 1);
             }
         }
         String[] dateSet = map.keySet().toArray(new String[0]);
-        List<String> dateList= Arrays.asList(dateSet);
+        List<String> dateList = Arrays.asList(dateSet);
         Integer[] cntSet = map.values().toArray(new Integer[0]);
-        List<Integer> cntList=Arrays.asList(cntSet);
+        List<Integer> cntList = Arrays.asList(cntSet);
 
         System.out.println(dateList.toString());
         System.out.println(cntList.toString());
@@ -106,8 +103,7 @@ public class SysOperlogController extends BaseController
     @RequiresPermissions("monitor:operlog:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(SysOperLog operLog)
-    {
+    public AjaxResult export(SysOperLog operLog) {
         List<SysOperLog> list = operLogService.selectOperLogList(operLog);
         ExcelUtil<SysOperLog> util = new ExcelUtil<SysOperLog>(SysOperLog.class);
         return util.exportExcel(list, "操作日志");
@@ -117,25 +113,22 @@ public class SysOperlogController extends BaseController
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
-    {
+    public AjaxResult remove(String ids) {
         return toAjax(operLogService.deleteOperLogByIds(ids));
     }
 
     @RequiresPermissions("monitor:operlog:detail")
     @GetMapping("/detail/{operId}")
-    public String detail(@PathVariable("operId") Long operId, ModelMap mmap)
-    {
+    public String detail(@PathVariable("operId") Long operId, ModelMap mmap) {
         mmap.put("operLog", operLogService.selectOperLogById(operId));
         return prefix + "/detail";
     }
-    
+
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @RequiresPermissions("monitor:operlog:remove")
     @PostMapping("/clean")
     @ResponseBody
-    public AjaxResult clean()
-    {
+    public AjaxResult clean() {
         operLogService.cleanOperLog();
         return success();
     }

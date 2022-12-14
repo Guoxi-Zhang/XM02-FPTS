@@ -60,25 +60,25 @@ public class SysNoticeController extends BaseController {
      * 统计报表
      */
     @RequestMapping("/chart")
-    public String showChart(ModelMap mmap){
+    public String showChart(ModelMap mmap) {
         List<SysNotice> list = noticeService.selectNoticeList(new SysNotice());
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
         Map<String, Integer> map = new TreeMap<String, Integer>();
-        for(SysNotice n: list){
+        for (SysNotice n : list) {
             Date tempDate = n.getCreateTime();
             String date = dateformat.format(tempDate);
 
-            if(map.containsKey(date)){
+            if (map.containsKey(date)) {
                 int cnt = map.get(date);
                 map.replace(date, cnt, cnt + 1);
-            }else{
+            } else {
                 map.put(date, 1);
             }
         }
         String[] dateSet = map.keySet().toArray(new String[0]);
-        List<String> dateList=Arrays.asList(dateSet);
+        List<String> dateList = Arrays.asList(dateSet);
         Integer[] cntSet = map.values().toArray(new Integer[0]);
-        List<Integer> cntList=Arrays.asList(cntSet);
+        List<Integer> cntList = Arrays.asList(cntSet);
 
         System.out.println(dateList.toString());
         System.out.println(cntList.toString());

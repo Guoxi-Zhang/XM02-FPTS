@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('实名认证统计图')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+    <!-- bootstrap-table 表格插件样式 -->
+
+</head>
+<body class="white-bg">
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 800px;height:500px;"></div>
+<script th:src="@{/js/echarts.js}"></script>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    let statusList = [[${statusList}]];
+
+    let countList = [[${countList}]];
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '实名认证统计图'
+        },
+        tooltip: {},
+        legend: {
+            data: ['用户数量']
+        },
+        series: [
+            {
+                name: '实名认证统计图',
+                type: 'pie',    // 设置图表类型为饼图
+                radius: ['50%', '70%'],  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                label: {
+                    normal: {
+                        formatter: '{b}:{c}' + '\n\r' + '({d}%)',
+                        show: true,
+                        position: 'outside'
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: true
+                    }
+                },
+                data: [ // 数据数组，name 为数据项名称，value 为数据项值
+                    {value: countList[0], name: '已完成实名认证'},
+                    {value: countList[1], name: '未完成实名认证'},
+                ]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

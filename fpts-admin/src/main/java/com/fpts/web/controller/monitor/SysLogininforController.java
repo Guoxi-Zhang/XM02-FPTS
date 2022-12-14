@@ -24,13 +24,12 @@ import com.fpts.system.service.ISysLogininforService;
 
 /**
  * 系统访问记录
- * 
+ *
  * @author ruoyi
  */
 @Controller
 @RequestMapping("/monitor/logininfor")
-public class SysLogininforController extends BaseController
-{
+public class SysLogininforController extends BaseController {
     private String prefix = "monitor/logininfor";
 
     @Autowired
@@ -41,16 +40,14 @@ public class SysLogininforController extends BaseController
 
     @RequiresPermissions("monitor:logininfor:view")
     @GetMapping()
-    public String logininfor()
-    {
+    public String logininfor() {
         return prefix + "/logininfor";
     }
 
     @RequiresPermissions("monitor:logininfor:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(SysLogininfor logininfor)
-    {
+    public TableDataInfo list(SysLogininfor logininfor) {
         startPage();
         List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
         return getDataTable(list);
@@ -60,25 +57,25 @@ public class SysLogininforController extends BaseController
      * 统计报表
      */
     @RequestMapping("/chart")
-    public String showChart(ModelMap mmap){
+    public String showChart(ModelMap mmap) {
         List<SysLogininfor> list = logininforService.selectLogininforList(new SysLogininfor());
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
         Map<String, Integer> map = new TreeMap<String, Integer>();
-        for(SysLogininfor l: list){
+        for (SysLogininfor l : list) {
             Date tempDate = l.getLoginTime();
             String date = dateformat.format(tempDate);
 
-            if(map.containsKey(date)){
+            if (map.containsKey(date)) {
                 int cnt = map.get(date);
                 map.replace(date, cnt, cnt + 1);
-            }else{
+            } else {
                 map.put(date, 1);
             }
         }
         String[] dateSet = map.keySet().toArray(new String[0]);
-        List<String> dateList= Arrays.asList(dateSet);
+        List<String> dateList = Arrays.asList(dateSet);
         Integer[] cntSet = map.values().toArray(new Integer[0]);
-        List<Integer> cntList=Arrays.asList(cntSet);
+        List<Integer> cntList = Arrays.asList(cntSet);
 
         System.out.println(dateList.toString());
         System.out.println(cntList.toString());
@@ -109,8 +106,7 @@ public class SysLogininforController extends BaseController
     @RequiresPermissions("monitor:logininfor:export")
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(SysLogininfor logininfor)
-    {
+    public AjaxResult export(SysLogininfor logininfor) {
         List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
         ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
         return util.exportExcel(list, "登录日志");
@@ -120,17 +116,15 @@ public class SysLogininforController extends BaseController
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
-    public AjaxResult remove(String ids)
-    {
+    public AjaxResult remove(String ids) {
         return toAjax(logininforService.deleteLogininforByIds(ids));
     }
-    
+
     @RequiresPermissions("monitor:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.CLEAN)
     @PostMapping("/clean")
     @ResponseBody
-    public AjaxResult clean()
-    {
+    public AjaxResult clean() {
         logininforService.cleanLogininfor();
         return success();
     }
@@ -139,8 +133,7 @@ public class SysLogininforController extends BaseController
     @Log(title = "账户解锁", businessType = BusinessType.OTHER)
     @PostMapping("/unlock")
     @ResponseBody
-    public AjaxResult unlock(String loginName)
-    {
+    public AjaxResult unlock(String loginName) {
         passwordService.clearLoginRecordCache(loginName);
         return success();
     }

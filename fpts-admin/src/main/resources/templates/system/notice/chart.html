@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:include="include :: header('通知公告图表')" />
-  <th:block th:include="include :: datetimepicker-css" />
-  <!-- bootstrap-table 表格插件样式 -->
+    <th:block th:include="include :: header('通知公告图表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+    <!-- bootstrap-table 表格插件样式 -->
 
 </head>
 <body class="white-bg">
@@ -11,39 +11,39 @@
 <div id="main" style="width: 800px;height:500px;"></div>
 <script th:src="@{/js/echarts.js}"></script>
 <script th:inline="javascript">
-  // 基于准备好的dom，初始化echarts实例
-  var myChart = echarts.init(document.getElementById('main'));
-  var cntList = [[${cntList}]];
-  console.log(cntList);
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var cntList = [[${cntList}]];
+    console.log(cntList);
 
-  var dateList = [[${dateList}]];
-  console.log(dateList);
+    var dateList = [[${dateList}]];
+    console.log(dateList);
 
-  // 指定图表的配置项和数据
-  var option = {
-    title: {
-      text: '通知公告创建时间统计'
-    },
-    tooltip: {},
-    legend: {
-      data: ['通知公告个数']
-    },
-    xAxis: {
-      name: '创建日期',
-      data: dateList
-    },
-    yAxis: {},
-    series: [
-      {
-        name: '通知公告个数',
-        type: 'line',
-        data: cntList
-      }
-    ]
-  };
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '通知公告创建时间统计'
+        },
+        tooltip: {},
+        legend: {
+            data: ['通知公告个数']
+        },
+        xAxis: {
+            name: '创建日期',
+            data: dateList
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '通知公告个数',
+                type: 'line',
+                data: cntList
+            }
+        ]
+    };
 
-  // 使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
 </script>
 </body>
 </html>
