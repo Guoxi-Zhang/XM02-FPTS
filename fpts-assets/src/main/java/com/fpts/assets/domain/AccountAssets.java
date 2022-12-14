@@ -1,10 +1,9 @@
 package com.fpts.assets.domain;
 
-import java.math.BigDecimal;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fpts.common.annotation.Excel;
 import com.fpts.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 查看资产对象 account_assets
@@ -29,27 +28,27 @@ public class AccountAssets extends BaseEntity
 
     /** 账户余额 */
     @Excel(name = "账户余额")
-    private BigDecimal accountBalance;
+    private Long accountBalance;
 
     /** 用户的资产数额 */
     @Excel(name = "用户的资产数额")
-    private BigDecimal totalAssets;
+    private Long totalAssets;
 
     /** A股总资产 */
     @Excel(name = "A股总资产")
-    private BigDecimal astockAssets;
+    private Long astockAssets;
 
     /** B股总资产 */
     @Excel(name = "B股总资产")
-    private BigDecimal bstockAssets;
+    private Long bstockAssets;
 
     /** 债券总资产 */
     @Excel(name = "债券总资产")
-    private BigDecimal bonfAssets;
+    private Long bonfAssets;
 
     /** 基金总资产 */
     @Excel(name = "基金总资产")
-    private BigDecimal fundAssets;
+    private Long fundAssets;
 
     public void setNo(Long no) 
     {
@@ -78,57 +77,57 @@ public class AccountAssets extends BaseEntity
     {
         return accountId;
     }
-    public void setAccountBalance(BigDecimal accountBalance) 
+    public void setAccountBalance(Long accountBalance)
     {
         this.accountBalance = accountBalance;
     }
 
-    public BigDecimal getAccountBalance() 
+    public Long getAccountBalance()
     {
         return accountBalance;
     }
-    public void setTotalAssets(BigDecimal totalAssets) 
+    public void setTotalAssets(Long totalAssets)
     {
         this.totalAssets = totalAssets;
     }
 
-    public BigDecimal getTotalAssets() 
+    public Long getTotalAssets()
     {
         return totalAssets;
     }
-    public void setAstockAssets(BigDecimal astockAssets) 
+    public void setAstockAssets(Long astockAssets)
     {
         this.astockAssets = astockAssets;
     }
 
-    public BigDecimal getAstockAssets() 
+    public Long getAstockAssets()
     {
         return astockAssets;
     }
-    public void setBstockAssets(BigDecimal bstockAssets) 
+    public void setBstockAssets(Long bstockAssets)
     {
         this.bstockAssets = bstockAssets;
     }
 
-    public BigDecimal getBstockAssets() 
+    public Long getBstockAssets()
     {
         return bstockAssets;
     }
-    public void setBonfAssets(BigDecimal bonfAssets) 
+    public void setBonfAssets(Long bonfAssets)
     {
         this.bonfAssets = bonfAssets;
     }
 
-    public BigDecimal getBonfAssets() 
+    public Long getBonfAssets()
     {
         return bonfAssets;
     }
-    public void setFundAssets(BigDecimal fundAssets) 
+    public void setFundAssets(Long fundAssets)
     {
         this.fundAssets = fundAssets;
     }
 
-    public BigDecimal getFundAssets() 
+    public Long getFundAssets()
     {
         return fundAssets;
     }
