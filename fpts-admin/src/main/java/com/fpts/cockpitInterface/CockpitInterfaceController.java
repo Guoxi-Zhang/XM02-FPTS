@@ -49,10 +49,5 @@ public class CockpitInterfaceController {
         //返回视图
         return prefix + "/cockpitInterface";
     }
-    //@PostMapping(value="/todo_list", "finance_forum")
-    @ResponseBody
-    public void list(ModelMap mmap, TodoList todoList, FinanceForum financeForum, SysUserOnline sysUserOnline)
-    {
 
-    }
 }
