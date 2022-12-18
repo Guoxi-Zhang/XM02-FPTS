@@ -16,24 +16,36 @@
     //var chartDom = document.getElementById('quotations-count-container');
     var myChart = echarts.init(document.getElementById('main'));
 
-    let cntList = [[${cntList}]];
-    console.log(cntList);
+    // let cntList = [[${cntList}]];
+    // console.log(cntList);
+    //
+    // let pIdList = [[${pIdList}]];
+    // console.log(pIdList);
 
-    let pIdList = [[${pIdList}]];
+    var tempCntList = '[[${cntList}]]'.replace('[','').replace(']','').split(",");
+    var tempPIDList = '[[${pIdList}]]';
+
+    //转化为字符串数组和整数数组
+    let pIdList = tempPIDList.replace('[','').replace(']','').split(",");
+    let cntList = [];
+    tempCntList.forEach(function(data,index,arr){
+        cntList.push(+data);
+    });
+
     console.log(pIdList);
-
+    console.log(cntList);
 
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '行情查询分类统计图'
+            text: '涨幅前十产品统计'
         },
         tooltip: {},
         legend: {
-            data: ['收藏数量']
+            data: ['涨幅']
         },
         xAxis: {
-            name: '产品种类',
+            name: '产品名称',
             data: pIdList,
             axisLabel: { // 如果显示字符过长 就间隔1 设为0
                 interval:0
@@ -42,7 +54,7 @@
         yAxis: {},
         series: [
             {
-                name: '收藏数量',
+                name: '涨幅',
                 type: 'bar',
                 data: cntList
             }

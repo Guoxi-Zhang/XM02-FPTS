@@ -198,32 +198,33 @@ public class FinanceQueryController extends BaseController
     @RequestMapping("/chart")
 
     public String showChart(ModelMap mmap){
-        List<FinanceCollection> list = financeCollectionService.selectFinanceCollectionList(new FinanceCollection());
-        Map<String, Integer> map = new TreeMap<String, Integer>();
+        List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(new FinanceQuery());
+        Map<String, Double> map = new TreeMap<String, Double>();
 
-        for(FinanceCollection f: list){
-            String pId = f.getProductId();
+        for(FinanceQuery f: list){
+            String pId = f.getName();
+            Double rate = f.getIncrease();
+            //改这里，找涨幅最高的十只股票
+            map.put(pId, rate);
 
-            if(map.containsKey(pId)){
-                int cnt = map.get(pId);
-                map.replace(pId, cnt, cnt + 1);
-            }else{
-                map.put(pId, 1);
-            }
         }
 
-        List<Map.Entry<String,Integer>> list1= new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
-        Collections.sort(list1,new Comparator<Map.Entry<String, Integer>>() {
+        List<Map.Entry<String, Double>> list1= new ArrayList<Map.Entry<String, Double>>(map.entrySet());
+        Collections.sort(list1,new Comparator<Map.Entry<String, Double>>() {
             //降序排序
             @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+            public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
                 return o2.getValue().compareTo(o1.getValue());
             }
         });
 
         List<String> pIdList = new ArrayList<String>();   //= Arrays.asList(pIdSet);
-        List<Integer> cntList = new ArrayList<Integer>();
-        for (Map.Entry<String, Integer> a: list1){
+        List<Double> cntList = new ArrayList<Double>();
+        int tot=0;
+
+        for (Map.Entry<String, Double> a: list1) {
+            tot++;
+            if(tot==10) break;
             pIdList.add(a.getKey());
             cntList.add(a.getValue());
         }

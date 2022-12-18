@@ -1,6 +1,9 @@
 package com.fpts.finance_collection.controller;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import ch.qos.logback.classic.util.LogbackMDCAdapter;
 import com.fpts.assets.domain.AccountAssets;
@@ -150,6 +153,39 @@ public class FinanceCollectionController extends BaseController
     {
         return toAjax(financeCollectionService.deleteFinanceCollectionByIds(ids));
     }
+
+
+    /**
+     * 统计报表
+     */
+    @RequestMapping("/chart")
+
+    public String showChart(ModelMap mmap){
+        List<FinanceCollection> list = financeCollectionService.selectFinanceCollectionListWithColl(new FinanceCollection());
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+
+        for(FinanceCollection f: list){
+            String type = f.getType();
+
+            if(map.containsKey(type)){
+                int cnt = map.get(type);
+                map.replace(type, cnt, cnt + 1);
+            }else{
+                map.put(type, 1);
+            }
+        }
+        String[] typeSet = map.keySet().toArray(new String[0]);
+        List<String> typeList= Arrays.asList(typeSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
+
+        System.out.println(typeList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("cTypeList", typeList);
+        mmap.put("cCntList", cntList);
+        return prefix + "/chart";
+    }
+
 
     /**
      * 打印跳转

@@ -27,7 +27,7 @@ public class FinanceCollection extends BaseEntity
     private Long userId;
 
     /** 部门ID */
-    private Long deptId;
+    //private Long deptId;
 
     /** 名称 */
     @Excel(name = "名称")
@@ -106,15 +106,15 @@ public class FinanceCollection extends BaseEntity
         return userId;
     }
 
-    public void setDeptId(Long deptId)
-    {
-        this.deptId = deptId;
-    }
-
-    public Long getDeptId()
-    {
-        return deptId;
-    }
+//    public void setDeptId(Long deptId)
+//    {
+//        this.deptId = deptId;
+//    }
+//
+//    public Long getDeptId()
+//    {
+//        return deptId;
+//    }
 
     public void setName(String name)
     {
@@ -213,7 +213,7 @@ public class FinanceCollection extends BaseEntity
             .append("id", getId())
             .append("productId", getProductId())
             .append("userId", getUserId())
-            .append("deptId", getDeptId())
+            ///.append("deptId", getDeptId())
             .append("name", getName())
             .append("type", getType())
             .append("newPrice", getNewPrice())

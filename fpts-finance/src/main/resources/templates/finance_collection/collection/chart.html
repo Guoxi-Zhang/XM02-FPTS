@@ -16,28 +16,32 @@
     //var chartDom = document.getElementById('quotations-count-container');
     var myChart = echarts.init(document.getElementById('main'));
 
-    let cntList = [[${cntList}]];
+    let cntList = [[${cCntList}]];
     console.log(cntList);
 
-    let pIdList = [[${pIdList}]];
-    console.log(pIdList);
+    let typeList = [[${cTypeList}]];
+    console.log(typeList);
 
     // 指定图表的配置项和数据
     var option = {
         title: {
-            text: '数据仓库分类统计图'
+            text: '产品收藏分类统计图'    //标题
         },
-        tooltip: {},
+        tooltip: {},                    //提示信息框，详细信息在配置项手册
         legend: {
-            data: ['收藏数量']
+            data: ['收藏数量']           //图例组件，可以把不同的图例分开
+        },
+        toolbox: {                      //工具箱组件
+          feature: {
+              saveAsImage: {}           //另存为图片
+          }
         },
         xAxis: {
-            //data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-            name: '产品代码',
-            data: pIdList
+            name: '产品种类',
+            data: ['A股','B股','债券','基金']
         },
         yAxis: {},
-        series: [
+        series: [                       //系列列表
             {
                 name: '收藏数量',
                 type: 'bar',
