@@ -89,7 +89,7 @@
             }
         });
         var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
-        var baroption = {
+        var barOption = {
             title : {
                 text: '账户持仓统计'
             },
@@ -135,7 +135,7 @@
                 }
             ]
         };
-        barChart.setOption(baroption);
+        barChart.setOption(barOption);
 
         window.onresize = barChart.resize;
 
