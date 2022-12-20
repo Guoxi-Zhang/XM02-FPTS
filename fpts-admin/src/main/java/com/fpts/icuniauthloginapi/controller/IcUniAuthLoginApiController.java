@@ -60,7 +60,7 @@ public class IcUniAuthLoginApiController extends BaseController
     /**
      * 在 icUniAuth 处注册时提供给 icUniAuth 的 redirect_uri
      */
-    private final String redirectUri = "http://localhost:80/icuniauth_client";
+    private final String redirectUri = "http://47.108.114.204:8888/icuniauth_client";
 
     /**
      * 请求的数据范围
