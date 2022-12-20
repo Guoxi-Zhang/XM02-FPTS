@@ -70,6 +70,22 @@ public class IcUniAuthLoginApiController extends BaseController
     private final String scope = "BE";
 
     /**
+     * 获取 access token & refresh token 的接口
+     */
+    private final String tokenEndpoint = "http://uniauth.icseclab.org/api/token";
+
+    /**
+     * 获取 access token 后，获取资源的接口
+     */
+    private final String resourceEndpoint = "http://uniauth.icseclab.org/api/get_user_info";
+
+    /**
+     * icUniAuth本系统内的ID
+     * 因为本系统可能支持多个统一认证登录，因此需要给这些登录系统一个ID
+     */
+    private final String appId = "mmuN1G9np9lzFU4SynnbFX46yoRzvwF3";
+
+    /**
      * Method to encode a string value using `UTF-8` encoding scheme
      * @param value string to be encoded
      * @return url-encoded string
@@ -114,138 +130,75 @@ public class IcUniAuthLoginApiController extends BaseController
         if (!code.equals("null"))
         {
             String authCode = code;
-            System.out.println("芝士 code：" + authCode);
+            // System.out.println("芝士 code：" + authCode);
             // 获取 access token 和 refresh token
             try
             {
-                // 新建连接
-                URL url = new URL("http://uniauth.icseclab.org/api/token");
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                // 设置请求类型
-                connection.setRequestMethod("POST");
-                // 设置 content-type
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                // 其他设置
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                // entity-body 的内容
+                // 请求 tokens
                 String entityBody = "grant_type=authorization_code&code=" + authCode + "&redirect_url=" + urlEncodedValue(redirectUri) +
                         "&client_id=" + clientId + "&client_secret=" + clientSecret;
-                System.out.println("entity-body: " + entityBody);
-                // 写入 http request body
-                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
-                writer.write(entityBody);
-                // 发送
-                writer.flush();
-                // 关闭 writer
-                writer.close();
-
-                // 获取 access token
-                // 读取输入流
-                InputStream inputStream = connection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                StringBuffer stringBuffer = new StringBuffer();
-                String stringRead = null;
-                while ((stringRead = reader.readLine()) != null) stringBuffer.append(stringRead);
-                reader.close();
-                // 关闭 input stream
-                inputStream.close();
-                // 关闭连接
-                connection.disconnect();
-                System.out.println("获取到的数据：" + stringBuffer.toString());
-                // 把结果转化为 json
-                JSONObject responseBody = (JSONObject) JSON.parse(stringBuffer.toString());
+                JSONObject responseBody = sendHttpPostRequest(tokenEndpoint, entityBody);
+                // System.out.println("json 数据：" + responseBody.toString());
                 // 获取 access token
                 String accessToken = responseBody.getString("access_token");
                 System.out.println("access token: " + accessToken);
                 // 获取 access token 的 expire time
                 String expireTime = responseBody.getString("expires_in");
-                System.out.println("expire time: " + expireTime);
+                // System.out.println("expire time: " + expireTime);
                 // 获取 refresh token
                 String refreshToken = responseBody.getString("refresh_token");
                 System.out.println("refresh token: " + refreshToken);
 
-                // 获取用户资料
-                // 设置 url
-                url = new URL("http://uniauth.icseclab.org/api/get_user_info");
-                // 搭建连接
-                connection = (HttpURLConnection) url.openConnection();
-                // 其他设置
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                // 设置请求类型
-                connection.setRequestMethod("POST");
-                // 设置 content-type
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                // 写 entity-body
+                // 更改 entity body
                 entityBody = "access_token=" + accessToken;
-                System.out.println("entity-body: " + entityBody);
-                // 写入 http request body
-                writer = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
-                writer.write(entityBody);
-                // 发送
-                writer.flush();
-                // 关闭
-                writer.close();
-
-                // 获取用户资源
-                // 读取输入流
-                inputStream = connection.getInputStream();
-                reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                stringBuffer = new StringBuffer();
-                stringRead = null;
-                while ((stringRead = reader.readLine()) != null) stringBuffer.append(stringRead);
-                reader.close();
-                // 关闭连接
-                connection.disconnect();
-                System.out.println("获取到的数据：" + stringBuffer.toString());
-                // 把结果转化为 json
-                responseBody = (JSONObject) JSON.parse(stringBuffer.toString());
+                // 请求用户资料
+                responseBody = sendHttpPostRequest(resourceEndpoint, entityBody);
                 System.out.println("json 数据：" + responseBody.toString());
                 // 获取 data 部分
                 JSONObject data = responseBody.getJSONObject("data");
-                System.out.println("data：" + data.toString());
+                // System.out.println("data：" + data.toString());
                 // 获取 nickname
                 String nickName = data.getString("nick_name");
-                System.out.println("nickname: " + nickName);
+                // System.out.println("nickname: " + nickName);
                 // 获取 open id
                 String openId = data.getString("open_id");
-                System.out.println("open id: " + openId);
+                // System.out.println("open id: " + openId);
                 // 获取 email
                 String email = data.getString("email");
-                System.out.println("email: " + email);
+                // System.out.println("email: " + email);
 
                 // 检查是否为新用户，为新用户自动注册
-                if (!isRegistered(openId))
+                List<IcUniAuthLoginApiInfo> resultList = selectUserByOpenIdAndAppId(openId, appId);
+                if (resultList.isEmpty())
                 {
                     // 首先写入 sys_user 表
-
                     SysUser newUser = new SysUser();
                     // 新用户信息
                     newUser.setPassword(getRandomString(6));
                     newUser.setUserName(nickName);
                     newUser.setLoginName(nickName);
                     newUser.setEmail(email);
-                    System.out.println(newUser.toString());
+                    // System.out.println(newUser.toString());
                     // 注册用户
                     String msg = registerService.register(newUser);
-                    System.out.println("注册结果：" + msg);
+                    // System.out.println("注册结果：" + msg);
                     // 获取用户在 sys_user 表中的 id
                     Long userId = sysUserService.selectUserByLoginName(nickName).getUserId();
-
                     // 然后用户信息写入临时对象
-                    IcUniAuthLoginApiInfo externalUser = new IcUniAuthLoginApiInfo();
-                    externalUser.setUserId(userId);
-                    externalUser.setAccessToken(accessToken);
-                    externalUser.setRefreshToken(refreshToken);
-                    externalUser.setAppId(getRandomString(32));
-                    externalUser.setAppName("icUniAuth");
-                    externalUser.setNickName(nickName);
-                    externalUser.setEmail(email);
-                    externalUser.setOpenId(openId);
-                    // System.out.println("这是Open ID：" + externalUser.getOpenId());
+                    IcUniAuthLoginApiInfo externalUser = new IcUniAuthLoginApiInfo(userId, accessToken, refreshToken,
+                            appId, "icUniAuth", nickName, email, openId);
                     // 写入 external_user 表
                     externalUserInfoService.insertExternalUserInfo(externalUser);
+                }
+                else // 为老用户更新 access token 和 refresh token
+                {
+                    // tokens 写入临时对象
+                    IcUniAuthLoginApiInfo externalUser = new IcUniAuthLoginApiInfo();
+                    externalUser.setAccessToken(accessToken);
+                    externalUser.setRefreshToken(refreshToken);
+                    externalUser.setUserId(resultList.get(0).getUserId());
+                    // 写入 external_user 表
+                    externalUserInfoService.updateExternalUserInfo(externalUser);
                 }
 
                 // 登录
@@ -256,25 +209,81 @@ public class IcUniAuthLoginApiController extends BaseController
             catch (Exception e)
             {
                 e.printStackTrace();
+                return "redirect:login";
             }
-
         }
-
         return "redirect:index";
     }
 
-    public boolean isRegistered(String openId)
+    public JSONObject sendHttpPostRequest(String serverUrl, String entityBody) throws Exception
+    {
+        JSONObject responseBody = null;
+        try
+        {
+            // 新建连接
+            URL url = new URL(serverUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            // 设置请求类型
+            connection.setRequestMethod("POST");
+            // 设置 content-type
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            // 其他设置
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+            // System.out.println("entity-body: " + entityBody);
+            // 写入 http request body
+            OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream(), StandardCharsets.UTF_8);
+            writer.write(entityBody);
+            // 发送
+            writer.flush();
+            // 关闭 writer
+            writer.close();
+
+            // 获取 access token
+            // 读取输入流
+            InputStream inputStream = connection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            StringBuffer stringBuffer = new StringBuffer();
+            String stringRead = null;
+            while ((stringRead = reader.readLine()) != null) stringBuffer.append(stringRead);
+            reader.close();
+            // 关闭 input stream
+            inputStream.close();
+            // 关闭连接
+            connection.disconnect();
+            // System.out.println("获取到的数据：" + stringBuffer.toString());
+            // 把结果转化为 json
+            responseBody = (JSONObject) JSON.parse(stringBuffer.toString());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw new Exception("access denied!");
+        }
+
+        return responseBody;
+    }
+
+    /**
+     * 检验从统一认证系统登录的用户是否已经在本系统内注册过
+     * @param openId 统一认证登录系统提供的用户在认证系统内部的ID
+     * @return true-注册过，false-没注册过
+     */
+    public List<IcUniAuthLoginApiInfo> selectUserByOpenIdAndAppId(String openId, String appId)
     {
         // 新建用户对象，该对象是要查找的用户
         IcUniAuthLoginApiInfo userInfo = new IcUniAuthLoginApiInfo();
         userInfo.setOpenId(openId);
-        // 调用 service 接口查询
-        List<IcUniAuthLoginApiInfo> resultList = externalUserInfoService.selectExternalUserInfoList(userInfo);
+        userInfo.setAppId(appId);
         // 返回结果
-        return !(resultList.isEmpty());
+        return externalUserInfoService.selectExternalUserInfoList(userInfo);
     }
 
-    //length用户要求产生字符串的长度
+    /**
+     * 生成随机字符串，字符串包含字符 a-z & A-Z & 0-9
+     * @param length 生成的字符串的长度
+     * @return 随机字符串
+     */
     public static String getRandomString(int length)
     {
         String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

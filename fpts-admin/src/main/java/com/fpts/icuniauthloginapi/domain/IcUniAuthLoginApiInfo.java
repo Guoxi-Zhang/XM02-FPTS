@@ -46,6 +46,24 @@ public class IcUniAuthLoginApiInfo extends BaseEntity
     @Excel(name = "刷新令牌")
     private String refreshToken;
 
+    /**
+     * 默认构造函数，还是有用的
+     */
+    public  IcUniAuthLoginApiInfo() {}
+
+    public IcUniAuthLoginApiInfo(long userId, String accessToken, String refreshToken, String appId, String appName,
+                                 String nickName, String email, String openId)
+    {
+        this.userId = userId;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.appId = appId;
+        this.appName = appName;
+        this.nickName = nickName;
+        this.email = email;
+        this.openId = openId;
+    }
+
     public void setUserId(Long userId)
     {
         this.userId = userId;
