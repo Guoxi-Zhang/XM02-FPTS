@@ -1,9 +1,14 @@
 package com.fpts.web.controller.system;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+
+import com.fpts.todo.domain.TodoList;
+import com.fpts.todo.service.ITodoListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +47,9 @@ public class SysIndexController extends BaseController
 
     @Autowired
     private SysPasswordService passwordService;
+
+    @Autowired
+    private ITodoListService todoListService;
 
     // 系统首页
     @GetMapping("/index")
@@ -128,8 +136,23 @@ public class SysIndexController extends BaseController
 
     // 系统介绍
     @GetMapping("/system/main")
-    public String main(ModelMap mmap)
-    {
+    public String main(ModelMap mmap, TodoList todoList) throws ParseException {
+        List<TodoList> list = todoListService.selectTodoListList(todoList);
+        for(TodoList t:list){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            t.setEndTime(sdf.parse(sdf.format(t.getEndTime())));
+
+            String detail = t.getDetail();
+            System.out.println(detail);
+            if(detail.contains("<p>")){
+                t.setDetail(t.getDetail().replace("<p>", ""));
+                System.out.println(detail.replace("<p>", ""));
+            }
+            if(detail.contains("</p>")){
+                t.setDetail(t.getDetail().replace("</p>", ""));
+            }
+        }
+        mmap.put("todoList", list);
         mmap.put("version", RuoYiConfig.getVersion());
         return "main";
     }

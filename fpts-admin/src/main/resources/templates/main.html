@@ -4,11 +4,22 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>统计</title>
+	<script th:src="@{/js/echarts.js}"></script>
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/echarts.min.js}"></script>
+	<script th:src="@{/js/jquery.cxselect.min.js}"></script>
 	<link rel="shortcut icon" href="favicon.ico">
 	<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
 	<link href="../static/css/animate.min.css" th:href="@{/css/animate.min.css}" rel="stylesheet"/>
 	<link href="../static/css/style.min.css" th:href="@{/css/style.min.css}" rel="stylesheet"/>
+	<link href="/css/bootstrap.min.css?v=3.3.7" rel="stylesheet"/>
+	<link href="/css/font-awesome.min.css?v=4.7.0" rel="stylesheet"/>
+	<!-- bootstrap-table 表格插件样式 -->
+	<link href="/ajax/libs/bootstrap-table/bootstrap-table.min.css?v=1.18.3" rel="stylesheet"/>
+	<link href="/css/animate.min.css?v=20210831" rel="stylesheet"/>
+	<link href="/css/style.min.css?v=20210831" rel="stylesheet"/>
+	<link href="/ruoyi/css/ry-ui.css?v=4.7.5" rel="stylesheet"/>
 </head>
 
 <body class="gray-bg" style="background-color: #e0f8f8">
@@ -80,56 +91,32 @@
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>订单</h5>
-					<div class="pull-right">
-						<div class="btn-group">
-							<button type="button" class="btn btn-xs btn-white active">天</button>
-							<button type="button" class="btn btn-xs btn-white">月</button>
-							<button type="button" class="btn btn-xs btn-white">年</button>
-						</div>
+					<h5>交易记录概述</h5>
+					<div class="ibox-tools">
+						<a class="collapse-link">
+							<i class="fa fa-chevron-up"></i>
+						</a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							<i class="fa fa-wrench"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-user">
+							<li><a href="#">选项1</a>
+							</li>
+							<li><a href="#">选项2</a>
+							</li>
+						</ul>
+						<a class="close-link">
+							<i class="fa fa-times"></i>
+						</a>
 					</div>
 				</div>
 				<div class="ibox-content">
-					<div class="row">
-						<div class="col-sm-9">
-							<div class="flot-chart">
-								<div class="flot-chart-content" id="flot-dashboard-chart"></div>
-							</div>
-						</div>
-						<div class="col-sm-3">
-							<ul class="stat-list">
-								<li>
-									<h2 class="no-margins">2,346</h2>
-									<small>订单总数</small>
-									<div class="stat-percent">48% <i class="fa fa-level-up text-navy"></i>
-									</div>
-									<div class="progress progress-mini">
-										<div style="width: 48%;" class="progress-bar"></div>
-									</div>
-								</li>
-								<li>
-									<h2 class="no-margins ">4,422</h2>
-									<small>最近一个月订单</small>
-									<div class="stat-percent">60% <i class="fa fa-level-down text-navy"></i>
-									</div>
-									<div class="progress progress-mini">
-										<div style="width: 60%;" class="progress-bar"></div>
-									</div>
-								</li>
-								<li>
-									<h2 class="no-margins ">9,180</h2>
-									<small>最近一个月销售额</small>
-									<div class="stat-percent">22% <i class="fa fa-bolt text-navy"></i>
-									</div>
-									<div class="progress progress-mini">
-										<div style="width: 22%;" class="progress-bar"></div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
+					<div class="echarts" id="echarts-bar-chart"></div>
 				</div>
 			</div>
+
+
+
 		</div>
 	</div>
 
@@ -137,7 +124,7 @@
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<h5>用户项目列表</h5>
+					<h5>我的待办事项</h5>
 					<div class="ibox-tools">
 						<a class="collapse-link">
 							<i class="fa fa-chevron-up"></i>
@@ -151,62 +138,22 @@
 					<table class="table table-hover no-margins">
 						<thead>
 						<tr>
+							<th>任务</th>
+							<th>截止日期</th>
 							<th>状态</th>
-							<th>日期</th>
-							<th>用户</th>
-							<th>值</th>
+							<th>细节</th>
 						</tr>
 						</thead>
 						<tbody>
+
+						<tr th:each="todoItem:${todoList}" >
+							<td th:text="${todoItem.task}"><i class="fa fa-clock-o"></i></td>
+							<td th:text="${#dates.format(todoItem.endTime,'yyyy-MM-dd')}"><i class="fa fa-clock-o"></i></td>
+							<td th:if="${todoItem.state} eq 1"><span class="label label-success">进行中</span> </td>
+							<td th:if="${todoItem.state} eq 0"><span class="label label-primary">已完成</span> </td>
+							<td th:text="${todoItem.detail}"></td>
 						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 11:20</td>
-							<td>青衣5858</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 24%</td>
-						</tr>
-						<tr>
-							<td><span class="label label-warning">已取消</span>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 10:40</td>
-							<td>徐子崴</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 01:30</td>
-							<td>姜岚昕</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 54%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 02:20</td>
-							<td>武汉大兵哥</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 12%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 09:40</td>
-							<td>荆莹儿</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 22%</td>
-						</tr>
-						<tr>
-							<td><span class="label label-primary">已完成</span>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 04:10</td>
-							<td>栾某某</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 66%</td>
-						</tr>
-						<tr>
-							<td><small>进行中...</small>
-							</td>
-							<td><i class="fa fa-clock-o"></i> 12:08</td>
-							<td>范范范二妮</td>
-							<td class="text-navy"> <i class="fa fa-level-up"></i> 23%</td>
-						</tr>
+
 						</tbody>
 					</table>
 				</div>
@@ -238,118 +185,68 @@
 
 	}
 
-	$(document).ready(function () {
-		var data2 = [
-			[gd(2012, 1, 1), 7], [gd(2012, 1, 2), 6], [gd(2012, 1, 3), 4], [gd(2012, 1, 4), 8],
-			[gd(2012, 1, 5), 9], [gd(2012, 1, 6), 7], [gd(2012, 1, 7), 5], [gd(2012, 1, 8), 4],
-			[gd(2012, 1, 9), 7], [gd(2012, 1, 10), 8], [gd(2012, 1, 11), 9], [gd(2012, 1, 12), 6],
-			[gd(2012, 1, 13), 4], [gd(2012, 1, 14), 5], [gd(2012, 1, 15), 11], [gd(2012, 1, 16), 8],
-			[gd(2012, 1, 17), 8], [gd(2012, 1, 18), 11], [gd(2012, 1, 19), 11], [gd(2012, 1, 20), 6],
-			[gd(2012, 1, 21), 6], [gd(2012, 1, 22), 8], [gd(2012, 1, 23), 11], [gd(2012, 1, 24), 13],
-			[gd(2012, 1, 25), 7], [gd(2012, 1, 26), 9], [gd(2012, 1, 27), 9], [gd(2012, 1, 28), 8],
-			[gd(2012, 1, 29), 5], [gd(2012, 1, 30), 8], [gd(2012, 1, 31), 25]
-		];
-
-		var data3 = [
-			[gd(2012, 1, 1), 800], [gd(2012, 1, 2), 500], [gd(2012, 1, 3), 600], [gd(2012, 1, 4), 700],
-			[gd(2012, 1, 5), 500], [gd(2012, 1, 6), 456], [gd(2012, 1, 7), 800], [gd(2012, 1, 8), 589],
-			[gd(2012, 1, 9), 467], [gd(2012, 1, 10), 876], [gd(2012, 1, 11), 689], [gd(2012, 1, 12), 700],
-			[gd(2012, 1, 13), 500], [gd(2012, 1, 14), 600], [gd(2012, 1, 15), 700], [gd(2012, 1, 16), 786],
-			[gd(2012, 1, 17), 345], [gd(2012, 1, 18), 888], [gd(2012, 1, 19), 888], [gd(2012, 1, 20), 888],
-			[gd(2012, 1, 21), 987], [gd(2012, 1, 22), 444], [gd(2012, 1, 23), 999], [gd(2012, 1, 24), 567],
-			[gd(2012, 1, 25), 786], [gd(2012, 1, 26), 666], [gd(2012, 1, 27), 888], [gd(2012, 1, 28), 900],
-			[gd(2012, 1, 29), 178], [gd(2012, 1, 30), 555], [gd(2012, 1, 31), 993]
-		];
-
-
-		var dataset = [
-			{
-				label: "订单数",
-				data: data3,
-				color: "#1ab394",
-				bars: {
-					show: true,
-					align: "center",
-					barWidth: 24 * 60 * 60 * 600,
-					lineWidth: 0
-				}
-
-			}, {
-				label: "付款数",
-				data: data2,
-				yaxis: 2,
-				color: "#464f88",
-				lines: {
-					lineWidth: 1,
-					show: true,
-					fill: true,
-					fillColor: {
-						colors: [{
-							opacity: 0.2
-						}, {
-							opacity: 0.2
-						}]
-					}
-				},
-				splines: {
-					show: false,
-					tension: 0.6,
-					lineWidth: 1,
-					fill: 0.1
-				},
+	$(function () {
+		var CountByMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
+		$.ajax({
+			type: 'post',
+			url: '/record/transaction_record/eCharts',
+			async: false,
+			success: function(res) {
+				console.log(res);
+				CountByMonth = res;
 			}
-		];
-
-
-		var options = {
-			xaxis: {
-				mode: "time",
-				tickSize: [3, "day"],
-				tickLength: 0,
-				axisLabel: "Date",
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: 'Arial',
-				axisLabelPadding: 10,
-				color: "#838383"
+		});
+		var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
+		var baroption = {
+			title : {
+				text: '每月交易记录统计'
 			},
-			yaxes: [{
-				position: "left",
-				max: 1070,
-				color: "#838383",
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: 'Arial',
-				axisLabelPadding: 3
-			}, {
-				position: "right",
-				clolor: "#838383",
-				axisLabelUseCanvas: true,
-				axisLabelFontSizePixels: 12,
-				axisLabelFontFamily: ' Arial',
-				axisLabelPadding: 67
-			}
-			],
+			tooltip : {
+				trigger: 'axis'
+			},
 			legend: {
-				noColumns: 1,
-				labelBoxBorderColor: "#000000",
-				position: "nw"
+				data:['交易次数']
 			},
-			grid: {
-				hoverable: false,
-				borderWidth: 0,
-				color: '#838383'
-			}
+			grid:{
+				x:30,
+				x2:20,
+				y2:30
+			},
+			calculable : true,
+			xAxis : [
+				{
+					type : 'category',
+					data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+				}
+			],
+			yAxis : [
+				{
+					type : 'value'
+				}
+			],
+			series : [
+				{
+					name:"交易记录次数",
+					type:'bar',
+					data: CountByMonth,
+					markPoint : {
+						data : [
+							{type : 'max', name: '最大值'},
+							{type : 'min', name: '最小值'}
+						]
+					},
+					markLine : {
+						data : [
+							{type : 'average', name: '平均值'}
+						]
+					}
+				}
+			]
 		};
+		barChart.setOption(baroption);
 
-		function gd(year, month, day) {
-			return new Date(year, month - 1, day).getTime();
-		}
+		window.onresize = barChart.resize;
 
-		var previousPoint = null,
-				previousLabel = null;
-
-		$.plot($("#flot-dashboard-chart"), dataset, options);
 	});
 </script>
 </body>

@@ -58,6 +58,12 @@ public class CertificationController extends BaseController {
      */
     @RequestMapping("/chart")
     public String showChart(ModelMap mmap) {
+        chartList(mmap);
+        return prefix + "/chart";
+    }
+
+    @RequestMapping("/chartList")
+    public void chartList(ModelMap mmap) {
         List<Certification> list = certificationService.selectCertificationList(new Certification());
         Map<String, Integer> map = new TreeMap<String, Integer>();
         String done = "1";
@@ -86,7 +92,6 @@ public class CertificationController extends BaseController {
         System.out.println(countList.toString());
         mmap.put("statusList", statusList);
         mmap.put("countList", countList);
-        return prefix + "/chart";
     }
 
     /**

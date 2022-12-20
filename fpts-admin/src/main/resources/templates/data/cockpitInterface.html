@@ -35,7 +35,7 @@
             <li>
                 <div class="boxall" style="height:350px;">
                     <div class="alltitle">通知公告</div>
-                    <div class="navboxall" id="echart4">
+                    <div class="navboxall">
                         <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                             <tr>
@@ -129,52 +129,25 @@
         </ul>
         <ul class="clearfix">
             <li style="width:60%">
-                <div class="boxall" style="height:450px;">
+                <div class="boxall" style="height:300px;">
                     <div class="alltitle">交易记录统计</div>
-                    <div class="wrapper wrapper-content animated fadeInRight">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="ibox float-e-margins">
-                                    <div class="ibox-title">
-                                        <h5>柱状图</h5>
-                                        <div class="ibox-tools">
-                                            <a class="collapse-link">
-                                                <i class="fa fa-chevron-up"></i>
-                                            </a>
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                                <i class="fa fa-wrench"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-user">
-                                                <li><a href="#">选项1</a>
-                                                </li>
-                                                <li><a href="#">选项2</a>
-                                                </li>
-                                            </ul>
-                                            <a class="close-link">
-                                                <i class="fa fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="ibox-content">
-
-                                        <div class="echarts" id="echarts-bar-chart"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="navboxall " id="echarts-bar-chart">
 
                     </div>
                 </div>
             </li>
             <li style="width: 40%">
-                <div class="boxall" style="height:450px">
 
+                <div class="boxall" style="height:300px">
+                    <div class="alltitle">实名认证比例</div>
+                    <div class="navboxall" id="echart4"></div>
                 </div>
             </li>
+
         </ul>
     </div>
 </div>
-<script>
+<script type="text/javascript">
     $(function () {
         $('.wrap,.adduser').liMarquee({
             direction: 'up',
@@ -183,93 +156,63 @@
         });
     });
 
-</script>
-<script> var ctx = "\/"; </script>
-<a id="scroll-up" href="#" class="btn btn-sm display"><i class="fa fa-angle-double-up"></i></a>
-<script src="/js/jquery.min.js?v=3.6.1"></script>
-<script src="/js/bootstrap.min.js?v=3.3.7"></script>
-<!-- bootstrap-table 表格插件 -->
-<script src="/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=1.18.3"></script>
-<script src="/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js?v=1.18.3"></script>
-<script src="/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js?v=1.18.3"></script>
-<!-- jquery-validate 表单验证插件 -->
-<script src="/ajax/libs/validate/jquery.validate.min.js?v=1.19.3"></script>
-<script src="/ajax/libs/validate/jquery.validate.extend.js?v=1.19.3"></script>
-<script src="/ajax/libs/validate/messages_zh.js?v=1.19.3"></script>
-<!-- bootstrap-table 表格树插件 -->
-<script src="/ajax/libs/bootstrap-table/extensions/tree/bootstrap-table-tree.min.js?v=1.18.3"></script>
-<!-- 遮罩层 -->
-<script src="/ajax/libs/blockUI/jquery.blockUI.js?v=2.70.0"></script>
-<script src="/ajax/libs/iCheck/icheck.min.js?v=1.0.3"></script>
-<script src="/ajax/libs/layer/layer.min.js?v=3.5.1"></script>
-<script src="/ajax/libs/layui/layui.min.js?v=2.7.5"></script>
-<script src="/ruoyi/js/common.js?v=4.7.5"></script>
-<script src="/ruoyi/js/ry-ui.js?v=4.7.5"></script>
-<script src="/ajax/libs/report/echarts/echarts-all.min.js?v=4.2.1"></script>
-<script type="text/javascript">
-    $(function () {
-        var CountByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        $.ajax({
-            type: 'post',
-            url: '/record/transaction_record/eCharts',
-            async: false,
-            success: function (res) {
-                console.log(res);
-                CountByMonth = res;
-            }
-        });
-        var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
-        var baroption = {
-            title: {
-                text: '交易记录统计'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['交易次数']
-            },
-            grid: {
-                x: 30,
-                x2: 20,
-                y2: 30
-            },
-            calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
-                }
+    var myChart = echarts.init(document.getElementById('echart4'));
+
+    let statusList = [[${statusList}]];
+
+    let countList = [[${countList}]];
+
+    option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series: [{
+            name: '占比情况',
+            type: 'pie',
+            radius: '50%',
+            center: ['50%', '50%'],
+            clockwise: false,
+            data: [
+                {value: countList[0], name: '已完成实名认证'},
+                {value: countList[1], name: '未完成实名认证'},
             ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
-            series: [
-                {
-                    name: "交易记录次数",
-                    type: 'bar',
-                    data: CountByMonth,
-                    markPoint: {
-                        data: [
-                            {type: 'max', name: '最大值'},
-                            {type: 'min', name: '最小值'}
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            {type: 'average', name: '平均值'}
-                        ]
+            label: {
+                normal: {
+                    textStyle: {
+                        color: 'rgba(255,255,255,.6)',
+                        fontSize: 14,
                     }
                 }
-            ]
-        };
-        barChart.setOption(baroption);
+            },
+            legend: {
+                data: ['用户数量']
+            },
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    //borderWidth: 1,
+                    //borderColor: '#ffffff',
+                },
+                emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }],
+        color: ['#62c98d','#2f89cf','#4cb9cf'],
+        //backgroundColor: '#fff'
+    };
 
-        window.onresize = barChart.resize;
 
-    });
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
 </script>
 
 
