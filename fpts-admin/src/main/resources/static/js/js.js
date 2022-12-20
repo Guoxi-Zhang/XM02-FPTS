@@ -90,7 +90,8 @@ $(function () {
                 }
             },
             legend: {
-                data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30']
+                data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
+                textStyle: {color: "#fff"}
             },
             grid: {
                 left: '10%',
@@ -99,10 +100,11 @@ $(function () {
             },
             xAxis: {
                 type: 'category',
+                axisLabel:  {textStyle: {color: "#fff",}},
+                axisLine: {lineStyle: { color: 'rgba(255,255,255,.6)'}, onZero: false },
                 data: data0.categoryData,
                 scale: true,
                 boundaryGap: false,
-                axisLine: { onZero: false },
                 splitLine: { show: false },
                 splitNumber: 20,
                 min: 'dataMin',
@@ -112,7 +114,9 @@ $(function () {
                 scale: true,
                 splitArea: {
                     show: true
-                }
+                },
+                axisLabel: {textStyle: {color: '#fff'}},
+                axisLine: {lineStyle: {color: 'rgba(255,255,255,.6)'}},
             },
             dataZoom: [
                 {
@@ -125,8 +129,13 @@ $(function () {
                     type: 'slider',
                     top: '90%',
                     start: 50,
-                    end: 100
-                }
+                    end: 100,
+                    textStyle: {
+                        color: "#fff"
+                    },
+                    borderColor: "rgba(255,255,255,.6)"
+                },
+
             ],
             series: [
                 {
