@@ -2,6 +2,9 @@ package com.fpts.framework.shiro.realm;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fpts.framework.shiro.uniauthtoken.ExtendedUsernamePasswordToken;
+import com.fpts.framework.shiro.uniauthtoken.LoginType;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -86,7 +89,9 @@ public class UserRealm extends AuthorizingRealm
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException
     {
-        UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        // 系统原生部分
+        ExtendedUsernamePasswordToken upToken = (ExtendedUsernamePasswordToken) token;
+        LoginType type = upToken.getType();
         String username = upToken.getUsername();
         String password = "";
         if (upToken.getPassword() != null)
@@ -97,7 +102,14 @@ public class UserRealm extends AuthorizingRealm
         SysUser user = null;
         try
         {
-            user = loginService.login(username, password);
+            if (LoginType.NOPASSWD.equals(type))
+            {
+                user = loginService.login(username);
+            }
+            else
+            {
+                user = loginService.login(username, password);
+            }
         }
         catch (CaptchaException e)
         {

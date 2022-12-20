@@ -3,19 +3,50 @@ package com.fpts.icuniauthloginapi.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fpts.common.core.controller.BaseController;
+import com.fpts.common.core.domain.entity.SysUser;
+import com.fpts.framework.shiro.uniauthtoken.LoginType;
+import com.fpts.framework.shiro.uniauthtoken.ExtendedUsernamePasswordToken;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Random;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.fpts.common.annotation.Log;
+import com.fpts.common.enums.BusinessType;
+import com.fpts.icuniauthloginapi.domain.IcUniAuthLoginApiInfo;
+import com.fpts.icuniauthloginapi.service.IIcUniAuthLoginApiInfoService;
+import com.fpts.common.core.domain.AjaxResult;
+import com.fpts.common.utils.poi.ExcelUtil;
+import com.fpts.common.core.page.TableDataInfo;
+import com.fpts.framework.shiro.service.SysRegisterService;
+import com.fpts.system.service.ISysUserService;
 
 @Controller
 public class IcUniAuthLoginApiController extends BaseController
 {
+    @Autowired
+    private IIcUniAuthLoginApiInfoService externalUserInfoService;
+
+    @Autowired
+    private ISysUserService sysUserService;
+
+    @Autowired
+    private SysRegisterService registerService;
+
+    private String prefix = "icuniauth_login";
     /**
      * icUniAuth 发给 FPTS 的 client_id
      */
@@ -184,18 +215,166 @@ public class IcUniAuthLoginApiController extends BaseController
                 String email = data.getString("email");
                 System.out.println("email: " + email);
 
+                // 检查是否为新用户，为新用户自动注册
+                if (!isRegistered(openId))
+                {
+                    // 首先写入 sys_user 表
+
+                    SysUser newUser = new SysUser();
+                    // 新用户信息
+                    newUser.setPassword(getRandomString(6));
+                    newUser.setUserName(nickName);
+                    newUser.setLoginName(nickName);
+                    newUser.setEmail(email);
+                    System.out.println(newUser.toString());
+                    // 注册用户
+                    String msg = registerService.register(newUser);
+                    System.out.println("注册结果：" + msg);
+                    // 获取用户在 sys_user 表中的 id
+                    Long userId = sysUserService.selectUserByLoginName(nickName).getUserId();
+
+                    // 然后用户信息写入临时对象
+                    IcUniAuthLoginApiInfo externalUser = new IcUniAuthLoginApiInfo();
+                    externalUser.setUserId(userId);
+                    externalUser.setAccessToken(accessToken);
+                    externalUser.setRefreshToken(refreshToken);
+                    externalUser.setAppId(getRandomString(32));
+                    externalUser.setAppName("icUniAuth");
+                    externalUser.setNickName(nickName);
+                    externalUser.setEmail(email);
+                    externalUser.setOpenId(openId);
+                    // System.out.println("这是Open ID：" + externalUser.getOpenId());
+                    // 写入 external_user 表
+                    externalUserInfoService.insertExternalUserInfo(externalUser);
+                }
+
+                // 登录
+                ExtendedUsernamePasswordToken token = new ExtendedUsernamePasswordToken(nickName, LoginType.NOPASSWD);
+                Subject subject = SecurityUtils.getSubject();
+                subject.login(token);
             }
             catch (Exception e)
             {
                 e.printStackTrace();
             }
-            // 留在本页
-            return "icuniauth_client";
-        }
 
-        // 尝试读取
+        }
 
         return "redirect:index";
     }
 
+    public boolean isRegistered(String openId)
+    {
+        // 新建用户对象，该对象是要查找的用户
+        IcUniAuthLoginApiInfo userInfo = new IcUniAuthLoginApiInfo();
+        userInfo.setOpenId(openId);
+        // 调用 service 接口查询
+        List<IcUniAuthLoginApiInfo> resultList = externalUserInfoService.selectExternalUserInfoList(userInfo);
+        // 返回结果
+        return !(resultList.isEmpty());
+    }
+
+    //length用户要求产生字符串的长度
+    public static String getRandomString(int length)
+    {
+        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<length;i++){
+            int number=random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    @RequiresPermissions("system:info:view")
+    @GetMapping()
+    public String info()
+    {
+        return prefix + "/info";
+    }
+
+    /**
+     * 查询外部用户，用于存储从其他应用登录FPTS的用户的原始信息列表
+     */
+    @RequiresPermissions("system:info:list")
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list(IcUniAuthLoginApiInfo externalUserInfo)
+    {
+        startPage();
+        List<IcUniAuthLoginApiInfo> list = externalUserInfoService.selectExternalUserInfoList(externalUserInfo);
+        return getDataTable(list);
+    }
+
+    /**
+     * 导出外部用户，用于存储从其他应用登录FPTS的用户的原始信息列表
+     */
+    @RequiresPermissions("system:info:export")
+    @Log(title = "外部用户，用于存储从其他应用登录FPTS的用户的原始信息", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(IcUniAuthLoginApiInfo externalUserInfo)
+    {
+        List<IcUniAuthLoginApiInfo> list = externalUserInfoService.selectExternalUserInfoList(externalUserInfo);
+        ExcelUtil<IcUniAuthLoginApiInfo> util = new ExcelUtil<IcUniAuthLoginApiInfo>(IcUniAuthLoginApiInfo.class);
+        return util.exportExcel(list, "外部用户，用于存储从其他应用登录FPTS的用户的原始信息数据");
+    }
+
+    /**
+     * 新增外部用户，用于存储从其他应用登录FPTS的用户的原始信息
+     */
+    @GetMapping("/add")
+    public String add()
+    {
+        return prefix + "/add";
+    }
+
+    /**
+     * 新增保存外部用户，用于存储从其他应用登录FPTS的用户的原始信息
+     */
+    @RequiresPermissions("system:info:add")
+    @Log(title = "外部用户，用于存储从其他应用登录FPTS的用户的原始信息", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(IcUniAuthLoginApiInfo externalUserInfo)
+    {
+        return toAjax(externalUserInfoService.insertExternalUserInfo(externalUserInfo));
+    }
+
+    /**
+     * 修改外部用户，用于存储从其他应用登录FPTS的用户的原始信息
+     */
+    @RequiresPermissions("system:info:edit")
+    @GetMapping("/edit/{userId}")
+    public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
+    {
+        IcUniAuthLoginApiInfo externalUserInfo = externalUserInfoService.selectExternalUserInfoByUserId(userId);
+        mmap.put("externalUserInfo", externalUserInfo);
+        return prefix + "/edit";
+    }
+
+    /**
+     * 修改保存外部用户，用于存储从其他应用登录FPTS的用户的原始信息
+     */
+    @RequiresPermissions("system:info:edit")
+    @Log(title = "外部用户，用于存储从其他应用登录FPTS的用户的原始信息", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(IcUniAuthLoginApiInfo externalUserInfo)
+    {
+        return toAjax(externalUserInfoService.updateExternalUserInfo(externalUserInfo));
+    }
+
+    /**
+     * 删除外部用户，用于存储从其他应用登录FPTS的用户的原始信息
+     */
+    @RequiresPermissions("system:info:remove")
+    @Log(title = "外部用户，用于存储从其他应用登录FPTS的用户的原始信息", businessType = BusinessType.DELETE)
+    @PostMapping( "/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        return toAjax(externalUserInfoService.deleteExternalUserInfoByUserIds(ids));
+    }
 }

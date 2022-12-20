@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.icuniauthloginapi.mapper.IcUniAuthLoginApiInfoMapper">
+
+    <resultMap type="IcUniAuthLoginApiInfo" id="ExternalUserInfoResult">
+        <result property="userId"    column="user_id"    />
+        <result property="openId"    column="open_id"    />
+        <result property="email"    column="email"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="appName"    column="app_name"    />
+        <result property="appId"    column="app_id"    />
+        <result property="accessToken"    column="access_token"    />
+        <result property="refreshToken"    column="refresh_token"    />
+    </resultMap>
+
+    <sql id="selectExternalUserInfoVo">
+        select user_id, open_id, email, nick_name, app_name, app_id, access_token, refresh_token from external_user_info
+    </sql>
+
+    <select id="selectExternalUserInfoList" parameterType="IcUniAuthLoginApiInfo" resultMap="ExternalUserInfoResult">
+        <include refid="selectExternalUserInfoVo"/>
+        <where>
+            <if test="openId != null  and openId != ''"> and open_id = #{openId}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
+            <if test="appName != null  and appName != ''"> and app_name like concat('%', #{appName}, '%')</if>
+            <if test="appId != null  and appId != ''"> and app_id = #{appId}</if>
+            <if test="accessToken != null  and accessToken != ''"> and access_token = #{accessToken}</if>
+            <if test="refreshToken != null  and refreshToken != ''"> and refresh_token = #{refreshToken}</if>
+        </where>
+    </select>
+
+    <select id="selectExternalUserInfoByUserId" parameterType="Long" resultMap="ExternalUserInfoResult">
+        <include refid="selectExternalUserInfoVo"/>
+        where user_id = #{userId}
+    </select>
+
+    <insert id="insertExternalUserInfo" parameterType="IcUniAuthLoginApiInfo">
+        insert into external_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="openId != null and openId != ''">open_id,</if>
+            <if test="email != null and email != ''">email,</if>
+            <if test="nickName != null and nickName != ''">nick_name,</if>
+            <if test="appName != null and appName != ''">app_name,</if>
+            <if test="appId != null and appId != ''">app_id,</if>
+            <if test="accessToken != null and accessToken != ''">access_token,</if>
+            <if test="refreshToken != null and refreshToken != ''">refresh_token,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="openId != null and openId != ''">#{openId},</if>
+            <if test="email != null and email != ''">#{email},</if>
+            <if test="nickName != null and nickName != ''">#{nickName},</if>
+            <if test="appName != null and appName != ''">#{appName},</if>
+            <if test="appId != null and appId != ''">#{appId},</if>
+            <if test="accessToken != null and accessToken != ''">#{accessToken},</if>
+            <if test="refreshToken != null and refreshToken != ''">#{refreshToken},</if>
+        </trim>
+    </insert>
+
+    <update id="updateExternalUserInfo" parameterType="IcUniAuthLoginApiInfo">
+        update external_user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="openId != null and openId != ''">open_id = #{openId},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+            <if test="appName != null and appName != ''">app_name = #{appName},</if>
+            <if test="appId != null and appId != ''">app_id = #{appId},</if>
+            <if test="accessToken != null and accessToken != ''">access_token = #{accessToken},</if>
+            <if test="refreshToken != null and refreshToken != ''">refresh_token = #{refreshToken},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteExternalUserInfoByUserId" parameterType="Long">
+        delete from external_user_info where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteExternalUserInfoByUserIds" parameterType="String">
+        delete from external_user_info where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+</mapper>
