@@ -7,73 +7,90 @@ import com.fpts.common.core.domain.BaseEntity;
 
 /**
  * 实名认证对象 certification
- * 
+ *
  * @author ruoyi
  * @date 2022-12-11
  */
-public class Certification extends BaseEntity
-{
+public class Certification extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /** 序号 */
+    /**
+     * 序号
+     */
     private Long id;
 
-    /** 用户ID */
+    /**
+     * 用户ID
+     */
     @Excel(name = "用户ID")
     private Long userId;
 
-    /** 真实姓名 */
+    /**
+     * 登录名
+     */
+    @Excel(name = "登录名")
+    private String loginName;
+
+    /**
+     * 真实姓名
+     */
     @Excel(name = "真实姓名")
     private String realName;
 
-    /** 身份证号 */
+    /**
+     * 身份证号
+     */
     @Excel(name = "身份证号")
     private String identityCardNumber;
 
-    public void setId(Long id) 
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() 
-    {
+    public Long getId() {
         return id;
     }
-    public void setUserId(Long userId) 
-    {
+
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Long getUserId() 
-    {
+    public Long getUserId() {
         return userId;
     }
-    public void setRealName(String realName) 
-    {
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setRealName(String realName) {
         this.realName = realName;
     }
 
-    public String getRealName() 
-    {
+    public String getRealName() {
         return realName;
     }
-    public void setIdentityCardNumber(String identityCardNumber) 
-    {
+
+    public void setIdentityCardNumber(String identityCardNumber) {
         this.identityCardNumber = identityCardNumber;
     }
 
-    public String getIdentityCardNumber() 
-    {
+    public String getIdentityCardNumber() {
         return identityCardNumber;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("userId", getUserId())
-            .append("realName", getRealName())
-            .append("identityCardNumber", getIdentityCardNumber())
-            .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+                .append("id", getId())
+                .append("userId", getUserId())
+                .append("loginName", getLoginName())
+                .append("realName", getRealName())
+                .append("identityCardNumber", getIdentityCardNumber())
+                .toString();
     }
 }

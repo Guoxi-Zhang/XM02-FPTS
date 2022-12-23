@@ -1,52 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fpts.system.mapper.CertificationMapper">
-    
+
     <resultMap type="Certification" id="CertificationResult">
-        <result property="id"    column="id"    />
-        <result property="userId"    column="user_id"    />
-        <result property="realName"    column="real_name"    />
-        <result property="identityCardNumber"    column="identity_card_number"    />
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="loginName" column="login_name"/>
+        <result property="realName" column="real_name"/>
+        <result property="identityCardNumber" column="identity_card_number"/>
     </resultMap>
 
     <sql id="selectCertificationVo">
-        select id, user_id, real_name, identity_card_number from certification
+        select id, user_id, login_name, real_name, identity_card_number
+        from certification
     </sql>
 
     <select id="selectCertificationList" parameterType="Certification" resultMap="CertificationResult">
         <include refid="selectCertificationVo"/>
-        <where>  
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="realName != null  and realName != ''"> and real_name like concat('%', #{realName}, '%')</if>
-            <if test="identityCardNumber != null  and identityCardNumber != ''"> and identity_card_number = #{identityCardNumber}</if>
+        <where> 1=1
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="loginName != null  and loginName != ''">and login_name like concat('%', #{loginName}, '%')</if>
+            <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
+            <if test="identityCardNumber != null  and identityCardNumber != ''">and identity_card_number =
+                #{identityCardNumber}
+            </if>
         </where>
+        ${params.dataScope}
     </select>
-    
+
     <select id="selectCertificationById" parameterType="Long" resultMap="CertificationResult">
         <include refid="selectCertificationVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertCertification" parameterType="Certification" useGeneratedKeys="true" keyProperty="id">
         insert into certification
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
+            <if test="loginName != null">login_name,</if>
             <if test="realName != null">real_name,</if>
             <if test="identityCardNumber != null">identity_card_number,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
+            <if test="loginName != null">#{loginName},</if>
             <if test="realName != null">#{realName},</if>
             <if test="identityCardNumber != null">#{identityCardNumber},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateCertification" parameterType="Certification">
         update certification
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
+            <if test="loginName != null">login_name = #{loginName},</if>
             <if test="realName != null">real_name = #{realName},</if>
             <if test="identityCardNumber != null">identity_card_number = #{identityCardNumber},</if>
         </trim>
@@ -54,11 +63,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteCertificationById" parameterType="Long">
-        delete from certification where id = #{id}
+        delete
+        from certification
+        where id = #{id}
     </delete>
 
     <delete id="deleteCertificationByIds" parameterType="String">
-        delete from certification where id in 
+        delete from certification where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
