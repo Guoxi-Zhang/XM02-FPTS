@@ -213,4 +213,20 @@ public class AccountAssetsController extends BaseController
         //AccountAssets accountAssets = accountAssetsService.selectAccountAssetsByNo()
         return toAjax(accountAssetsService.updateAccountAssets(accountAssets));
     }
+
+    @RequestMapping("/getAccountBalance")
+    @ResponseBody
+    public Long getAccountBalance(@RequestParam String userid, @RequestParam String accountid){
+        AccountAssets accountAsset = new AccountAssets();
+        accountAsset.setUserId(userid);
+        accountAsset.setAccountId(accountid);
+        List<AccountAssets> accountAssets = accountAssetsService.selectAccountAssetsList(accountAsset);
+        if (accountAssets.isEmpty()){
+            return -11111L;
+        }
+        else {
+            AccountAssets aa = accountAssets.get(0);
+            return aa.getAccountBalance();
+        }
+    }
 }
