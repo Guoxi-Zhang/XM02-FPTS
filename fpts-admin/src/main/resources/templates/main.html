@@ -33,7 +33,7 @@
 					<h5>收入</h5>
 				</div>
 				<div class="ibox-content">
-					<h1 class="no-margins">40 886,200</h1>
+					<h1 class="no-margins">40,200</h1>
 					<div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i>
 					</div>
 					<small>总收入</small>
@@ -57,14 +57,14 @@
 		<div class="col-sm-3">
 			<div class="ibox float-e-margins">
 				<div class="ibox-title">
-					<span class="label label-primary pull-right">今天</span>
-					<h5>访客</h5>
+					<span class="label label-primary pull-right">月</span>
+					<h5>新闻</h5>
 				</div>
 				<div class="ibox-content">
-					<h1 class="no-margins">106,120</h1>
+					<h1 class="no-margins">120</h1>
 					<div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i>
 					</div>
-					<small>新访客</small>
+					<small>财经新闻</small>
 				</div>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 				<div class="ibox-title">
 <!--					<a class="btn btn-primary btn-rounded btn-sm pull-right" onclick="searchWeather()"><i class="fa fa-search"></i>&nbsp;搜索该城市天气</a>-->
 					<span class="label label-primary pull-right" id="searchBtn" onclick="searchWeather()"><i class="fa fa-search"></i></span>
-					<h5>天气&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;</h5>
+					<h5>天气&emsp;  &emsp; &emsp; &emsp;</h5>
 					<input type="text" id="searchCity" style="width: 50px"/>
 				</div>
 				<div class="ibox-content">
@@ -81,7 +81,7 @@
 
 <!--					<div class="stat-percent font-bold text-danger"> <i class="fa fa-level-down"></i>-->
 <!--					</div>-->
-					<small id = "date">12月8日</small>
+					<small id = "date">2022-12-22</small>
 				</div>
 			</div>
 		</div>
@@ -171,6 +171,7 @@
 	function searchWeather() {
 		console.log("searchWeather");
 		var city = document.getElementById("searchCity").value;
+		// var city = "成都";
 		console.log("city:" + city);
 		document.getElementById("searchBtn").innerHTML= "<i class=\"fa fa-search\"></i>" + city;
 		var url = "/weathers/cityWeathers/search/" +city;
