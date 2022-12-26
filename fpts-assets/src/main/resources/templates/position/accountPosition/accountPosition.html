@@ -83,7 +83,7 @@
         var options = {
             url: prefix + "/list",
             createUrl: prefix + "/add",
-            updateUrl: prefix + "/edit/{id}",
+            detailUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
             modalName: "账户持仓",
@@ -132,7 +132,7 @@
                     align: 'center',
                     formatter: function(value, row, index) {
                         var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.orderId + '\')"><i class="fa fa-edit"></i>查看持仓</a> ');
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.detail(\'' + row.orderId + '\')"><i class="fa fa-edit"></i>查看持仓</a> ');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="sellPart(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>部分卖出</a>');
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderId + '\')"><i class="fa fa-remove"></i>全部卖出</a>');
                         return actions.join('');
