@@ -50,6 +50,18 @@ public class FinanceCollectionServiceImpl implements IFinanceCollectionService
     }
 
     /**
+     * 查询专门的产品收藏
+     *
+     * @param financeCollection 产品收藏
+     * @return 产品收藏
+     */
+    @Override
+    public FinanceCollection selectFinanceCollectionByIdPid(FinanceCollection financeCollection)
+    {
+        return financeCollectionMapper.selectFinanceCollectionByIdPid(financeCollection);
+    }
+
+    /**
      * 查询产品收藏列表_改
      *
      * @param financeCollection 产品收藏

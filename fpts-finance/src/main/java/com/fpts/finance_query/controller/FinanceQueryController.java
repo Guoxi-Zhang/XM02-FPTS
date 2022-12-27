@@ -160,10 +160,13 @@ public class FinanceQueryController extends BaseController
     @ResponseBody
     public AjaxResult addCollection(@PathVariable("product_id") String productId) {
         long userId = (long) PermissionUtils.getPrincipalProperty("userId");
+        String msg = "已经收藏过了";
         System.out.println(userId);
         System.out.println(productId);
         financeCollection = new FinanceCollection(userId, productId);
-        return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
+        if(financeCollectionService.selectFinanceCollectionByIdPid(financeCollection)==null)
+            return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
+        return error(msg);
     }
 
     @GetMapping("/addTransactionRecord")

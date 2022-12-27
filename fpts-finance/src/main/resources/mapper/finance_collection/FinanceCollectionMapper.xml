@@ -83,4 +83,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ${params.dataScope}
     </select>
 
+    <select id="selectFinanceCollectionByIdPid" parameterType="FinanceCollection" resultMap="FinanceCollectionResult">
+        <include refid="selectFinanceCollectionVo"/>
+        where user_id = #{userId} and product_id=#{productId}
+    </select>
+
 </mapper>

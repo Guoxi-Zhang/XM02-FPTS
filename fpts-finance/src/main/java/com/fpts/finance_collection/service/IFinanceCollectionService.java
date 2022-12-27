@@ -18,6 +18,7 @@ public interface IFinanceCollectionService
      * @return 产品收藏
      */
     public FinanceCollection selectFinanceCollectionById(Long id);
+    public FinanceCollection selectFinanceCollectionByIdPid(FinanceCollection financeCollection);
 
     /**
      * 查询产品收藏列表

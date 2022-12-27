@@ -18,6 +18,7 @@ public interface FinanceCollectionMapper
      * @return 产品收藏
      */
     public FinanceCollection selectFinanceCollectionById(Long id);
+    FinanceCollection selectFinanceCollectionByIdPid(FinanceCollection financeCollection);
 
     /**
      * 查询产品收藏列表
@@ -59,5 +60,6 @@ public interface FinanceCollectionMapper
      * @return 结果
      */
     public int deleteFinanceCollectionByIds(String[] ids);
+
 
 }
