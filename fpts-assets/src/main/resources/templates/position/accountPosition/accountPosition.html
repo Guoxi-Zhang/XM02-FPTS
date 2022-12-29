@@ -11,6 +11,10 @@
                 <div class="select-list">
                     <ul>
                         <li>
+                            <label>用户ID：</label>
+                            <input type="text" name="userId"/>
+                        </li>
+                        <li>
                             <label>账户ID：</label>
                             <input type="text" name="accountId"/>
                         </li>
@@ -94,6 +98,11 @@
                     field: 'orderId',
                     title: '序号',
                     visible: false
+                },
+                {
+                    field: 'userId',
+                    title: '用户ID',
+                    sortable: true
                 },
                 {
                     field: 'accountId',

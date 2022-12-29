@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import com.fpts.common.annotation.DataScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.position.mapper.AccountPositionMapper;
@@ -31,6 +33,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 账户持仓
      */
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public AccountPosition selectAccountPositionByOrderId(Long orderId)
     {
         return accountPositionMapper.selectAccountPositionByOrderId(orderId);
@@ -43,6 +46,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 账户持仓
      */
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public List<AccountPosition> selectAccountPositionList(AccountPosition accountPosition)
     {
         return accountPositionMapper.selectAccountPositionList(accountPosition);
@@ -55,6 +59,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int insertAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.insertAccountPosition(accountPosition);
@@ -67,6 +72,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int updateAccountPosition(AccountPosition accountPosition)
     {
         return accountPositionMapper.updateAccountPosition(accountPosition);
@@ -79,6 +85,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int deleteAccountPositionByOrderIds(String orderIds)
     {
         return accountPositionMapper.deleteAccountPositionByOrderIds(Convert.toStrArray(orderIds));
@@ -91,6 +98,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public int deleteAccountPositionByOrderId(Long orderId)
     {
         return accountPositionMapper.deleteAccountPositionByOrderId(orderId);
@@ -98,6 +106,7 @@ public class AccountPositionServiceImpl implements IAccountPositionService
 
     //统计
     @Override
+    @DataScope(deptAlias = "account_position", userAlias = "account_position")
     public List<Integer> getMonthlyData() {
         int len = 12;
         List<Integer> list = new ArrayList<>(len);

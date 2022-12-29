@@ -145,6 +145,21 @@ public class AccountAssetsController extends BaseController
     }
 
     /**
+     * 统计
+     */
+    @GetMapping("/eCharts")
+    public String statistics()
+    {
+        return prefix + "/eCharts";
+    }
+    @PostMapping("/eCharts")
+    @ResponseBody
+    public List<Long> statisticsData(@RequestParam String userId)
+    {
+        return accountAssetsService.getAccountAssets(userId);
+    }
+
+    /**
      * 输入充值金额
      */
     @GetMapping("/addBalance/{no}")

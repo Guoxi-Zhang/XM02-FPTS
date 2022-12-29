@@ -60,4 +60,6 @@ public interface IAccountAssetsService
     public int deleteAccountAssetsByNo(Long no);
 
     public List<AccountAssets> selectAccountId();
+
+    public List<Long> getAccountAssets(String userId);
 }

@@ -52,7 +52,9 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                
+                <a class="btn btn-success" onclick="printToChart()">
+                    <i class="fa fa-area-chart"></i> 统计图表
+                </a>
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="assets:account_assets:remove">
                     <i class="fa fa-remove"></i> 注销账户
                 </a>
@@ -80,6 +82,12 @@
         function printToHtml(){
             $.modal.openFull(table.options.modalName + "打印", "/assets/account_assets/print");
         }
+
+        function printToChart(){
+            console.log("打开统计图标");
+            $.modal.open("账户资产统计", "assets/account_assets/eCharts");
+        }
+
         $(function() {
             var options = {
                 url: prefix + "/list",

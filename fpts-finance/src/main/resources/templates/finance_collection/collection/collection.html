@@ -167,7 +167,7 @@
         });
 
         function buy(pid, type, newprice) {
-            localStorage.setItem("productId", JSON.stringify(pid));
+            localStorage.setItem("productId", pid);
             localStorage.setItem("productPrice", newprice);
             localStorage.setItem("productType", type);
             console.log(typeof p);
@@ -175,7 +175,7 @@
             console.log(newprice);
             console.log(type);
             table.set();
-            $.modal.open(table.options.modalName + "新增交易", "/finance_query/finance_query/addTransactionRecord")
+            $.modal.open("新增交易", "/finance_query/finance_query/addTransactionRecord")
         }
     </script>
 </body>
