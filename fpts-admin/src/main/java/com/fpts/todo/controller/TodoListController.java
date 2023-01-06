@@ -7,11 +7,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.todo.domain.TodoList;
@@ -58,10 +54,45 @@ public class TodoListController extends BaseController
         return getDataTable(list);
     }
 
-    @GetMapping("/wxGet")
-    public List<TodoList> get(){
-        return todoListService.selectTodoListList(new TodoList());
+    @RequestMapping(value = "/wxGet/{Navtab}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<TodoList> get(TodoList todoList, @PathVariable("Navtab") String tab){
+        List<TodoList> list = todoListService.selectTodoListList(todoList);
+        List<TodoList> ansList = new ArrayList<>();
+        for(TodoList t:list){
+            String detail = t.getDetail();
+            if(detail.contains("<p>")){
+                t.setDetail(t.getDetail().replace("<p>", ""));
+                System.out.println(detail.replace("<p>", ""));
+            }
+            if(detail.contains("</p>")){
+                t.setDetail(t.getDetail().replace("</p>", ""));
+            }
+            if(tab.equals("0") && t.getState().equals("0")){//进行中待办事项
+                ansList.add(t);
+            }else if(tab.equals("1") && t.getState().equals("1")){//已完成待办事项
+                ansList.add(t);
+            }
+        }
+        System.out.println(ansList.toString());
+        return ansList;
     }
+
+    @RequestMapping(value = "/wxEdit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public TodoList wxEdit( @PathVariable("id") String id){
+        TodoList item = todoListService.selectTodoListById(Long.valueOf(id));
+        String detail = item.getDetail();
+        if(detail.contains("<p>")){
+            item.setDetail(item.getDetail().replace("<p>", ""));
+            System.out.println(detail.replace("<p>", ""));
+        }
+        if(detail.contains("</p>")){
+            item.setDetail(item.getDetail().replace("</p>", ""));
+        }
+        return item;
+    }
+
 
     /**
      * 导出待办事项列表
@@ -125,7 +156,6 @@ public class TodoListController extends BaseController
     /**
      * 删除待办事项
      */
-    @RequiresPermissions("todo:list:remove")
     @Log(title = "待办事项", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
