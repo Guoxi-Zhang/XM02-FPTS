@@ -5,11 +5,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.record.domain.TradingRecord;
@@ -205,5 +201,24 @@ public class TradingRecordController extends BaseController
     public List<Integer> statisticsData()
     {
         return tradingRecordService.getMonthlyData();
+    }
+
+    @PostMapping("/searchTradingRecord")
+    @ResponseBody
+    public List<TradingRecord> searchTradingRecord(@RequestParam String userId, @RequestParam String productType)
+    {
+        TradingRecord tradingRecord = new TradingRecord();
+        tradingRecord.setUserId(userId);
+        tradingRecord.setProductType(productType);
+        return tradingRecordService.selectTradingRecordList(tradingRecord);
+    }
+
+    @PostMapping("/addTradingRecord")
+    @ResponseBody
+    public List<TradingRecord> addTradingRecord(@RequestParam String userId, @RequestParam String productType) {
+        TradingRecord tradingRecord = new TradingRecord();
+        tradingRecord.setUserId(userId);
+        tradingRecord.setProductType(productType);
+        return tradingRecordService.selectTradingRecordList(tradingRecord);
     }
 }
