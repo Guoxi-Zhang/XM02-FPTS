@@ -7,6 +7,7 @@ import ch.qos.logback.classic.util.LogbackMDCAdapter;
 import com.fpts.assets.domain.AccountAssets;
 import com.fpts.assets.mapper.AccountAssetsMapper;
 import com.fpts.assets.service.IAccountAssetsService;
+import com.fpts.finance_query.service.impl.FinanceQueryServiceImpl;
 import com.fpts.record.domain.TradingRecord;
 import com.fpts.record.service.ITradingRecordService;
 import org.apache.ibatis.transaction.Transaction;
@@ -20,11 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.finance_query.domain.FinanceQuery;
@@ -259,4 +256,42 @@ public class FinanceQueryController extends BaseController
         List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(financeQuery);
         return getDataTable(list);
     }
+
+    /** 小程序列表 */
+    @RequestMapping(value = "/wxGet/{Navtab}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<FinanceQuery> get(FinanceQuery financeQuery, @PathVariable("Navtab") String tab){
+        List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(financeQuery);
+        List<FinanceQuery> ansList = new ArrayList<>();
+        int cnt = 0;
+        for(FinanceQuery t: list){
+            if (cnt>500) break;
+            if(tab.equals("0") && t.getType().equals("0")){//A股
+                ansList.add(t);
+                cnt++;
+            }
+            else if(tab.equals("1") && t.getType().equals("1")){//B股
+                ansList.add(t);
+                cnt++;
+            }
+            else if(tab.equals("2") && t.getType().equals("2")){//债券
+                ansList.add(t);
+                cnt++;
+            }
+            else if(tab.equals("3") && t.getType().equals("3")){//基金
+                ansList.add(t);
+                cnt++;
+            }
+        }
+        System.out.println(ansList.toString());
+        return ansList;
+    }
+
+    @RequestMapping(value = "/wxEdit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public FinanceQuery wxEdit( @PathVariable("id") String id){
+        FinanceQuery item = financeQueryService.selectFinanceQueryById(Integer.valueOf(id));
+        return item;
+    }
+
 }
