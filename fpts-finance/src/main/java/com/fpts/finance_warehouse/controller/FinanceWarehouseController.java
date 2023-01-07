@@ -9,11 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
@@ -179,5 +175,42 @@ public class FinanceWarehouseController extends BaseController
 //        startPage();
         List<FinanceWarehouse> list = financeWarehouseService.selectFinanceWarehouseList(financeWarehouse);
         return getDataTable(list);
+    }
+
+    /** 小程序列表 */
+    @RequestMapping(value = "/wxGet/{Navtab}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<FinanceWarehouse> get(FinanceWarehouse financeWarehouse, @PathVariable("Navtab") String tab){
+        List<FinanceWarehouse> list = financeWarehouseService.selectFinanceWarehouseList(financeWarehouse);
+        List<FinanceWarehouse> ansList = new ArrayList<>();
+        int cnt = 0;
+        for(FinanceWarehouse t: list){
+            if (cnt>500) break;
+            if(tab.equals("0") && t.getType().equals("0")){//A股
+                ansList.add(t);
+                cnt++;
+            }
+            else if(tab.equals("1") && t.getType().equals("1")){//B股
+                ansList.add(t);
+                cnt++;
+            }
+            else if(tab.equals("2") && t.getType().equals("2")){//债券
+                ansList.add(t);
+                cnt++;
+            }
+            else if(tab.equals("3") && t.getType().equals("3")){//基金
+                ansList.add(t);
+                cnt++;
+            }
+        }
+        System.out.println(ansList.toString());
+        return ansList;
+    }
+
+    @RequestMapping(value = "/wxEdit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public FinanceWarehouse wxEdit( @PathVariable("id") String id){
+        FinanceWarehouse item = financeWarehouseService.selectFinanceWarehouseById(Integer.valueOf(id));
+        return item;
     }
 }
