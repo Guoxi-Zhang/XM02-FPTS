@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.constant.UserConstants;
@@ -102,6 +98,20 @@ public class SysUserController extends BaseController
     {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         return util.importTemplateExcel("用户数据");
+    }
+
+    /**
+     * 以用户的登录名查询用户的所有信息
+     * @param loginName 查询参数，用户的登录名
+     * @return SysUser 对象
+     */
+    @PostMapping("/getUserInfo")
+    @ResponseBody
+    public SysUser getUserInfoByLoginName(@RequestParam String loginName)
+    {
+//        SysUser queryUser = new SysUser();
+//        queryUser.setLoginName(loginName);
+        return userService.selectUserByLoginName(loginName);
     }
 
     /**

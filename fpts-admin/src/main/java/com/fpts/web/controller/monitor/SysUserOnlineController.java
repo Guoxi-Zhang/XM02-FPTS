@@ -5,10 +5,7 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
@@ -38,6 +35,13 @@ public class SysUserOnlineController extends BaseController
 
     @Autowired
     private OnlineSessionDAO onlineSessionDAO;
+
+    @PostMapping("/getLoginNameBySessionId")
+    @ResponseBody
+    public SysUserOnline SysUserOnline(@RequestParam String sessionId)
+    {
+        return userOnlineService.selectOnlineById(sessionId);
+    }
 
     @RequiresPermissions("monitor:online:view")
     @GetMapping()
