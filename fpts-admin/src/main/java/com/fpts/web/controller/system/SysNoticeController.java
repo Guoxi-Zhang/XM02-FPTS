@@ -12,11 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
@@ -54,6 +50,38 @@ public class SysNoticeController extends BaseController {
         startPage();
         List<SysNotice> list = noticeService.selectNoticeList(notice);
         return getDataTable(list);
+    }
+
+    /**
+     * 微信小程序查询公告列表
+     */
+    @RequestMapping(value = "/wxGet/{Navtab}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<SysNotice> get(SysNotice notice, @PathVariable("Navtab") String tab) {
+        List<SysNotice> list = noticeService.selectNoticeList(notice);
+        List<SysNotice> ansList = new ArrayList<>();
+        for (SysNotice t : list) {
+//            String detail = t.getDetail();
+//            if (detail.contains("<p>")) {
+//                t.setDetail(t.getDetail().replace("<p>", ""));
+//            }
+            if (tab.equals("0") && t.getStatus().equals("0")) { //0正常
+                ansList.add(t);
+            } else if (tab.equals("1") && t.getStatus().equals("1")) { //1关闭
+                ansList.add(t);
+            }
+        }
+        return ansList;
+    }
+
+    /**
+     * 微信小程序查询指定的公告
+     */
+    @RequestMapping(value = "/wxView/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public SysNotice wxView(@PathVariable("id") String id) {
+        SysNotice item = noticeService.selectNoticeById(Long.valueOf(id));
+        return item;
     }
 
     /**
