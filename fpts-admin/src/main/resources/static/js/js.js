@@ -53,7 +53,7 @@ $(function () {
 
         function GetData() {
 
-            let url = "http://47.108.114.204:8080/api/public/index_zh_a_hist?symbol=000001&period=daily&start_date=20220601&end_date=20221215";
+            let url = "http://47.108.114.204:8080/api/public/index_zh_a_hist?symbol=000001&period=daily&start_date=20220601&end_date=20230115";
             console.log(url);
             var arr = [];
             $.ajax({

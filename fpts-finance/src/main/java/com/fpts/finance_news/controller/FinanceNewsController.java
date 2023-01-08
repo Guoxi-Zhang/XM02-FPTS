@@ -7,11 +7,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.finance_news.domain.FinanceNews;
@@ -55,6 +51,13 @@ public class FinanceNewsController extends BaseController
         List<FinanceNews> list = financeNewsService.selectFinanceNewsList(financeNews);
         return getDataTable(list);
     }
+
+    @RequestMapping(value = "/wxGetNews", method = RequestMethod.GET)
+    @ResponseBody
+    public List<FinanceNews> get(FinanceNews financeNews){
+        return financeNewsService.selectFinanceNewsList(financeNews);
+    }
+
 
     /**
      * 导出新闻管理列表

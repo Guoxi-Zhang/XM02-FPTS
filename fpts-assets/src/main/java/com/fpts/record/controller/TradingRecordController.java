@@ -1,6 +1,8 @@
 package com.fpts.record.controller;
 
 import java.util.List;
+
+import org.apache.poi.ss.formula.functions.Finance;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -210,15 +212,29 @@ public class TradingRecordController extends BaseController
         TradingRecord tradingRecord = new TradingRecord();
         tradingRecord.setUserId(userId);
         tradingRecord.setProductType(productType);
+        return tradingRecordService.selectTradingRecordListWithName(tradingRecord);
+    }
+
+    @PostMapping("/getById")
+    @ResponseBody
+    public List<TradingRecord> getTradingRecord(@RequestParam Long orderId) {
+        TradingRecord tradingRecord = new TradingRecord();
+        tradingRecord.setOrderId(orderId);
         return tradingRecordService.selectTradingRecordList(tradingRecord);
     }
 
-    @PostMapping("/addTradingRecord")
+    @PostMapping("/addRecord")
     @ResponseBody
-    public List<TradingRecord> addTradingRecord(@RequestParam String userId, @RequestParam String productType) {
+    public AjaxResult addTradingRecord(@RequestParam String userId, @RequestParam String accountId, @RequestParam String productId, @RequestParam Double productPrice, @RequestParam String productType, @RequestParam int productAmount) {
         TradingRecord tradingRecord = new TradingRecord();
         tradingRecord.setUserId(userId);
+        tradingRecord.setAccountId(accountId);
+        tradingRecord.setProductId(productId);
+        tradingRecord.setProductPrice(productPrice);
         tradingRecord.setProductType(productType);
-        return tradingRecordService.selectTradingRecordList(tradingRecord);
+        tradingRecord.setProductAmount(productAmount);
+        return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
+
+
 }

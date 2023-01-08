@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.feedback.domain.UserFeedback;
@@ -57,6 +58,46 @@ public class UserFeedbackController extends BaseController
         List<UserFeedback> list = userFeedbackService.selectUserFeedbackList(userFeedback);
         return getDataTable(list);
     }
+
+    @RequestMapping(value = "/wxGet/{Navtab}", method = RequestMethod.POST)
+    @ResponseBody
+    public List<UserFeedback> get(UserFeedback userFeedback, @PathVariable("Navtab") String tab){
+        List<UserFeedback> list = userFeedbackService.selectUserFeedbackList(userFeedback);
+        List<UserFeedback> ansList = new ArrayList<>();
+        for(UserFeedback t:list){
+            String adminFeedbackContent = t.getAdminFeedbackContent();
+            if(adminFeedbackContent.contains("<p>")){
+                t.setAdminFeedbackContent(t.getAdminFeedbackContent().replace("<p>", ""));
+                System.out.println(adminFeedbackContent.replace("<p>", ""));
+            }
+            if(adminFeedbackContent.contains("</p>")){
+                t.setAdminFeedbackContent(t.getAdminFeedbackContent().replace("</p>", ""));
+            }
+            if(tab.equals("0") && t.getCompletemark().equals("0")){//进行中待办事项
+                ansList.add(t);
+            }else if(tab.equals("1") && t.getCompletemark().equals("1")){//已完成待办事项
+                ansList.add(t);
+            }
+        }
+        System.out.println(ansList.toString());
+        return ansList;
+    }
+
+    @RequestMapping(value = "/wxEdit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public UserFeedback wxEdit( @PathVariable("userFeedbackId") Long userFeedbackId){
+        UserFeedback item = userFeedbackService.selectUserFeedbackByUserFeedbackId(Long.valueOf(userFeedbackId));
+        String adminFeedbackContent = item.getAdminFeedbackContent();
+        if(adminFeedbackContent.contains("<p>")){
+            item.setAdminFeedbackContent(item.getAdminFeedbackContent().replace("<p>", ""));
+            System.out.println(adminFeedbackContent.replace("<p>", ""));
+        }
+        if(adminFeedbackContent.contains("</p>")){
+            item.setAdminFeedbackContent(item.getAdminFeedbackContent().replace("</p>", ""));
+        }
+        return item;
+    }
+
 
     /**
      * 导出用户反馈列表

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.fpts.record.domain.TradingRecord;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -243,5 +244,40 @@ public class AccountAssetsController extends BaseController
             AccountAssets aa = accountAssets.get(0);
             return aa.getAccountBalance();
         }
+    }
+
+    @PostMapping("/getByNo")
+    @ResponseBody
+    public List<AccountAssets> getById(@RequestParam String userId, @RequestParam String accountId) {
+        AccountAssets accountAssets = new AccountAssets();
+        accountAssets.setUserId(userId);
+        accountAssets.setAccountId(accountId);
+        return accountAssetsService.selectAccountAssetsList(accountAssets);
+    }
+
+    @PostMapping("/increase")
+    @ResponseBody
+    public AjaxResult increase(@RequestParam String userId, @RequestParam String accountId, @RequestParam Long assets) {
+        AccountAssets accountAssets = new AccountAssets();
+        accountAssets.setUserId(userId);
+        accountAssets.setAccountId(accountId);
+        List<AccountAssets> list = accountAssetsService.selectAccountAssetsList(accountAssets);
+        AccountAssets newAccountAssets = list.get(0);
+        Long balance = newAccountAssets.getAccountBalance() + assets;
+        newAccountAssets.setAccountBalance(balance);
+        return toAjax(accountAssetsService.updateAccountAssets(newAccountAssets));
+    }
+
+    @PostMapping("/decrease")
+    @ResponseBody
+    public AjaxResult decrease(@RequestParam String userId, @RequestParam String accountId, @RequestParam Long assets) {
+        AccountAssets accountAssets = new AccountAssets();
+        accountAssets.setUserId(userId);
+        accountAssets.setAccountId(accountId);
+        List<AccountAssets> list = accountAssetsService.selectAccountAssetsList(accountAssets);
+        AccountAssets newAccountAssets = list.get(0);
+        Long balance = newAccountAssets.getAccountBalance() - assets;
+        newAccountAssets.setAccountBalance(balance);
+        return toAjax(accountAssetsService.updateAccountAssets(newAccountAssets));
     }
 }

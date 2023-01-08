@@ -27,6 +27,8 @@ public interface TradingRecordMapper
      */
     public List<TradingRecord> selectTradingRecordList(TradingRecord tradingRecord);
 
+    public List<TradingRecord> selectTradingRecordListWithName(TradingRecord tradingRecord);
+
     /**
      * 查询A股交易记录列表
      *
