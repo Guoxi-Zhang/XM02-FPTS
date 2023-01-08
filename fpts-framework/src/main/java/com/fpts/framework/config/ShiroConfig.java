@@ -296,6 +296,9 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/icuniauth_client", "anon");
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
+        // 找回密码相关
+        filterChainDefinitionMap.put("/resetPasswordRequest", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/resetPassword", "anon");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 
