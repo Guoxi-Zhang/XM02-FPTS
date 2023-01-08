@@ -43,6 +43,8 @@ public interface ITradingRecordService
      */
     public List<TradingRecord> selectBondTradingRecordList(TradingRecord tradingRecord);
 
+    public List<TradingRecord> selectTradingRecordListWithName(TradingRecord tradingRecord);
+
     /**
      * 查询交易记录列表
      *

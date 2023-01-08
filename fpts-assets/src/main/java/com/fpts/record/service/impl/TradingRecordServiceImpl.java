@@ -51,6 +51,13 @@ public class TradingRecordServiceImpl implements ITradingRecordService
         return tradingRecordMapper.selectTradingRecordList(tradingRecord);
     }
 
+    @Override
+    @DataScope(deptAlias = "trading_record", userAlias = "trading_record")
+    public List<TradingRecord> selectTradingRecordListWithName(TradingRecord tradingRecord)
+    {
+        return tradingRecordMapper.selectTradingRecordListWithName(tradingRecord);
+    }
+
     /**
      * 查询A股交易记录列表
      *
