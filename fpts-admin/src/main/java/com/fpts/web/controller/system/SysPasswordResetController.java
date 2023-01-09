@@ -1,10 +1,16 @@
 package com.fpts.web.controller.system;
 
+import com.fpts.common.annotation.Log;
 import com.fpts.common.constant.ShiroConstants;
+import com.fpts.common.core.controller.BaseController;
 import com.fpts.common.core.domain.AjaxResult;
 import com.fpts.common.core.domain.entity.SysUser;
+import com.fpts.common.enums.BusinessType;
 import com.fpts.common.exception.user.CaptchaException;
+import com.fpts.common.utils.DateUtils;
 import com.fpts.common.utils.ServletUtils;
+import com.fpts.common.utils.ShiroUtils;
+import com.fpts.framework.shiro.service.SysPasswordService;
 import com.fpts.system.domain.SysPasswordReset;
 import com.fpts.system.service.ISysPasswordResetService;
 import com.fpts.system.service.ISysUserService;
@@ -17,13 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Controller
 @RequestMapping("/resetPassword")
-public class SysPasswordResetController
+public class SysPasswordResetController extends BaseController
 {
     @Autowired
     private ISysUserService userService;
@@ -33,6 +39,10 @@ public class SysPasswordResetController
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private SysPasswordService passwordService;
+
 
     /**
      * 生成随机字符串，字符串包含字符 a-z & A-Z & 0-9
@@ -65,6 +75,11 @@ public class SysPasswordResetController
         mailSender.send(simpleMailMessage);
     }
 
+    /**
+     * 用于向用户的邮箱发送验证码
+     * @param email 用户提供的邮箱地址
+     * @return 完成状态信息
+     */
     @PostMapping("/sendCode")
     @ResponseBody
     public AjaxResult validateAndSendCode(@RequestParam String email)
@@ -78,7 +93,7 @@ public class SysPasswordResetController
         else if (queryResult == null)
         {
             // 邮箱不存在
-            return AjaxResult.error("邮箱不存在");
+            return error("邮箱不存在");
         }
         else
         {
@@ -104,7 +119,41 @@ public class SysPasswordResetController
                     "【XM02-FPTS账号事务局】重置密码令牌",
                     "这是您用于重置密码的令牌，请勿泄露给他人，如果您没有进行相关操作，建议您立刻更改密码并联系管理员！\n" + token);
 
-            return AjaxResult.success();
+            return success();
+        }
+    }
+
+    /**
+     * 用于重置用户密码
+     * @param newPassword 用户提供的新密码
+     * @param token 邮件验证码
+     * @return 完成状态信息
+     */
+    @Log(title = "邮件重置密码", businessType = BusinessType.UPDATE)
+    @PostMapping("/setNewPassword")
+    @ResponseBody
+    public AjaxResult setNewPassword(@RequestParam String newPassword, @RequestParam String token)
+    {
+        // 用 token 和 seesionId 同时查用户
+        SysPasswordReset conditions = new SysPasswordReset();
+        conditions.setResetToken(token);
+        conditions.setSessionId(ServletUtils.getRequest().getSession().getId());
+        List<SysPasswordReset> result = passwordResetService.selectPasswordResetList(conditions);
+        // 检验查询结果有效性
+        if(result.size() != 1)
+        {
+            // 无效
+            return AjaxResult.error("无效的验证码");
+        }
+        else
+        {
+            // 有效，重置密码
+            SysUser user = userService.selectUserById(result.get(0).getUserId());
+            user.setSalt(ShiroUtils.randomSalt());
+            user.setPassword(passwordService.encryptPassword(user.getLoginName(), newPassword, user.getSalt()));
+            user.setPwdUpdateDate(DateUtils.getNowDate());
+            userService.updateUserInfo(user);
+            return success();
         }
     }
 }
