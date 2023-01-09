@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('菜单图表')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+    <!-- bootstrap-table 表格插件样式 -->
+
+</head>
+<body class="white-bg">
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 800px;height:500px;"></div>
+<script th:src="@{/js/echarts.js}"></script>
+<script th:inline="javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    var data = {
+        "name": "菜单",
+        "children": [
+            {
+                "name": "可视化大屏",
+            },
+            {
+                "name": "人物管理",
+                "children": [{"name": "用户管理"}, {"name": "实名认证"}, {"name": "角色管理"}, {"name": "在线用户"},]
+            },
+            {
+                "name": "系统管理",
+                "children": [{"name": "菜单管理"}, {"name": "通知公告"}, {"name": "登录日志"}, {"name": "操作日志"},]
+            },
+            {
+                "name": "财经新闻",
+                "children": [{"name": "新闻管理"},]
+            },
+            {
+                "name": "金融信息",
+                "children": [{"name": "数据仓库"}, {"name": "行情查询"}, {"name": "产品收藏"}, {"name": "金融论坛"},]
+            },
+            {
+                "name": "银行账户",
+                "children": [{"name": "账户管理"},]
+            },
+            {
+                "name": "资产交易",
+                "children": [{"name": "账户管理"}, {"name": "账户资产"}, {"name": "账户持仓"}, {"name": "交易记录"},]
+            },
+            {
+                "name": "待办事项",
+            },
+            {
+                "name": "天气管理",
+            },
+            {
+                "name": "用户反馈",
+            },
+        ]
+    };
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '菜单树形图'
+        },
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        series: [
+            {
+                type: 'tree',
+                data: [data],
+
+                top: '10%',
+                left: '10%',
+                bottom: '10%',
+                right: '10%',
+
+                symbolSize: 7,
+
+                edgeShape: 'polyline',//控制是否为折线
+                edgeForkPosition: '63%',
+                initialTreeDepth: 3,
+
+                lineStyle: {
+                    width: 2
+                },
+
+                label: {
+                    backgroundColor: '#fff',
+                    position: 'right',
+                    verticalAlign: 'middle',
+                    align: 'left'
+                },
+
+                // leaves: {
+                //     label: {
+                //         position: 'right',
+                //         verticalAlign: 'middle',
+                //         align: 'right'
+                //     }
+                // },
+
+                expandAndCollapse: true,
+                animationDuration: 550,
+                animationDurationUpdate: 750
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>

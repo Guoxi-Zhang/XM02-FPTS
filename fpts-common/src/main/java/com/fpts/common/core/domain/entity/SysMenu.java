@@ -3,6 +3,8 @@ package com.fpts.common.core.domain.entity;
 import java.util.List;
 import java.util.ArrayList;
 import javax.validation.constraints.*;
+
+import com.fpts.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fpts.common.core.domain.BaseEntity;
@@ -17,39 +19,51 @@ public class SysMenu extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 菜单ID */
+    @Excel(name = "菜单ID", cellType = Excel.ColumnType.NUMERIC)
     private Long menuId;
 
     /** 菜单名称 */
+    @Excel(name = "菜单名称")
     private String menuName;
 
     /** 父菜单名称 */
+    @Excel(name = "父菜单名称")
     private String parentName;
 
     /** 父菜单ID */
+    @Excel(name = "父菜单ID", cellType = Excel.ColumnType.NUMERIC)
     private Long parentId;
 
     /** 显示顺序 */
+    @Excel(name = "显示顺序")
     private String orderNum;
 
     /** 菜单URL */
+    @Excel(name = "菜单URL")
     private String url;
 
     /** 打开方式（menuItem页签 menuBlank新窗口） */
+    @Excel(name = "打开方式")
     private String target;
 
     /** 类型（M目录 C菜单 F按钮） */
+    @Excel(name = "类型")
     private String menuType;
 
     /** 菜单状态（0显示 1隐藏） */
+    @Excel(name = "菜单状态")
     private String visible;
 
     /** 是否刷新（0刷新 1不刷新） */
+    @Excel(name = "是否刷新")
     private String isRefresh;
 
     /** 权限字符串 */
+    @Excel(name = "权限字符串")
     private String perms;
 
     /** 菜单图标 */
+    @Excel(name = "菜单图标")
     private String icon;
 
     /** 子菜单 */

@@ -1,9 +1,11 @@
 package com.fpts.web.controller.system;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.fpts.common.core.page.TableDataInfo;
 import com.fpts.common.utils.poi.ExcelUtil;
+import com.fpts.system.domain.SysNotice;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,6 +57,14 @@ public class SysMenuController extends BaseController {
     }
 
     /**
+     * 统计报表
+     */
+    @RequestMapping("/chart")
+    public String showChart() {
+        return prefix + "/chart";
+    }
+
+    /**
      * 导出菜单
      */
     @Log(title = "菜单管理", businessType = BusinessType.EXPORT)
@@ -62,7 +72,6 @@ public class SysMenuController extends BaseController {
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(SysMenu menu) {
-
         Long userId = ShiroUtils.getUserId();
         List<SysMenu> list = menuService.selectMenuList(menu, userId);
         ExcelUtil<SysMenu> util = new ExcelUtil<SysMenu>(SysMenu.class);
