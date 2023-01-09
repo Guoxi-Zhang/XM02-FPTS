@@ -101,7 +101,7 @@ public class SysPasswordResetController
             sendSimpleMail(
                     "melody953@qq.com",
                     email,
-                    "【XM02-FPTS】重置密码令牌",
+                    "【XM02-FPTS账号事务局】重置密码令牌",
                     "这是您用于重置密码的令牌，请勿泄露给他人，如果您没有进行相关操作，建议您立刻更改密码并联系管理员！\n" + token);
 
             return AjaxResult.success();
