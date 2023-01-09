@@ -109,8 +109,6 @@ public class SysUserController extends BaseController
     @ResponseBody
     public SysUser getUserInfoByLoginName(@RequestParam String loginName)
     {
-//        SysUser queryUser = new SysUser();
-//        queryUser.setLoginName(loginName);
         return userService.selectUserByLoginName(loginName);
     }
 

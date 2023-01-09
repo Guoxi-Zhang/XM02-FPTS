@@ -40,6 +40,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
+    <select id="selectTradingRecordListWithName" parameterType="TradingRecord" resultMap="TradingRecordResult">
+        select tr.order_id as order_id, tr.user_id as user_id, tr.account_id as account_id, tr.product_id as product_id, tr.product_type as product_type, tr.product_price as product_price, tr.product_amount as product_amount, tr.order_time as order_time, tr.order_direction as order_direction, tr.order_pattern as order_pattern, tr.order_situation as order_situation, fs.name as name
+        from trading_record tr
+        LEFT JOIN  finance_summary fs  on tr.product_id = fs.product_id
+        <where> 1=1
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="accountId != null  and accountId != ''"> and account_id = #{accountId}</if>
+            <if test="productId != null  and productId != ''"> and product_id = #{productId}</if>
+            <if test="productType != null  and productType != ''"> and product_type = #{productType}</if>
+            <if test="productPrice != null "> and product_price = #{productPrice}</if>
+            <if test="productAmount != null "> and product_amount = #{productAmount}</if>
+            <if test="orderTime != null "> and order_time = #{orderTime}</if>
+            <if test="orderDirection != null  and orderDirection != ''"> and order_direction = #{orderDirection}</if>
+            <if test="orderPattern != null  and orderPattern != ''"> and order_pattern = #{orderPattern}</if>
+            <if test="orderSituation != null  and orderSituation != ''"> and order_situation = #{orderSituation}</if>
+            ${params.dataScope}
+        </where>
+        order by order_time desc
+    </select>
+
     <select id="selectAStockTradingRecordList" parameterType="TradingRecord" resultMap="TradingRecordResult">
         <include refid="selectTradingRecordVo"/>
         <where>

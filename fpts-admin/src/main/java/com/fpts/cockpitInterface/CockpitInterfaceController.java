@@ -13,6 +13,8 @@ import com.fpts.finance_forum.domain.FinanceForum;
 import com.fpts.finance_forum.service.IFinanceForumService;
 import com.fpts.system.domain.SysUserOnline;
 import com.fpts.system.service.ISysUserOnlineService;
+import com.fpts.weathers.domain.WeatherStatistics;
+import com.fpts.weathers.service.IWeatherStatisticsService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +22,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 可视化大屏幕Controller
@@ -47,42 +47,18 @@ public class CockpitInterfaceController {
     @Autowired
     ICertificationService certificationService;
 
+    @Autowired
+    private IWeatherStatisticsService weatherStatisticsService;
+
     @GetMapping()
-    public String cockpitInterface(ModelMap mmap, TodoList todoList, FinanceForum financeForum, SysUserOnline sysUserOnline, SysNotice notice)
+    public String cockpitInterface(ModelMap mmap)
     {
         /**
-         * 查询待办事项列表和金融论坛
+         * 天气图表
          */
-        List<TodoList> list = todoListService.selectTodoListList(todoList);
-        for(TodoList t:list){
-            String detail = t.getDetail();
-            System.out.println(detail);
-            if(detail.contains("<p>")){
-                t.setDetail(t.getDetail().replace("<p>", ""));
-                System.out.println(detail.replace("<p>", ""));
-            }
-            if(detail.contains("</p>")){
-                t.setDetail(t.getDetail().replace("</p>", ""));
-            }
-        }
-        mmap.put("todoList", list);
-        List<FinanceForum> list1 = financeForumService.selectFinanceForumList(financeForum);
-        for(FinanceForum f:list1){
-            String content = f.getContent();
-            if(content.contains("<p>")){
-                f.setContent(f.getContent().replace("<p>", ""));
-            }
-            if(content.contains("</p>")){
-                f.setContent(f.getContent().replace("</p>", ""));
-            }
-        }
-        mmap.put("financeForum", list1);
-        List<SysUserOnline> list2 = sysUserOnlineService.selectUserOnlineList(sysUserOnline);
-        mmap.put("sysUserOnline", list2);
-        List<SysNotice> list3 = noticeService.selectNoticeList(notice);
-        mmap.put("notice", list3);
+        weatherChart(mmap);
+        todoListChart(mmap);
 
-        chartList(mmap);
         //返回视图
         return prefix + "/cockpitInterface";
     }
@@ -116,5 +92,39 @@ public class CockpitInterfaceController {
         System.out.println(countList.toString());
         mmap.put("statusList", statusList);
         mmap.put("countList", countList);
+
+
+    }
+
+    public void weatherChart(ModelMap mmap){
+        List<WeatherStatistics> weatherStatisticsList = weatherStatisticsService.searchWeatherStatistics();
+        List<String> cityList = new ArrayList<String>();
+        List<Integer> cityCntList = new ArrayList<Integer>();
+        int totalCityNum = 0;
+        for(WeatherStatistics w: weatherStatisticsList){
+            cityList.add(w.getCity());
+            cityCntList.add(w.getCityCnt());
+            totalCityNum += w.getCityCnt();
+        }
+        mmap.put("cityList", cityList);
+        mmap.put("cityCntList", cityCntList);
+        mmap.put("totalCityNum", totalCityNum);
+
+    }
+
+    public void todoListChart(ModelMap mmap){
+        List<TodoList> list = todoListService.selectTodoListList(new TodoList());
+        for(TodoList t:list){
+            String detail = t.getDetail();
+            System.out.println(detail);
+            if(detail.contains("<p>")){
+                t.setDetail(t.getDetail().replace("<p>", ""));
+                System.out.println(detail.replace("<p>", ""));
+            }
+            if(detail.contains("</p>")){
+                t.setDetail(t.getDetail().replace("</p>", ""));
+            }
+        }
+        mmap.put("todoList", list);
     }
 }

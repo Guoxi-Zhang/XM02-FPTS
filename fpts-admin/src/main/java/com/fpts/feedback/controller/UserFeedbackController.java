@@ -73,9 +73,9 @@ public class UserFeedbackController extends BaseController
             if(adminFeedbackContent.contains("</p>")){
                 t.setAdminFeedbackContent(t.getAdminFeedbackContent().replace("</p>", ""));
             }
-            if(tab.equals("0") && t.getCompletemark().equals("0")){//进行中待办事项
+            if(tab.equals("0") && t.getCompletemark()==0){//进行中待办事项
                 ansList.add(t);
-            }else if(tab.equals("1") && t.getCompletemark().equals("1")){//已完成待办事项
+            }else if(tab.equals("1") && t.getCompletemark()==1){//已完成待办事项
                 ansList.add(t);
             }
         }

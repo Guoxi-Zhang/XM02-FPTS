@@ -290,12 +290,16 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
+
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         filterChainDefinitionMap.put("/icuniauth_login", "anon");
         filterChainDefinitionMap.put("/icuniauth_client", "anon");
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
+        // 找回密码相关
+        filterChainDefinitionMap.put("/resetPassword/sendCode", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/resetPassword/setNewPassword", "anon");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

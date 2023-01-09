@@ -33,6 +33,10 @@ public class TradingRecord extends BaseEntity
     @Excel(name = "金融产品ID")
     private String productId;
 
+    /** 金融产品名称 */
+    @Excel(name = "金融产品名称")
+    private String name;
+
     /** 产品类型 */
     @Excel(name = "产品类型")
     private String productType;
@@ -104,6 +108,15 @@ public class TradingRecord extends BaseEntity
     public String getProductId() 
     {
         return productId;
+    }
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
     }
     public void setProductType(String productType) 
     {

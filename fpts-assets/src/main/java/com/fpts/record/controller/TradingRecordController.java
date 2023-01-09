@@ -212,7 +212,7 @@ public class TradingRecordController extends BaseController
         TradingRecord tradingRecord = new TradingRecord();
         tradingRecord.setUserId(userId);
         tradingRecord.setProductType(productType);
-        return tradingRecordService.selectTradingRecordList(tradingRecord);
+        return tradingRecordService.selectTradingRecordListWithName(tradingRecord);
     }
 
     @PostMapping("/getById")

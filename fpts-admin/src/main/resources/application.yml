@@ -72,6 +72,13 @@ spring:
     restart:
       # 热部署开关
       enabled: true
+  # 邮件模块
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: melody953@qq.com
+    password: fzkepmrvjcwpbeab
+
 
 # MyBatis
 mybatis:
