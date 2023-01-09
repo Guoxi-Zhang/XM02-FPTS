@@ -41,7 +41,7 @@ public class CockpitInterfaceController {
     @Autowired
     private IFinanceForumService financeForumService;
     @Autowired
-    private  ISysUserOnlineService sysUserOnlineService;
+    private ISysUserOnlineService sysUserOnlineService;
     @Autowired
     private ISysNoticeService noticeService;
     @Autowired
@@ -51,19 +51,52 @@ public class CockpitInterfaceController {
     private IWeatherStatisticsService weatherStatisticsService;
 
     @GetMapping()
-    public String cockpitInterface(ModelMap mmap)
-    {
-        /**
-         * 天气图表
-         */
+    public String cockpitInterface(ModelMap mmap, SysNotice notice) {
+        //生成mmap
         weatherChart(mmap);
         todoListChart(mmap);
 
+        List<SysNotice> noticeList = noticeService.selectNoticeList(notice);
+        mmap.put("notice", noticeList);
+
+        certificationChart(mmap);
         //返回视图
         return prefix + "/cockpitInterface";
     }
 
-    public void chartList(ModelMap mmap) {
+    public void weatherChart(ModelMap mmap) {
+        List<WeatherStatistics> weatherStatisticsList = weatherStatisticsService.searchWeatherStatistics();
+        List<String> cityList = new ArrayList<String>();
+        List<Integer> cityCntList = new ArrayList<Integer>();
+        int totalCityNum = 0;
+        for (WeatherStatistics w : weatherStatisticsList) {
+            cityList.add(w.getCity());
+            cityCntList.add(w.getCityCnt());
+            totalCityNum += w.getCityCnt();
+        }
+        mmap.put("cityList", cityList);
+        mmap.put("cityCntList", cityCntList);
+        mmap.put("totalCityNum", totalCityNum);
+
+    }
+
+    public void todoListChart(ModelMap mmap) {
+        List<TodoList> list = todoListService.selectTodoListList(new TodoList());
+        for (TodoList t : list) {
+            String detail = t.getDetail();
+            System.out.println(detail);
+            if (detail.contains("<p>")) {
+                t.setDetail(t.getDetail().replace("<p>", ""));
+                System.out.println(detail.replace("<p>", ""));
+            }
+            if (detail.contains("</p>")) {
+                t.setDetail(t.getDetail().replace("</p>", ""));
+            }
+        }
+        mmap.put("todoList", list);
+    }
+
+    public void certificationChart(ModelMap mmap) {
         List<Certification> list = certificationService.selectCertificationList(new Certification());
         Map<String, Integer> map = new TreeMap<String, Integer>();
         String done = "1";
@@ -88,43 +121,7 @@ public class CockpitInterfaceController {
             statusList.add(m.getKey());
             countList.add(m.getValue());
         }
-        System.out.println(statusList.toString());
-        System.out.println(countList.toString());
         mmap.put("statusList", statusList);
         mmap.put("countList", countList);
-
-
-    }
-
-    public void weatherChart(ModelMap mmap){
-        List<WeatherStatistics> weatherStatisticsList = weatherStatisticsService.searchWeatherStatistics();
-        List<String> cityList = new ArrayList<String>();
-        List<Integer> cityCntList = new ArrayList<Integer>();
-        int totalCityNum = 0;
-        for(WeatherStatistics w: weatherStatisticsList){
-            cityList.add(w.getCity());
-            cityCntList.add(w.getCityCnt());
-            totalCityNum += w.getCityCnt();
-        }
-        mmap.put("cityList", cityList);
-        mmap.put("cityCntList", cityCntList);
-        mmap.put("totalCityNum", totalCityNum);
-
-    }
-
-    public void todoListChart(ModelMap mmap){
-        List<TodoList> list = todoListService.selectTodoListList(new TodoList());
-        for(TodoList t:list){
-            String detail = t.getDetail();
-            System.out.println(detail);
-            if(detail.contains("<p>")){
-                t.setDetail(t.getDetail().replace("<p>", ""));
-                System.out.println(detail.replace("<p>", ""));
-            }
-            if(detail.contains("</p>")){
-                t.setDetail(t.getDetail().replace("</p>", ""));
-            }
-        }
-        mmap.put("todoList", list);
     }
 }

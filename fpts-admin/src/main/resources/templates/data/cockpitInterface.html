@@ -2,13 +2,12 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>企业营收大数据统计html页面图表</title>
+    <title>金融产品交易系统可视化大屏</title>
     <script th:src="@{/js/echarts.js}"></script>
     <script th:src="@{/js/jquery.js}"></script>
     <script th:src="@{/js/js.js} "></script>
     <script th:src="@{/js/jquery.cxselect.min.js}"></script>
     <script th:src="@{/js/jquery.liMarquee.js}"></script>
-
     <link href="/css/bootstrap.min.css?v=3.3.7" rel="stylesheet"/>
     <link href="/css/font-awesome.min.css?v=4.7.0" rel="stylesheet"/>
     <!-- bootstrap-table 表格插件样式 -->
@@ -16,20 +15,20 @@
     <link href="/css/animate.min.css?v=20210831" rel="stylesheet"/>
     <link href="/css/style.min.css?v=20210831" rel="stylesheet"/>
     <link href="/ruoyi/css/ry-ui.css?v=4.7.5" rel="stylesheet"/>
-
     <link href="../../static/css/comon0.css" th:href="@{/css/comon0.css}" rel="stylesheet"/>
 </head>
 <body>
 <div style="background:#000d4a url(images/bg.jpg) center top;">
     <div class="loading">
-        <div class="loadbox"> <img src="images/loading.gif"> 页面加载中... </div>
+        <div class="loadbox"><img src="images/loading.gif"> 页面加载中...</div>
     </div>
     <div class="back"></div>
+
     <div class="head">
         <div class="weather"><span id="showTime"></span></div>
-        <h1>企业营收大数据统计</h1>
-
+        <h1>金融产品交易系统可视化大屏</h1>
     </div>
+
     <script>
         var t = null;
         t = setTimeout(time, 1000);/*開始运行*/
@@ -45,15 +44,18 @@
             document.getElementById("showTime").innerHTML = y + "年" + mt + "月" + day + "日" + h + "时" + m + "分" + s + "秒";
             t = setTimeout(time, 1000);
         }
-
     </script>
+
     <div class="mainbox">
         <ul class="clearfix">
+
+            <!--左侧三个表-->
             <li>
                 <div class="boxall" style="height:400px;">
                     <div class="alltitle">城市天气数据比例统计</div>
                     <div class="navboxall" id="echart5"></div>
                 </div>
+
                 <div class="boxall" style="height:260px;">
                     <div class="alltitle">我的待办事项</div>
                     <div class="navboxall">
@@ -62,89 +64,67 @@
                         </div>
                         <div class="wrap">
                             <ul th:each="todoItem:${todoList}">
-                                <li><p><span th:text="${todoItem.task}"></span><span th:text="${todoItem.detail}">199</span></p></li>
-
-
+                                <li><p><span th:text="${todoItem.task}"></span><span
+                                        th:text="${todoItem.detail}">199</span></p></li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
-                <div class="boxall" style="height:260px;">
-                    <div class="alltitle">1</div>
 
+                <div class="boxall" style="height:260px;">
+                    <div class="alltitle">标题样式</div>
                     <div class="navboxall" id="echart1"></div>
                 </div>
             </li>
-            <li>
 
+            <!--中间三个表-->
+            <li>
                 <div class="boxall" style="height:230px">
                     <div class="clearfix navboxall" style="height: 100%">
                         <div class="pulll_left num">
                             <div class="numbt">总体情况<span>(单位：元)</span></div>
-                            <div class="numtxt">19382721 </div>
+                            <div class="numtxt">1938272</div>
                         </div>
                         <div class="pulll_right zhibiao">
-                            <div class="zb1"><span>标题样式</span><div id="zb1"></div></div>
-                            <div class="zb2"><span>标题样式</span><div id="zb2"></div></div>
-                            <div class="zb3"><span>标题样式</span><div id="zb3"></div></div>
+                            <div class="zb1"><span>资金流通</span>
+                                <div id="zb1"></div>
+                            </div>
+                            <div class="zb2"><span>金融产品</span>
+                                <div id="zb2"></div>
+                            </div>
+                            <div class="zb3"><span>财经新闻</span>
+                                <div id="zb3"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="boxall" style="height:350px">
                     <div class="alltitle">标题样式</div>
                     <div class="navboxall" id="echart4"></div>
-
                 </div>
+
                 <div class="boxall" style="height:340px">
                     <div class="alltitle">标题样式</div>
                     <div class="navboxall" id="echart3"></div>
                 </div>
             </li>
+
+            <!--右侧三个表-->
             <li>
                 <div class="boxall" style="height:300px">
-                    <div class="alltitle">标题样式</div>
+                    <div class="alltitle">通知公告</div>
                     <div class="navboxall">
                         <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                             <tr>
-                                <th scope="col">排名</th>
-                                <th scope="col">公司</th>
-                                <th scope="col">数量</th>
-                                <th scope="col">增长率</th>
+                                <th scope="col" onclick="notice()">公告标题</th>
+                                <th scope="col">发布时间</th>
                             </tr>
-                            <tr>
-                                <td><span>1</span></td>
-                                <td>腾讯科技</td>
-                                <td>114万<br></td>
-                                <td>100%<br></td>
+                            <tr th:each="noticeee:${notice}" th:if="${noticeeeStat.index} lt 3">
+                                <td th:text="${noticeee.noticeTitle}" onclick="notice()"></td>
+                                <td th:text="${noticeee.createTime}"></td>
                             </tr>
-                            <tr>
-                                <td><span>2</span></td>
-                                <td>百度公司</td>
-                                <td>923823万</td>
-                                <td>21%</td>
-                            </tr>
-
-                            <tr>
-                                <td><span>3</span></td>
-                                <td>新浪</td>
-                                <td>1240253万</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td><span>4</span></td>
-                                <td>网易</td>
-                                <td>1.2亿</td>
-                                <td>39%</td>
-                            </tr>
-                            <tr>
-                                <td><span>5</span></td>
-                                <td>雅虎</td>
-                                <td>13423万</td>
-                                <td>9%</td>
-                            </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -192,23 +172,19 @@
                                 <td>13423万</td>
                                 <td>9%</td>
                             </tr>
-
                             </tbody>
                         </table>
                     </div>
-
                 </div>
 
                 <div class="boxall" style="height:320px">
-                    <div class="alltitle">标题样式</div>
+                    <div class="alltitle">实名认证完成状况统计</div>
                     <div class="navboxall" id="echart2"></div>
                 </div>
-
-
             </li>
         </ul>
-
     </div>
+
 </div>
 
 <script th:inline="javascript">
@@ -219,7 +195,67 @@
             scrollamount: 20/*速度*/
         });
     });
+    echarts_2();
     echarts_5();
+
+    function notice() {
+        window.location.href = "/system/notice";
+    }
+
+    function echarts_2() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echart2'));
+
+        let statusList = [[${statusList}]];
+
+        let countList = [[${countList}]];
+
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b} : {c} ({d}%)"
+            },
+            legend: {
+                data: ['用户数量'],
+                top: '15%',
+                data: ['已完成实名认证', '未完成实名认证'],
+                icon: 'circle',
+                textStyle: {
+                    color: 'white',
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    type: 'pie',    // 设置图表类型为饼图
+                    radius: ['30%', '50%'],  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                    center: ['50%', '50%'],  // 支持设置成百分比，设置成百分比时第一项是相对于容器宽度，第二项是相对于容器高度
+                    label: {
+                        normal: {
+                            formatter: '{b}:{c}' + '\n\r' + '({d}%)',
+                            show: true,
+                            position: 'outside'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: true
+                        }
+                    },
+                    data: [ // 数据数组，name 为数据项名称，value 为数据项值
+                        {value: countList[0], name: '已完成实名认证'},
+                        {value: countList[1], name: '未完成实名认证'},
+                    ]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
 
     function echarts_5() {
         // 基于准备好的dom，初始化echarts实例
@@ -228,7 +264,7 @@
         var totalCityNum = [[${totalCityNum}]];
         var cityCntList = [[${cityCntList}]];
         var cityPercentList = [];
-        for(let i in cityCntList){
+        for (let i in cityCntList) {
             console.log(cityCntList[i] + " " + totalCityNum);
             cityPercentList.push(cityCntList[i] / totalCityNum * 100);
         }
@@ -306,7 +342,7 @@
 
                 },
                 itemStyle: {
-                    color:'#49bcf7'
+                    color: '#49bcf7'
                 },
                 barWidth: '15',
                 data: cityPercentList,
@@ -315,7 +351,7 @@
                 type: 'bar',
                 barGap: '-100%',
                 itemStyle: {
-                    color:'#fff',
+                    color: '#fff',
                     opacity: 0.1
                 },
                 barWidth: '15',
@@ -325,12 +361,10 @@
         };
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
 </script>
-
-
 </body>
 </html>
