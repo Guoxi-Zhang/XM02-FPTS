@@ -9,12 +9,15 @@ import com.fpts.system.domain.SysPasswordReset;
 import com.fpts.system.service.ISysPasswordResetService;
 import com.fpts.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Random;
 
@@ -27,6 +30,9 @@ public class SysPasswordResetController
 
     @Autowired
     private ISysPasswordResetService passwordResetService;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     /**
      * 生成随机字符串，字符串包含字符 a-z & A-Z & 0-9
@@ -43,6 +49,20 @@ public class SysPasswordResetController
             sb.append(str.charAt(number));
         }
         return sb.toString();
+    }
+
+    public void sendSimpleMail(String from, String to, String subject, String text)
+    {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        // 发件人
+        simpleMailMessage.setFrom(from);
+        // 收件人
+        simpleMailMessage.setTo(to);
+        // 邮件主题
+        simpleMailMessage.setSubject(subject);
+        // 邮件内容
+        simpleMailMessage.setText(text);
+        mailSender.send(simpleMailMessage);
     }
 
     @PostMapping("/sendCode")
@@ -76,7 +96,13 @@ public class SysPasswordResetController
             record.setUserId(userId);
             record.setSessionId(sessionId);
             record.setCreateTime(createTime);
+            passwordResetService.insertPasswordReset(record);
             // 发送邮件
+            sendSimpleMail(
+                    "melody953@qq.com",
+                    email,
+                    "重置密码令牌",
+                    "这是您用于重置密码的令牌，请勿泄露给他人，如果您没有进行相关操作，建议您立刻更改密码并联系管理员！\n" + token);
 
             return AjaxResult.success();
         }
