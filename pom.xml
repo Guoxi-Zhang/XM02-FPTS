@@ -164,6 +164,12 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <!-- 邮件工具 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+            </dependency>
+
             <!-- 定时任务-->
             <dependency>
                 <groupId>com.fpts</groupId>
