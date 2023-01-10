@@ -1,34 +1,23 @@
 package com.fpts.quartz.task;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fpts.finance_warehouse.domain.FinanceWarehouse;
-import com.fpts.finance_warehouse.service.IFinanceWarehouseService;
 import com.fpts.finance_warehouse.service.impl.FinanceWarehouseServiceImpl;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Component("finGetStockDataTask")
+@Component("finGetStockDataTaskA")
 //上面是重要引入，将这个Task类声明为bean，因为调用的那些service都是用bean注入的，反射的调用方式是没办法在非bean的对象里面注入bean的
 
-public class FinGetStockDataTask {
+public class FinGetStockDataTaskA {
 
     @Autowired
     FinanceWarehouseServiceImpl financeWarehouseService;
@@ -40,7 +29,7 @@ public class FinGetStockDataTask {
         String time=dateFormat.format(new Date());
         System.out.println(time);
         RestTemplate restTemplate = new RestTemplate();
-        String forObject = restTemplate.getForObject("http://47.108.114.204:8080/api/public/stock_zh_b_spot_em", String.class);
+        String forObject = restTemplate.getForObject("http://47.108.114.204:8080/api/public/stock_zh_a_spot_em", String.class);
 
         JSONArray array = JSONArray.parseArray(forObject);
 
@@ -57,7 +46,7 @@ public class FinGetStockDataTask {
                 String name =  object.getString("名称"); //key参数为string
                 stock.setName(name);
             }
-            stock.setType("1");
+            stock.setType("0");
             if(object.getString("最新价")!=null){
                 double new_price=Double.valueOf(object.getString("最新价"));
                 stock.setNewPrice(new_price);
