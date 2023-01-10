@@ -50,7 +50,6 @@ public class CockpitInterfaceController {
     ICertificationService certificationService;
     @Autowired
     private IFinanceQueryService financeQueryService;
-
     @Autowired
     private IWeatherStatisticsService weatherStatisticsService;
 
@@ -61,10 +60,7 @@ public class CockpitInterfaceController {
         todoListChart(mmap);
         forumChart(mmap);
         financeQueryChart(mmap);
-
-        List<SysNotice> noticeList = noticeService.selectNoticeList(notice);
-        mmap.put("notice", noticeList);
-
+        noticeChart(mmap);
         certificationChart(mmap);
         //返回视图
         return prefix + "/cockpitInterface";
@@ -102,11 +98,11 @@ public class CockpitInterfaceController {
         mmap.put("todoList", list);
     }
 
-    public void financeQueryChart(ModelMap mmap){
+    public void financeQueryChart(ModelMap mmap) {
         List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(new FinanceQuery());
         Map<String, Double> map = new TreeMap<String, Double>();
 
-        for(FinanceQuery f: list){
+        for (FinanceQuery f : list) {
             String pId = f.getName();
             Double rate = f.getIncrease();
             //改这里，找涨幅最高的十只股票
@@ -114,8 +110,8 @@ public class CockpitInterfaceController {
 
         }
 
-        List<Map.Entry<String, Double>> list1= new ArrayList<Map.Entry<String, Double>>(map.entrySet());
-        Collections.sort(list1,new Comparator<Map.Entry<String, Double>>() {
+        List<Map.Entry<String, Double>> list1 = new ArrayList<Map.Entry<String, Double>>(map.entrySet());
+        Collections.sort(list1, new Comparator<Map.Entry<String, Double>>() {
             //降序排序
             @Override
             public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
@@ -125,11 +121,11 @@ public class CockpitInterfaceController {
 
         List<String> pIdList = new ArrayList<String>();   //= Arrays.asList(pIdSet);
         List<Double> incList = new ArrayList<Double>();
-        int tot=0;
+        int tot = 0;
 
-        for (Map.Entry<String, Double> a: list1) {
+        for (Map.Entry<String, Double> a : list1) {
             tot++;
-            if(tot==10) break;
+            if (tot == 10) break;
             pIdList.add(a.getKey());
             incList.add(a.getValue());
         }
@@ -138,6 +134,11 @@ public class CockpitInterfaceController {
         System.out.println(incList.toString());
         mmap.put("pIdList", pIdList);
         mmap.put("incList", incList);
+    }
+
+    public void noticeChart(ModelMap mmap) {
+        List<SysNotice> noticeList = noticeService.selectNoticeList(new SysNotice());
+        mmap.put("notice", noticeList);
     }
 
     public void certificationChart(ModelMap mmap) {
@@ -168,6 +169,7 @@ public class CockpitInterfaceController {
         mmap.put("statusList", statusList);
         mmap.put("countList", countList);
     }
+
     public void forumChart(ModelMap mmap) {
         List<FinanceForum> list = financeForumService.selectFinanceForumList(new FinanceForum());
 

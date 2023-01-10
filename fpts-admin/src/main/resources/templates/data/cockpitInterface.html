@@ -278,13 +278,13 @@
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart3'));
 
-        var tempCntList = '[[${incList}]]'.replace('[','').replace(']','').split(",");
+        var tempCntList = '[[${incList}]]'.replace('[', '').replace(']', '').split(",");
         var tempPIDList = '[[${pIdList}]]';
 
         //转化为字符串数组和整数数组
-        let pIdList = tempPIDList.replace('[','').replace(']','').split(",");
+        let pIdList = tempPIDList.replace('[', '').replace(']', '').split(",");
         let cntList = [];
-        tempCntList.forEach(function(data,index,arr){
+        tempCntList.forEach(function (data, index, arr) {
             cntList.push(+data);
         });
 
@@ -306,7 +306,7 @@
                 data: pIdList,
                 axisLabel: { // 如果显示字符过长 就间隔1 设为0
                     textStyle: {color: 'white', fontSize: '14',},
-                    interval:0
+                    interval: 0
                 },
                 textStyle: {
                     color: 'white',
@@ -345,6 +345,7 @@
 
         // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
         var data0 = splitData(GetData());
+
         //var option;
 
         function splitData(rawData) {
@@ -389,7 +390,7 @@
                 success: function (data) {
                     console.log(url);
                     arr = [];
-                    let result=[];
+                    let result = [];
                     result = data.map(item => [
                         item['日期'],
                         item['开盘'],
@@ -397,12 +398,13 @@
                         item['最低'],
                         item['最高'],
                     ]) //映射为官方demo的数据格式
-                    arr=result;
+                    arr = result;
                     console.log(arr);
                 }
             })
             return arr;
         }
+
         option = {
             title: {
                 text: IndexName,
@@ -425,12 +427,12 @@
             },
             xAxis: {
                 type: 'category',
-                axisLabel:  {textStyle: {color: "#fff",}},
-                axisLine: {lineStyle: { color: 'rgba(255,255,255,.6)'}, onZero: false },
+                axisLabel: {textStyle: {color: "#fff",}},
+                axisLine: {lineStyle: {color: 'rgba(255,255,255,.6)'}, onZero: false},
                 data: data0.categoryData,
                 scale: true,
                 boundaryGap: false,
-                splitLine: { show: false },
+                splitLine: {show: false},
                 splitNumber: 20,
                 min: 'dataMin',
                 max: 'dataMax'
