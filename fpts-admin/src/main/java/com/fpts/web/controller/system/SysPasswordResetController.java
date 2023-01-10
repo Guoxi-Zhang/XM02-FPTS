@@ -126,6 +126,9 @@ public class SysPasswordResetController extends BaseController
         }
     }
 
+    @GetMapping("/setNewPassword")
+    public String setNewPassword() { return "setNewPassword"; }
+
     /**
      * 用于重置用户密码
      * @param newPassword 用户提供的新密码
