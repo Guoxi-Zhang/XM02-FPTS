@@ -4,8 +4,8 @@
 $(function () {
     echarts_1();
     // echarts_2();
-    echarts_3();
-    echarts_4();
+    // echarts_3();
+    // echarts_4();
     // echarts_5();
     zb1();
     zb2();
@@ -303,167 +303,167 @@ $(function () {
     //     });
     // }
 
-    function echarts_4() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart4'));
-        option = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    lineStyle: {
-                        color: '#57617B'
-                    }
-                }
-            },
-            "legend": {
-
-                "data": [
-                    {"name": "图例1"},
-                    {"name": "图例2"},
-                    {"name": "完成率"}
-                ],
-                "top": "0%",
-                "textStyle": {
-                    "color": "rgba(255,255,255,0.9)"//图例文字
-                }
-            },
-
-            "xAxis": [
-                {
-                    "type": "category",
-
-                    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-                    axisLine: {lineStyle: {color: "rgba(255,255,255,.1)"}},
-                    axisLabel: {
-                        textStyle: {color: "rgba(255,255,255,.6)", fontSize: '14',},
-                    },
-
-                },
-            ],
-            "yAxis": [
-                {
-                    "type": "value",
-                    "name": "金额",
-                    "min": 0,
-                    "max": 50,
-                    "interval": 10,
-                    "axisLabel": {
-                        "show": true,
-
-                    },
-                    axisLine: {lineStyle: {color: 'rgba(255,255,255,.4)'}},//左线色
-
-                },
-                {
-                    "type": "value",
-                    "name": "完成率",
-                    "show": true,
-                    "axisLabel": {
-                        "show": true,
-
-                    },
-                    axisLine: {lineStyle: {color: 'rgba(255,255,255,.4)'}},//右线色
-                    splitLine: {show: true, lineStyle: {color: "#001e94"}},//x轴线
-                },
-            ],
-            "grid": {
-                "top": "10%",
-                "right": "30",
-                "bottom": "30",
-                "left": "30",
-            },
-            "series": [
-                {
-                    "name": "图例1",
-
-                    "type": "bar",
-                    "data": [4, 6, 36, 6, 8, 6, 4, 6, 30, 6, 8, 12],
-                    "barWidth": "auto",
-                    "itemStyle": {
-                        "normal": {
-                            "color": {
-                                "type": "linear",
-                                "x": 0,
-                                "y": 0,
-                                "x2": 0,
-                                "y2": 1,
-                                "colorStops": [
-                                    {
-                                        "offset": 0,
-                                        "color": "#609db8"
-                                    },
-
-                                    {
-                                        "offset": 1,
-                                        "color": "#609db8"
-                                    }
-                                ],
-                                "globalCoord": false
-                            }
-                        }
-                    }
-                },
-                {
-                    "name": "图例2",
-                    "type": "bar",
-                    "data": [
-                        4, 2, 34, 6, 8, 6, 4, 2, 32, 6, 8, 18
-                    ],
-                    "barWidth": "auto",
-
-                    "itemStyle": {
-                        "normal": {
-                            "color": {
-                                "type": "linear",
-                                "x": 0,
-                                "y": 0,
-                                "x2": 0,
-                                "y2": 1,
-                                "colorStops": [
-                                    {
-                                        "offset": 0,
-                                        "color": "#66b8a7"
-                                    },
-                                    {
-                                        "offset": 1,
-                                        "color": "#66b8a7"
-                                    }
-                                ],
-                                "globalCoord": false
-                            }
-                        }
-                    },
-                    "barGap": "0"
-                },
-                {
-                    "name": "完成率",
-                    "type": "line",
-                    "yAxisIndex": 1,
-
-                    "data": [100, 50, 80, 30, 90, 40, 70, 33, 100, 40, 80, 20],
-                    lineStyle: {
-                        normal: {
-                            width: 2
-                        },
-                    },
-                    "itemStyle": {
-                        "normal": {
-                            "color": "#cdba00",
-
-                        }
-                    },
-                    "smooth": true
-                }
-            ]
-        };
-
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize", function () {
-            myChart.resize();
-        });
-    }
+    // function echarts_4() {
+    //     // 基于准备好的dom，初始化echarts实例
+    //     var myChart = echarts.init(document.getElementById('echart4'));
+    //     option = {
+    //         tooltip: {
+    //             trigger: 'axis',
+    //             axisPointer: {
+    //                 lineStyle: {
+    //                     color: '#57617B'
+    //                 }
+    //             }
+    //         },
+    //         "legend": {
+    //
+    //             "data": [
+    //                 {"name": "图例1"},
+    //                 {"name": "图例2"},
+    //                 {"name": "完成率"}
+    //             ],
+    //             "top": "0%",
+    //             "textStyle": {
+    //                 "color": "rgba(255,255,255,0.9)"//图例文字
+    //             }
+    //         },
+    //
+    //         "xAxis": [
+    //             {
+    //                 "type": "category",
+    //
+    //                 data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+    //                 axisLine: {lineStyle: {color: "rgba(255,255,255,.1)"}},
+    //                 axisLabel: {
+    //                     textStyle: {color: "rgba(255,255,255,.6)", fontSize: '14',},
+    //                 },
+    //
+    //             },
+    //         ],
+    //         "yAxis": [
+    //             {
+    //                 "type": "value",
+    //                 "name": "金额",
+    //                 "min": 0,
+    //                 "max": 50,
+    //                 "interval": 10,
+    //                 "axisLabel": {
+    //                     "show": true,
+    //
+    //                 },
+    //                 axisLine: {lineStyle: {color: 'rgba(255,255,255,.4)'}},//左线色
+    //
+    //             },
+    //             {
+    //                 "type": "value",
+    //                 "name": "完成率",
+    //                 "show": true,
+    //                 "axisLabel": {
+    //                     "show": true,
+    //
+    //                 },
+    //                 axisLine: {lineStyle: {color: 'rgba(255,255,255,.4)'}},//右线色
+    //                 splitLine: {show: true, lineStyle: {color: "#001e94"}},//x轴线
+    //             },
+    //         ],
+    //         "grid": {
+    //             "top": "10%",
+    //             "right": "30",
+    //             "bottom": "30",
+    //             "left": "30",
+    //         },
+    //         "series": [
+    //             {
+    //                 "name": "图例1",
+    //
+    //                 "type": "bar",
+    //                 "data": [4, 6, 36, 6, 8, 6, 4, 6, 30, 6, 8, 12],
+    //                 "barWidth": "auto",
+    //                 "itemStyle": {
+    //                     "normal": {
+    //                         "color": {
+    //                             "type": "linear",
+    //                             "x": 0,
+    //                             "y": 0,
+    //                             "x2": 0,
+    //                             "y2": 1,
+    //                             "colorStops": [
+    //                                 {
+    //                                     "offset": 0,
+    //                                     "color": "#609db8"
+    //                                 },
+    //
+    //                                 {
+    //                                     "offset": 1,
+    //                                     "color": "#609db8"
+    //                                 }
+    //                             ],
+    //                             "globalCoord": false
+    //                         }
+    //                     }
+    //                 }
+    //             },
+    //             {
+    //                 "name": "图例2",
+    //                 "type": "bar",
+    //                 "data": [
+    //                     4, 2, 34, 6, 8, 6, 4, 2, 32, 6, 8, 18
+    //                 ],
+    //                 "barWidth": "auto",
+    //
+    //                 "itemStyle": {
+    //                     "normal": {
+    //                         "color": {
+    //                             "type": "linear",
+    //                             "x": 0,
+    //                             "y": 0,
+    //                             "x2": 0,
+    //                             "y2": 1,
+    //                             "colorStops": [
+    //                                 {
+    //                                     "offset": 0,
+    //                                     "color": "#66b8a7"
+    //                                 },
+    //                                 {
+    //                                     "offset": 1,
+    //                                     "color": "#66b8a7"
+    //                                 }
+    //                             ],
+    //                             "globalCoord": false
+    //                         }
+    //                     }
+    //                 },
+    //                 "barGap": "0"
+    //             },
+    //             {
+    //                 "name": "完成率",
+    //                 "type": "line",
+    //                 "yAxisIndex": 1,
+    //
+    //                 "data": [100, 50, 80, 30, 90, 40, 70, 33, 100, 40, 80, 20],
+    //                 lineStyle: {
+    //                     normal: {
+    //                         width: 2
+    //                     },
+    //                 },
+    //                 "itemStyle": {
+    //                     "normal": {
+    //                         "color": "#cdba00",
+    //
+    //                     }
+    //                 },
+    //                 "smooth": true
+    //             }
+    //         ]
+    //     };
+    //
+    //
+    //     // 使用刚指定的配置项和数据显示图表。
+    //     myChart.setOption(option);
+    //     window.addEventListener("resize", function () {
+    //         myChart.resize();
+    //     });
+    // }
 
 
     function zb1() {
