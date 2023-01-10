@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -73,6 +70,12 @@ public class SysPasswordResetController extends BaseController
         // 邮件内容
         simpleMailMessage.setText(text);
         mailSender.send(simpleMailMessage);
+    }
+
+    @GetMapping("")
+    public String passwordReset()
+    {
+        return "resetPassword";
     }
 
     /**
