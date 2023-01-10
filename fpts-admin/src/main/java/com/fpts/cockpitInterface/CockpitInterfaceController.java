@@ -1,6 +1,8 @@
 package com.fpts.cockpitInterface;
 
 import com.fpts.common.core.page.TableDataInfo;
+import com.fpts.finance_query.domain.FinanceQuery;
+import com.fpts.finance_query.service.IFinanceQueryService;
 import com.fpts.framework.web.domain.server.Sys;
 import com.fpts.system.domain.Certification;
 import com.fpts.system.domain.SysNotice;
@@ -46,6 +48,8 @@ public class CockpitInterfaceController {
     private ISysNoticeService noticeService;
     @Autowired
     ICertificationService certificationService;
+    @Autowired
+    private IFinanceQueryService financeQueryService;
 
     @Autowired
     private IWeatherStatisticsService weatherStatisticsService;
@@ -56,6 +60,8 @@ public class CockpitInterfaceController {
         weatherChart(mmap);
         todoListChart(mmap);
         forumChart(mmap);
+        financeQueryChart(mmap);
+
         List<SysNotice> noticeList = noticeService.selectNoticeList(notice);
         mmap.put("notice", noticeList);
 
@@ -94,6 +100,44 @@ public class CockpitInterfaceController {
             }
         }
         mmap.put("todoList", list);
+    }
+
+    public void financeQueryChart(ModelMap mmap){
+        List<FinanceQuery> list = financeQueryService.selectFinanceQueryList(new FinanceQuery());
+        Map<String, Double> map = new TreeMap<String, Double>();
+
+        for(FinanceQuery f: list){
+            String pId = f.getName();
+            Double rate = f.getIncrease();
+            //改这里，找涨幅最高的十只股票
+            map.put(pId, rate);
+
+        }
+
+        List<Map.Entry<String, Double>> list1= new ArrayList<Map.Entry<String, Double>>(map.entrySet());
+        Collections.sort(list1,new Comparator<Map.Entry<String, Double>>() {
+            //降序排序
+            @Override
+            public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        List<String> pIdList = new ArrayList<String>();   //= Arrays.asList(pIdSet);
+        List<Double> incList = new ArrayList<Double>();
+        int tot=0;
+
+        for (Map.Entry<String, Double> a: list1) {
+            tot++;
+            if(tot==10) break;
+            pIdList.add(a.getKey());
+            incList.add(a.getValue());
+        }
+
+        System.out.println(pIdList.toString());
+        System.out.println(incList.toString());
+        mmap.put("pIdList", pIdList);
+        mmap.put("incList", incList);
     }
 
     public void certificationChart(ModelMap mmap) {

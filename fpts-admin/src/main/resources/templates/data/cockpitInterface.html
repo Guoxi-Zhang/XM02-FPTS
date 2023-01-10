@@ -272,6 +272,56 @@
         });
     }
 
+    function echarts_3() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echart3'));
+
+        var tempCntList = '[[${incList}]]'.replace('[','').replace(']','').split(",");
+        var tempPIDList = '[[${pIdList}]]';
+
+        //转化为字符串数组和整数数组
+        let pIdList = tempPIDList.replace('[','').replace(']','').split(",");
+        let cntList = [];
+        tempCntList.forEach(function(data,index,arr){
+            cntList.push(+data);
+        });
+
+        console.log(pIdList);
+        console.log(cntList);
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '涨幅前十产品统计'
+            },
+            tooltip: {},
+            legend: {
+                data: ['涨幅']
+            },
+            xAxis: {
+                name: '产品名称',
+                data: pIdList,
+                axisLabel: { // 如果显示字符过长 就间隔1 设为0
+                    interval:0
+                }
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '涨幅',
+                    type: 'bar',
+                    data: cntList
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
+
     function echarts_5() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart5'));
@@ -280,13 +330,13 @@
         var cityCntList = [[${cityCntList}]];
         var cityPercentList = [];
         for (let i in cityCntList) {
-            console.log(cityCntList[i] + " " + totalCityNum);
+            //console.log(cityCntList[i] + " " + totalCityNum);
             cityPercentList.push(cityCntList[i] / totalCityNum * 100);
         }
         var fullData = new Array(cityList.length).fill(100);
-        console.log(cityCntList);
-        console.log(cityPercentList);
-        console.log(cityList);
+        //console.log(cityCntList);
+        //console.log(cityPercentList);
+        //console.log(cityList);
 // 颜色
         var lightBlue = {
             type: 'linear',
