@@ -9,26 +9,24 @@ $(function() {
 
 $.validator.setDefaults({
     submitHandler: function() {
-    	register();
+    	setNewPassword();
     }
 });
 
-function register() {
+function setNewPassword() {
     $.modal.loading($("#btnSubmit").data("loading"));
-    var username = $.common.trim($("input[name='username']").val());
+    var token = $.common.trim($("input[name='token']").val());
     var password = $.common.trim($("input[name='password']").val());
-    var validateCode = $("input[name='validateCode']").val();
     $.ajax({
         type: "post",
-        url: ctx + "register",
+        url: ctx + "resetPassword/setNewPassword",
         data: {
-            "loginName": username,
-            "password": password,
-            "validateCode": validateCode
+            "token": token,
+            "newPassword": password
         },
         success: function(r) {
             if (r.code == web_status.SUCCESS) {
-            	layer.alert("<font color='red'>恭喜你，您的账号 " + username + " 注册成功！</font>", {
+            	layer.alert("<font color='red'>重置密码成功！</font>", {
             	    icon: 1,
             	    title: "系统提示"
             	},
@@ -51,9 +49,10 @@ function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#setNewPasswordForm").validate({
         rules: {
-            username: {
+            token: {
                 required: true,
-                minlength: 2
+                minlength: 10,
+                maxlength: 10
             },
             password: {
                 required: true,
@@ -65,9 +64,10 @@ function validateRule() {
             }
         },
         messages: {
-            username: {
-                required: icon + "请输入您的用户名",
-                minlength: icon + "用户名不能小于2个字符"
+            token: {
+                required: icon + "请输入令牌",
+                minlength: icon + "非法的令牌",
+                maxlength:  icon + "非法的令牌"
             },
             password: {
             	required: icon + "请输入您的密码",

@@ -149,7 +149,7 @@ public class SysPasswordResetController extends BaseController
         if(result.size() != 1)
         {
             // 无效
-            return AjaxResult.error("无效的验证码");
+            return AjaxResult.error("无效的令牌");
         }
         else
         {
