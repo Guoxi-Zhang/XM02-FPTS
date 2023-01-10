@@ -55,7 +55,7 @@ public class CockpitInterfaceController {
         //生成mmap
         weatherChart(mmap);
         todoListChart(mmap);
-
+        forumChart(mmap);
         List<SysNotice> noticeList = noticeService.selectNoticeList(notice);
         mmap.put("notice", noticeList);
 
@@ -123,5 +123,21 @@ public class CockpitInterfaceController {
         }
         mmap.put("statusList", statusList);
         mmap.put("countList", countList);
+    }
+    public void forumChart(ModelMap mmap) {
+        List<FinanceForum> list = financeForumService.selectFinanceForumList(new FinanceForum());
+
+        for (FinanceForum f : list) {
+            String content = f.getContent();
+            System.out.println(content);
+            if (content.contains("<p>")) {
+                f.setContent(f.getContent().replace("<p>", ""));
+                System.out.println(content.replace("<p>", ""));
+            }
+            if (content.contains("</p>")) {
+                f.setContent(f.getContent().replace("</p>", ""));
+            }
+        }
+        mmap.put("financeForum", list);
     }
 }

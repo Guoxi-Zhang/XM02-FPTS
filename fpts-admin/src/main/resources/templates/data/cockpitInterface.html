@@ -177,6 +177,21 @@
                     </div>
                 </div>
 
+                <div class="boxall" style="height:260px;">
+                    <div class="alltitle">财经论坛</div>
+                    <div class="navboxall">
+                        <div class="wraptit">
+                            <span>产品名称</span><span>评论</span>
+                        </div>
+                        <div class="wrap">
+                            <ul th:each="forumItem:${financeForum}">
+                                <li><p><span th:text="${forumItem.name}"></span><span
+                                        th:text="${forumItem.content}">199</span></p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="boxall" style="height:320px">
                     <div class="alltitle">实名认证完成状况统计</div>
                     <div class="navboxall" id="echart2"></div>
