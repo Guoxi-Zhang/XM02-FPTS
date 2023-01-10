@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fpts.todo.domain.TodoList;
 import com.fpts.todo.service.ITodoListService;
+import com.fpts.finance_forum.domain.FinanceForum;
+import com.fpts.finance_forum.service.IFinanceForumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,6 +52,9 @@ public class SysIndexController extends BaseController
 
     @Autowired
     private ITodoListService todoListService;
+
+    @Autowired
+    private IFinanceForumService financeForumService;
 
     // 系统首页
     @GetMapping("/index")
@@ -136,8 +141,9 @@ public class SysIndexController extends BaseController
 
     // 系统介绍
     @GetMapping("/system/main")
-    public String main(ModelMap mmap, TodoList todoList) throws ParseException {
+    public String main(ModelMap mmap, TodoList todoList,FinanceForum financeForum) throws ParseException {
         List<TodoList> list = todoListService.selectTodoListList(todoList);
+        List<FinanceForum> list1 = financeForumService.selectFinanceForumList(financeForum);
         for(TodoList t:list){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             t.setEndTime(sdf.parse(sdf.format(t.getEndTime())));
@@ -152,10 +158,40 @@ public class SysIndexController extends BaseController
                 t.setDetail(t.getDetail().replace("</p>", ""));
             }
         }
+        for(FinanceForum f : list1){
+            String content = f.getContent();
+            System.out.println(content);
+            if (content.contains("<p>")) {
+                f.setContent(f.getContent().replace("<p>", ""));
+                System.out.println(content.replace("<p>", ""));
+            }
+            if (content.contains("</p>")) {
+                f.setContent(f.getContent().replace("</p>", ""));
+            }
+        }
         mmap.put("todoList", list);
+        mmap.put("financeForum", list1);
         mmap.put("version", RuoYiConfig.getVersion());
         return "main";
     }
+
+//    public String text(ModelMap mmap, FinanceForum financeForum) throws ParseException {
+//        List<FinanceForum> list = financeForumService.selectFinanceForumList(financeForum);
+//        for(FinanceForum f : list){
+//            String content = f.getContent();
+//            System.out.println(content);
+//            if (content.contains("<p>")) {
+//                f.setContent(f.getContent().replace("<p>", ""));
+//                System.out.println(content.replace("<p>", ""));
+//            }
+//            if (content.contains("</p>")) {
+//                f.setContent(f.getContent().replace("</p>", ""));
+//            }
+//        }
+//
+//        mmap.put("version", RuoYiConfig.getVersion());
+//        return "text";
+//    }
 
     // content-main class
     public String contentMainClass(Boolean footer, Boolean tagsView)
