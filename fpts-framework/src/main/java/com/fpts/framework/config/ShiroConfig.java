@@ -300,7 +300,6 @@ public class ShiroConfig
         // 找回密码相关
         filterChainDefinitionMap.put("/resetPassword/sendCode", "anon,captchaValidate");
         filterChainDefinitionMap.put("/resetPassword/setNewPassword", "anon");
-        filterChainDefinitionMap.put("/resetPassword", "anon,captchaValidate");
         // 系统权限列表
         // filterChainDefinitionMap.putAll(SpringUtils.getBean(IMenuService.class).selectPermsAll());
 

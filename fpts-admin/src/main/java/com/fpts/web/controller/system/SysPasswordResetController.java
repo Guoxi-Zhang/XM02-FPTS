@@ -72,10 +72,10 @@ public class SysPasswordResetController extends BaseController
         mailSender.send(simpleMailMessage);
     }
 
-    @GetMapping("")
+    @GetMapping("/sendCode")
     public String passwordReset()
     {
-        return "resetPassword";
+        return "sendCode";
     }
 
     /**
