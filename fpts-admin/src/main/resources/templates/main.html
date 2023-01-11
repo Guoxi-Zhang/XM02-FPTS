@@ -221,9 +221,11 @@
 
     function recordChart() {
         var CountByMonth = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
         $.ajax({
             type: 'post',
             url: '/record/transaction_record/eCharts',
+            data: {userId: userId},
             async: false,
             success: function (res) {
                 console.log(res);

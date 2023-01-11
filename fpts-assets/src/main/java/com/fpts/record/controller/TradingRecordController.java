@@ -200,9 +200,9 @@ public class TradingRecordController extends BaseController
 
     @PostMapping("/eCharts")
     @ResponseBody
-    public List<Integer> statisticsData()
+    public List<Integer> statisticsData(String userId)
     {
-        return tradingRecordService.getMonthlyData();
+        return tradingRecordService.getMonthlyData(userId);
     }
 
     @PostMapping("/searchTradingRecord")

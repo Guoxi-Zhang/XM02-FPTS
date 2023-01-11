@@ -75,6 +75,10 @@
                     <div class="alltitle">用户反馈数量统计</div>
                     <div class="navboxall" id="echart6"></div>
                 </div>
+                <div class="boxall" style="height:320px">
+                    <div class="alltitle">账户资产</div>
+                    <div class="navboxall" id="echart7"></div>
+                </div>
             </li>
 
             <!--中间三个表-->
@@ -107,6 +111,10 @@
                 <div class="boxall" style="height:340px">
                     <div class="alltitle">涨幅TOP10产品统计</div>
                     <div class="navboxall" id="echart3"></div>
+                </div>
+                <div class="boxall" style="height:320px">
+                    <div class="alltitle">持仓记录统计</div>
+                    <div class="navboxall" id="echart8"></div>
                 </div>
             </li>
 
@@ -177,7 +185,7 @@
                     </div>
                 </div>
 
-                <div class="boxall" style="height:260px;">
+                <div class="boxall" style="height:320px;">
                     <div class="alltitle">财经论坛</div>
                     <div class="navboxall">
                         <div class="wraptit">
@@ -215,6 +223,8 @@
     echarts_4();
     echarts_5();
     echarts_6();
+    echarts_7();
+    echarts_8();
 
     function notice() {
         window.location.href = "/system/notice";
@@ -717,6 +727,7 @@
             myChart.resize();
         });
     }
+
     function echarts_6() {
         var myChart = echarts.init(document.getElementById('echart6'));
         var cntList = [[${cntList}]];
@@ -753,6 +764,156 @@
             myChart.resize();
         });
     }
+
+    function echarts_7() {
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echart7'));
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
+        var assets;
+        $.ajax({
+            type: 'post',
+            url: '/assets/account_assets/eCharts',
+            data: {userId: userId},
+            async: false,
+            success: function(res) {
+                console.log(res);
+                assets = res;
+            }
+        });
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: "{b} : {c} ({d}%)"
+            },
+            legend: {
+                right: 0,
+                top: 30,
+                height: 160,
+                itemWidth: 10,
+                itemHeight: 10,
+                itemGap: 10,
+                textStyle: {
+                    color: 'rgba(255,255,255,.6)',
+                    fontSize: 12
+                },
+                orient: 'vertical',
+                data: ['A股', 'B股', '债券', '基金']
+            },
+            calculable: true,
+            series: [
+                {
+                    name: ' ',
+                    color: ['#62c98d', '#2f89cf', '#4cb9cf', '#53b666', '#62c98d', '#205acf', '#c9c862', '#c98b62', '#c962b9', '#7562c9', '#c96262', '#c25775', '#00b7be'],
+                    type: 'pie',
+                    radius: [30, 70],
+                    center: ['35%', '50%'],
+                    roseType: 'radius',
+                    label: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+
+                    lableLine: {
+                        normal: {
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+
+                    data: [
+                        {value: assets[0], name: 'A股'},
+                        {value: assets[1], name: 'B股'},
+                        {value: assets[2], name: '债券'},
+                        {value: assets[3], name: '基金'}
+                    ]
+                },
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
+
+    function echarts_8() {
+        var myChart = echarts.init(document.getElementById('echart8'));
+        var amountList=[0,0,0,0,0,0,0,0,0,0,0,0];
+        var monthList;
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
+        $.ajax({
+            type: 'post',
+            url: '/position/accountPosition/eCharts',
+            data: {userId: userId},
+            async: false,
+            success: function(res) {
+                console.log(res);
+                amountList = res;
+            }
+        });
+        // 基于准备好的dom，初始化echarts实例
+        let mouthList = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+
+        // 指定图表的配置项和数据
+        var option = {
+
+            tooltip: {},
+            legend: {
+                data: ['持仓数量'],
+                textStyle: {
+                    color: 'white',
+                }
+            },
+            xAxis: {
+                name: '月份',
+                data: mouthList,
+                axisLabel: { // 如果显示字符过长 就间隔1 设为0
+                    textStyle: {color: 'white', fontSize: '13',},
+                    interval: 0
+                },
+                textStyle: {
+                    color: 'white',
+                }
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '数量',
+                    type: 'bar',
+                    data: amountList,
+                    textStyle: {
+                        color: 'white',
+                    },
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: '最大值'},
+                            {type : 'min', name: '最小值'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: '平均值'}
+                        ]
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
+
 
 
 </script>

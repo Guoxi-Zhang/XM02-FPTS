@@ -84,5 +84,5 @@ public interface ITradingRecordService
      * @return 结果
      */
     public int deleteTradingRecordByOrderId(Long orderId);
-    public List<Integer> getMonthlyData();
+    public List<Integer> getMonthlyData(String userId);
 }
