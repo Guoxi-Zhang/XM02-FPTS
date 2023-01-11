@@ -29,6 +29,9 @@
 	            <a class="btn btn-danger multiple disabled" onclick="javascript:batchForceLogout()" shiro:hasPermission="monitor:online:batchForceLogout">
 	                <i class="fa fa-sign-out"></i> 强退
 	            </a>
+				<a class="btn btn-info" onclick="printToHtml()">
+					<i class="fa fa-download"></i> 打印HTML
+				</a>
 	        </div>
 	        
 	        <div class="col-sm-12 select-table table-striped">
@@ -41,6 +44,10 @@
 	<script th:inline="javascript">
 		var forceFlag = [[${@permission.hasPermi('monitor:online:forceLogout')}]];
 		var prefix = ctx + "monitor/online";
+
+		function printToHtml(){
+			$.modal.openFull(table.options.modalName + "打印", "/monitor/online/print");
+		}
 
 		$(function() {
 		    var options = {

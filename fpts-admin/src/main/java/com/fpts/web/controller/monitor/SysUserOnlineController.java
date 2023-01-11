@@ -1,6 +1,8 @@
 package com.fpts.web.controller.monitor;
 
 import java.util.List;
+
+import com.fpts.common.core.domain.entity.SysRole;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,5 +90,27 @@ public class SysUserOnlineController extends BaseController
             userOnlineService.removeUserCache(online.getLoginName(), sessionId);
         }
         return success();
+    }
+
+    /**
+     * 打印页面跳转
+     * @return 页面地址
+     */
+    @GetMapping("print")
+    public String print()
+    {
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysUserOnline userOnline)
+    {
+        List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
+
+        return getDataTable(list);
     }
 }
