@@ -83,7 +83,7 @@
     var producttype = localStorage.getItem("productType");
     var productamount;
     var accountid;
-    var accountbalanceflag;
+    var accountbalance;
 
     console.log(typeof productid);
     document.getElementById("userId").value = userid;
@@ -93,6 +93,11 @@
 
     function getProductAmount() {
         productamount = document.getElementById("productAmount").value;
+        if (productprice * productamount!==0)
+        {
+            alert("此次买入的交易金额为"+ (productprice * productamount).toFixed(2) + "元!");
+        }
+
         console.log(productamount);
     }
 
@@ -101,21 +106,25 @@
         console.log(accountid);
         userid = [[${@permission.getPrincipalProperty('userId')}]];
         var config = {
-            url: "http:localhost/assets/account_assets/getAccountBalance",
+            url: "/assets/account_assets/getAccountBalance",
             data: {userid: userid, accountid: accountid},
             type: "post",
             success: function(res) {
                 console.log(res);
-                if (res===-11111){
-                    accountbalanceflag = false;
+                if (res === -11111){
+                    alert("该账户不存在");
                 }
                 else{
-                    accountbalanceflag = true;
+                    alert("该账户的余额还有"+res+"元！");
                 }
-                console.log(accountbalanceflag);
+                accountbalance = res;
+                console.log(typeof accountbalance);
             }
         };
-        $.ajax(config);
+        if (accountid!=null && accountid!==""){
+            $.ajax(config);
+        }
+
     }
 
     var prefix = ctx + "finance_collection/collection";
@@ -123,10 +132,13 @@
         focusCleanup: true
     });
     function submitHandler() {
-        if (accountbalanceflag){
+        if (accountbalance >= productprice * productamount){
             if ($.validate.form()) {
                 $.operate.save(prefix + "/addTransactionRecord", $('#form-transaction_record-add').serialize());
             }
+        }
+        else if(productprice <=0){
+            alert('请输入正确的购买数量');
         }
         else {
             alert('账户余额不足');

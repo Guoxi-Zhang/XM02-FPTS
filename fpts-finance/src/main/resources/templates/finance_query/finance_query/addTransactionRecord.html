@@ -93,7 +93,11 @@
 
     function getProductAmount() {
         productamount = document.getElementById("productAmount").value;
-        alert("该此买入的交易金额为"+ productprice * productamount + "元！");
+        if (productprice * productamount!==0)
+        {
+            alert("此次买入的交易金额为"+ (productprice * productamount).toFixed(2) + "元!");
+        }
+
         console.log(productamount);
     }
 
@@ -108,16 +112,19 @@
             success: function(res) {
                 console.log(res);
                 if (res === -11111){
-                    alert("该账户不存在！")
+                    alert("该账户不存在");
                 }
                 else{
-                    alert("该账户的余额还有"+res+"元！")
+                    alert("该账户的余额还有"+res+"元！");
                 }
                 accountbalance = res;
                 console.log(typeof accountbalance);
             }
         };
-        $.ajax(config);
+        if (accountid!=null && accountid!==""){
+            $.ajax(config);
+        }
+
     }
 
     var prefix = ctx + "finance_collection/collection";
@@ -129,6 +136,9 @@
             if ($.validate.form()) {
                 $.operate.save(prefix + "/addTransactionRecord", $('#form-transaction_record-add').serialize());
             }
+        }
+        else if(productprice <=0){
+            alert('请输入正确的购买数量');
         }
         else {
             alert('账户余额不足');
