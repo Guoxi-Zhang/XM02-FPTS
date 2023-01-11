@@ -3,6 +3,7 @@ package com.fpts.web.controller.monitor;
 import java.util.List;
 
 import com.fpts.common.core.domain.entity.SysRole;
+import com.fpts.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class SysUserOnlineController extends BaseController
 
     @PostMapping("/getLoginNameBySessionId")
     @ResponseBody
-    public SysUserOnline SysUserOnline(@RequestParam String sessionId)
+    public SysUserOnline getSysUserOnline(@RequestParam String sessionId)
     {
         return userOnlineService.selectOnlineById(sessionId);
     }
@@ -112,5 +113,19 @@ public class SysUserOnlineController extends BaseController
         List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
 
         return getDataTable(list);
+    }
+
+    /**
+     * 导出操作
+     * @param userOnline 一条在线用户的信息
+     * @return 查询结果
+     */
+    @PostMapping("/export")
+    @ResponseBody
+    public AjaxResult export(SysUserOnline userOnline)
+    {
+        List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
+        ExcelUtil<SysUserOnline> util = new ExcelUtil<SysUserOnline>(SysUserOnline.class);
+        return util.exportExcel(list, "用户数据");
     }
 }

@@ -1,6 +1,8 @@
 package com.fpts.system.domain;
 
 import java.util.Date;
+
+import com.fpts.common.annotation.Excel;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fpts.common.core.domain.BaseEntity;
@@ -16,36 +18,47 @@ public class SysUserOnline extends BaseEntity
     private static final long serialVersionUID = 1L;
     
     /** 用户会话id */
+    @Excel(name = "用户会话id")
     private String sessionId;
 
     /** 部门名称 */
+    @Excel(name = "部门名称")
     private String deptName;
 
     /** 登录名称 */
+    @Excel(name = "登录名称")
     private String loginName;
 
     /** 登录IP地址 */
+    @Excel(name = "登录IP地址")
     private String ipaddr;
 
     /** 登录地址 */
+    @Excel(name = "登录地址")
     private String loginLocation;
 
     /** 浏览器类型 */
+    @Excel(name = "浏览器类型")
     private String browser;
 
     /** 操作系统 */
+    @Excel(name = "操作系统")
     private String os;
 
     /** session创建时间 */
+    @Excel(name = "session创建时间")
     private Date startTimestamp;
 
     /** session最后访问时间 */
+    @Excel(name = "session最后访问时间")
     private Date lastAccessTime;
 
     /** 超时时间，单位为分钟 */
+    @Excel(name = "超时时间（分钟）")
     private Long expireTime;
 
     /** 在线状态 */
+    @Excel(name = "在线状态")
     private OnlineStatus status = OnlineStatus.on_line;
 
     public String getSessionId()
