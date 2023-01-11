@@ -19,11 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.enums.BusinessType;
 import com.fpts.finance_collection.domain.FinanceCollection;
@@ -225,7 +221,14 @@ public class FinanceCollectionController extends BaseController
         return toAjax(tradingRecordService.insertTradingRecord(tradingRecord));
     }
 
-    
+    @PostMapping("/addCollection")
+    @ResponseBody
+    public AjaxResult addCollection(@RequestParam Long userId) {
+        FinanceCollection financeCollection = new FinanceCollection();
+        financeCollection.setUserId(userId);
+        return toAjax(financeCollectionService.insertFinanceCollection(financeCollection));
+    }
+
     /*查询账户信息列表
     @PostMapping("/accountist")
     @ResponseBody
