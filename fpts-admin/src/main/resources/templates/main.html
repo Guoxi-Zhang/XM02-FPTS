@@ -145,7 +145,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="forumItem:${financeForum}" >
+                        <tr th:each="forumItem:${financeForum}" th:if="${forumItemStat.index} lt 3">
                             <td th:text="${forumItem.productId}"><i class="fa fa-clock-o"></i></td>
                             <td th:text="${forumItem.name}"></td>
                             <td th:text="${forumItem.content}"></td>
@@ -179,7 +179,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="todoItem:${todoList}" th:if="${todoItemStat.index} lt 4">
+                        <tr th:each="todoItem:${todoList}" th:if="${todoItemStat.index} lt 3">
                             <td th:text="${todoItem.task}"><i class="fa fa-clock-o"></i></td>
                             <td th:text="${#dates.format(todoItem.endTime,'yyyy-MM-dd')}"><i
                                     class="fa fa-clock-o"></i>

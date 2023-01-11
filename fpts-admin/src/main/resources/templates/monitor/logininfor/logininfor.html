@@ -44,10 +44,10 @@
         </div>
 
         <div class="btn-group-sm" id="toolbar" role="group">
-            <a class="btn btn-primary single disabled" onclick="unlock()"
-               shiro:hasPermission="monitor:logininfor:unlock">
-                <i class="fa fa-unlock"></i> 解锁
-            </a>
+            <!--            <a class="btn btn-primary single disabled" onclick="unlock()"-->
+            <!--               shiro:hasPermission="monitor:logininfor:unlock">-->
+            <!--                <i class="fa fa-unlock"></i> 解锁-->
+            <!--            </a>-->
             <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()"
                shiro:hasPermission="monitor:logininfor:remove">
                 <i class="fa fa-remove"></i> 删除
@@ -74,6 +74,7 @@
 
 <th:block th:include="include :: footer"/>
 <script th:inline="javascript">
+    var removeFlag = [[${@permission.hasPermi('monitor:logininfor:remove')}]];
     var datas = [[${@dict.getType('sys_common_status')}]];
     var prefix = ctx + "monitor/logininfor";
 
@@ -150,6 +151,16 @@
                 {
                     field: 'loginTime',
                     title: '登录时间',
+                    sortable: true
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function (value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.infoId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    },
                     sortable: true
                 }]
         };
