@@ -77,7 +77,7 @@ spring:
     host: smtp.qq.com
     port: 587
     username: melody953@qq.com
-    password: fzkepmrvjcwpbeab
+    password: sflwejhcvgjmbcdd
 
 
 # MyBatis
