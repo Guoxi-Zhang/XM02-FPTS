@@ -106,11 +106,11 @@ public class AccountPositionServiceImpl implements IAccountPositionService
 
     //统计
     @Override
-    @DataScope(deptAlias = "account_position", userAlias = "account_position")
+
     public List<Integer> getMonthlyData() {
         int len = 12;
-        List<Integer> list = new ArrayList<>(len);
-        for (int i = 0; i < len; i++) {
+        List<Integer> list = new ArrayList<>(12);
+        for (int i = 0; i < 12; i++) {
             list.add(0);
         }
 
