@@ -124,4 +124,26 @@ public class AccountInfoController extends BaseController
     {
         return toAjax(accountInfoService.deleteAccountInfoByIds(ids));
     }
+
+    /**
+     * 页面跳转
+     * @return 页面地址
+     */
+    @GetMapping("print")
+    public String print()
+    {
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(AccountInfo accountInfo)
+    {
+        List<AccountInfo> list = accountInfoService.selectAccountInfoList(accountInfo);
+
+        return getDataTable(list);
+    }
 }

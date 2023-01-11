@@ -68,6 +68,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="bank_account_management:manage:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-info" onclick="printToHtml()">
+                    <i class="fa fa-download"></i> 打印HTML
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -80,6 +83,10 @@
         var removeFlag = [[${@permission.hasPermi('bank_account_management:manage:remove')}]];
         var idDatas = [[${@dict.getType('${column.dictType}')}]];
         var prefix = ctx + "bank_account_management/manage";
+
+        function printToHtml(){
+            $.modal.openFull(table.options.modalName + "打印", "/bank_account_management/manage/print");
+        }
 
         $(function() {
             var options = {
