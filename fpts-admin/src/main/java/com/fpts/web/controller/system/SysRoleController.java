@@ -303,4 +303,26 @@ public class SysRoleController extends BaseController
         roleService.checkRoleDataScope(roleId);
         return toAjax(roleService.insertAuthUsers(roleId, userIds));
     }
+
+    /**
+     * 打印页面跳转
+     * @return 页面地址
+     */
+    @GetMapping("print")
+    public String print()
+    {
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysRole role)
+    {
+        List<SysRole> list = roleService.selectRoleList(role);
+
+        return getDataTable(list);
+    }
 }
