@@ -158,9 +158,9 @@ public class AccountPositionController extends BaseController
 
     @PostMapping("/eCharts")
     @ResponseBody
-    public List<Integer> statisticsData()
+    public List<Integer> statisticsData(Long userId)
     {
-        return accountPositionService.getMonthlyData();
+        return accountPositionService.getMonthlyData(userId);
     }
 
     /**

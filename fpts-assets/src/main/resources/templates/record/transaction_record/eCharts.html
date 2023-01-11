@@ -79,9 +79,11 @@
 <script type="text/javascript">
     $(function () {
         var CountByMonth = [0,0,0,0,0,0,0,0,0,0,0,0];
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
         $.ajax({
             type: 'post',
             url: 'eCharts',
+            data: {userId: userId},
             async: false,
             success: function(res) {
                 console.log(res);

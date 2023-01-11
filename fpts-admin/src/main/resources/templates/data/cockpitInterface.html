@@ -847,9 +847,11 @@
         var myChart = echarts.init(document.getElementById('echart8'));
         var amountList=[0,0,0,0,0,0,0,0,0,0,0,0];
         var monthList;
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
         $.ajax({
             type: 'post',
             url: '/position/accountPosition/eCharts',
+            data: {userId: userId},
             async: false,
             success: function(res) {
                 console.log(res);
