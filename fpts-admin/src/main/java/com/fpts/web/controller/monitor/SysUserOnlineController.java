@@ -126,6 +126,6 @@ public class SysUserOnlineController extends BaseController
     {
         List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
         ExcelUtil<SysUserOnline> util = new ExcelUtil<SysUserOnline>(SysUserOnline.class);
-        return util.exportExcel(list, "用户数据");
+        return util.exportExcel(list, "在线用户数据");
     }
 }

@@ -58,7 +58,7 @@ public class SysUserOnline extends BaseEntity
     private Long expireTime;
 
     /** 在线状态 */
-    @Excel(name = "在线状态")
+    @Excel(name = "在线状态", readConverterExp = "on_line=在线,off_line=离线")
     private OnlineStatus status = OnlineStatus.on_line;
 
     public String getSessionId()
