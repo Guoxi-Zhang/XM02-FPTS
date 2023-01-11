@@ -1,6 +1,7 @@
 package com.fpts.cockpitInterface;
 
 import com.fpts.common.core.page.TableDataInfo;
+import com.fpts.feedback.domain.UserFeedback;
 import com.fpts.finance_query.domain.FinanceQuery;
 import com.fpts.finance_query.service.IFinanceQueryService;
 import com.fpts.framework.web.domain.server.Sys;
@@ -13,6 +14,8 @@ import com.fpts.todo.domain.TodoList;
 import com.fpts.todo.service.ITodoListService;
 import com.fpts.finance_forum.domain.FinanceForum;
 import com.fpts.finance_forum.service.IFinanceForumService;
+import com.fpts.feedback.domain.UserFeedback;
+import com.fpts.feedback.service.IUserFeedbackService;
 import com.fpts.system.domain.SysUserOnline;
 import com.fpts.system.service.ISysUserOnlineService;
 import com.fpts.weathers.domain.WeatherStatistics;
@@ -43,6 +46,8 @@ public class CockpitInterfaceController {
     @Autowired
     private IFinanceForumService financeForumService;
     @Autowired
+    private IUserFeedbackService userFeedbackService;
+    @Autowired
     private ISysUserOnlineService sysUserOnlineService;
     @Autowired
     private ISysNoticeService noticeService;
@@ -62,6 +67,7 @@ public class CockpitInterfaceController {
         financeQueryChart(mmap);
         noticeChart(mmap);
         certificationChart(mmap);
+        feedbackChart(mmap);
         //返回视图
         return prefix + "/cockpitInterface";
     }
@@ -168,6 +174,31 @@ public class CockpitInterfaceController {
         }
         mmap.put("statusList", statusList);
         mmap.put("countList", countList);
+    }
+    public void feedbackChart(ModelMap mmap){
+        List<UserFeedback> list = userFeedbackService.selectUserFeedbackList( new UserFeedback());
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+        Map<String, Integer> map = new TreeMap<String, Integer>();
+        for( UserFeedback t: list){
+            Date tempDate = t.getUserFeedbackCreatetime();
+            String date = dateformat.format(tempDate);
+
+            if(map.containsKey(date)){
+                int cnt = map.get(date);
+                map.replace(date, cnt, cnt + 1);
+            }else{
+                map.put(date, 1);
+            }
+        }
+        String[] dateSet = map.keySet().toArray(new String[0]);
+        List<String> dateList= Arrays.asList(dateSet);
+        Integer[] cntSet = map.values().toArray(new Integer[0]);
+        List<Integer> cntList=Arrays.asList(cntSet);
+
+        System.out.println(dateList.toString());
+        System.out.println(cntList.toString());
+        mmap.put("dateList", dateList);
+        mmap.put("cntList", cntList);
     }
 
     public void forumChart(ModelMap mmap) {

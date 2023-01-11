@@ -66,12 +66,20 @@ public class UserFeedbackController extends BaseController
         List<UserFeedback> ansList = new ArrayList<>();
         for(UserFeedback t:list){
             String adminFeedbackContent = t.getAdminFeedbackContent();
+            String userFeedbackContent = t.getUserFeedbackContent();
             if(adminFeedbackContent.contains("<p>")){
                 t.setAdminFeedbackContent(t.getAdminFeedbackContent().replace("<p>", ""));
                 System.out.println(adminFeedbackContent.replace("<p>", ""));
             }
             if(adminFeedbackContent.contains("</p>")){
                 t.setAdminFeedbackContent(t.getAdminFeedbackContent().replace("</p>", ""));
+            }
+            if(userFeedbackContent.contains("<p>")){
+                t.setUserFeedbackContent(t.getUserFeedbackContent().replace("<p>", ""));
+                System.out.println(userFeedbackContent.replace("<p>", ""));
+            }
+            if(userFeedbackContent.contains("</p>")){
+                t.setUserFeedbackContent(t.getUserFeedbackContent().replace("</p>", ""));
             }
             if(tab.equals("0") && t.getCompletemark()==0){//进行中待办事项
                 ansList.add(t);
@@ -88,12 +96,20 @@ public class UserFeedbackController extends BaseController
     public UserFeedback wxEdit( @PathVariable("userFeedbackId") Long userFeedbackId){
         UserFeedback item = userFeedbackService.selectUserFeedbackByUserFeedbackId(Long.valueOf(userFeedbackId));
         String adminFeedbackContent = item.getAdminFeedbackContent();
+        String userFeedbackContent = item.getUserFeedbackContent();
         if(adminFeedbackContent.contains("<p>")){
             item.setAdminFeedbackContent(item.getAdminFeedbackContent().replace("<p>", ""));
             System.out.println(adminFeedbackContent.replace("<p>", ""));
         }
         if(adminFeedbackContent.contains("</p>")){
             item.setAdminFeedbackContent(item.getAdminFeedbackContent().replace("</p>", ""));
+        }
+        if(userFeedbackContent.contains("<p>")){
+            item.setUserFeedbackContent(item.getUserFeedbackContent().replace("<p>", ""));
+            System.out.println(userFeedbackContent.replace("<p>", ""));
+        }
+        if(userFeedbackContent.contains("</p>")){
+            item.setUserFeedbackContent(item.getUserFeedbackContent().replace("</p>", ""));
         }
         return item;
     }

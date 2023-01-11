@@ -72,8 +72,8 @@
                 </div>
 
                 <div class="boxall" style="height:260px;">
-                    <div class="alltitle">标题样式</div>
-                    <div class="navboxall" id="echart1"></div>
+                    <div class="alltitle">用户反馈数量统计</div>
+                    <div class="navboxall" id="echart6"></div>
                 </div>
             </li>
 
@@ -214,6 +214,7 @@
     echarts_3();
     echarts_4();
     echarts_5();
+    echarts_6();
 
     function notice() {
         window.location.href = "/system/notice";
@@ -716,6 +717,44 @@
             myChart.resize();
         });
     }
+    function echarts_6() {
+        var myChart = echarts.init(document.getElementById('echart6'));
+        var cntList = [[${cntList}]];
+        console.log(cntList);
+
+        var dateList = [[${dateList}]];
+        console.log(dateList);
+
+        // 指定图表的配置项和数据
+        var option = {
+            // title: {
+            //     text: '用户反馈创建时间统计'
+            // },
+            tooltip: {},
+            legend: {
+                data: ['用户反馈个数']
+            },
+            xAxis: {
+                data: dateList
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: '截止反馈个数',
+                    type: 'line',
+                    data: cntList
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.addEventListener("resize", function () {
+            myChart.resize();
+        });
+    }
+
+
 </script>
 </body>
 </html>
