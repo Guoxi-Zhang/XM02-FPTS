@@ -2,7 +2,7 @@
     $(".loading").fadeOut()
 });
 $(function () {
-    echarts_1();
+    // echarts_1();
     // echarts_2();
     // echarts_3();
     // echarts_4();
@@ -11,7 +11,7 @@ $(function () {
     zb2();
     zb3();
 
-    function echarts_1() {
+    /*function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
         option = {
@@ -77,7 +77,7 @@ $(function () {
         window.addEventListener("resize", function () {
             myChart.resize();
         });
-    }
+    }*/
 
     // function echarts_2() {
     //     // 基于准备好的dom，初始化echarts实例
