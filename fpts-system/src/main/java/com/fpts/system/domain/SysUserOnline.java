@@ -18,7 +18,7 @@ public class SysUserOnline extends BaseEntity
     private static final long serialVersionUID = 1L;
     
     /** 用户会话id */
-    @Excel(name = "用户会话id")
+    @Excel(name = "用户会话id", width = 40)
     private String sessionId;
 
     /** 部门名称 */
@@ -46,15 +46,14 @@ public class SysUserOnline extends BaseEntity
     private String os;
 
     /** session创建时间 */
-    @Excel(name = "session创建时间")
+    @Excel(name = "session创建时间", width = 40)
     private Date startTimestamp;
 
     /** session最后访问时间 */
-    @Excel(name = "session最后访问时间")
+    @Excel(name = "session最后访问时间", width = 40)
     private Date lastAccessTime;
 
     /** 超时时间，单位为分钟 */
-    @Excel(name = "超时时间（分钟）")
     private Long expireTime;
 
     /** 在线状态 */
