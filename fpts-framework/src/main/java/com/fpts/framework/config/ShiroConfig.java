@@ -298,6 +298,7 @@ public class ShiroConfig
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
         filterChainDefinitionMap.put("/getRegisterToken", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/termOfUse", "anon");
         // 找回密码相关
         filterChainDefinitionMap.put("/resetPassword/sendCode", "anon,captchaValidate");
         filterChainDefinitionMap.put("/resetPassword/setNewPassword", "anon");

@@ -164,4 +164,10 @@ public class SysRegisterController extends BaseController
             return success();
         }
     }
+
+    @GetMapping("/termOfUse")
+    public String termOfUse()
+    {
+        return "termOfUse";
+    }
 }
