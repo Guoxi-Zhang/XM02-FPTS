@@ -18,10 +18,12 @@ function register() {
     var username = $.common.trim($("input[name='username']").val());
     var password = $.common.trim($("input[name='password']").val());
     var validateCode = $("input[name='validateCode']").val();
+    var token = $("input[name='token']").val();
     $.ajax({
         type: "post",
         url: ctx + "register",
         data: {
+            "token": token,
             "loginName": username,
             "password": password,
             "validateCode": validateCode
@@ -65,6 +67,11 @@ function validateRule() {
             },
             acceptTerm: {
                 required: true
+            },
+            token: {
+                required: true,
+                minlength: 10,
+                maxlength: 10
             }
         },
         messages: {
@@ -82,6 +89,11 @@ function validateRule() {
             },
             acceptTerm: {
                 required: icon + "请阅读并同意使用条款"
+            },
+            token: {
+                required: icon + "请输入令牌",
+                minlength: icon + "非法的令牌",
+                maxlength:  icon + "非法的令牌"
             }
         },
         errorPlacement : function(error, element) {

@@ -5,6 +5,7 @@ import com.fpts.common.exception.user.CaptchaException;
 import com.fpts.common.utils.ServletUtils;
 import com.fpts.system.domain.RegisterToken;
 import com.fpts.system.domain.SysPasswordReset;
+import com.fpts.system.service.IRegisterTokenService;
 import com.fpts.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,6 +23,7 @@ import com.fpts.framework.shiro.service.SysRegisterService;
 import com.fpts.system.service.ISysConfigService;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,6 +44,9 @@ public class SysRegisterController extends BaseController
     private ISysUserService userService;
 
     @Autowired
+    private IRegisterTokenService registerTokenService;
+
+    @Autowired
     private JavaMailSender mailSender;
 
     @GetMapping("/register")
@@ -52,15 +57,32 @@ public class SysRegisterController extends BaseController
 
     @PostMapping("/register")
     @ResponseBody
-    public AjaxResult ajaxRegister(SysUser user)
+    public AjaxResult ajaxRegister(SysUser user, @RequestParam String token)
     {
-        System.out.println(user);
+        // System.out.println(token);
+
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser"))))
         {
             return error("当前系统没有开启注册功能！");
         }
-        String msg = registerService.register(user);
-        return StringUtils.isEmpty(msg) ? success() : error(msg);
+        //验证令牌的有效性
+        // 用 token 和 seesionId 同时查用户
+        RegisterToken conditions = new RegisterToken();
+        conditions.setToken(token);
+        conditions.setSessionId(ServletUtils.getRequest().getSession().getId());
+        List<RegisterToken> result = registerTokenService.selectRegisterTokenList(conditions);
+        // 检验查询结果有效性
+        if(result.size() != 1)
+        {
+            // 无效
+            return AjaxResult.error("无效的令牌");
+        }
+        else
+        {
+            // 有效，注册用户
+            String msg = registerService.register(user);
+            return StringUtils.isEmpty(msg) ? success() : error(msg);
+        }
     }
 
     @GetMapping("/getRegisterToken")
@@ -130,6 +152,7 @@ public class SysRegisterController extends BaseController
             record.setSessionId(sessionId);
             record.setEmailTo(email);
             record.setCreateTime(createTime);
+            registerTokenService.insertRegisterToken(record);
             // 发邮件
             sendSimpleMail(
                     "melody953@qq.com",
