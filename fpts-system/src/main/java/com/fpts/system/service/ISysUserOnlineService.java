@@ -43,6 +43,13 @@ public interface ISysUserOnlineService
     public void saveOnline(SysUserOnline online);
 
     /**
+     * 添加会话信息
+     *
+     * @param online 会话信息
+     */
+    public int insertOnline(SysUserOnline online);
+
+    /**
      * 查询会话集合
      * 
      * @param userOnline 分页参数

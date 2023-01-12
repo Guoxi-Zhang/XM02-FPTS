@@ -2,6 +2,7 @@ package com.fpts.web.controller.monitor;
 
 import java.util.List;
 
+import com.fpts.bank_account_management.domain.AccountInfo;
 import com.fpts.common.core.domain.entity.SysRole;
 import com.fpts.common.utils.poi.ExcelUtil;
 import org.apache.shiro.authz.annotation.Logical;
@@ -127,5 +128,27 @@ public class SysUserOnlineController extends BaseController
         List<SysUserOnline> list = userOnlineService.selectUserOnlineList(userOnline);
         ExcelUtil<SysUserOnline> util = new ExcelUtil<SysUserOnline>(SysUserOnline.class);
         return util.exportExcel(list, "在线用户数据");
+    }
+
+    /**
+     * 新增在线用户会话
+     */
+    @GetMapping("/add")
+    public String add()
+    {
+        return prefix + "/add";
+    }
+
+    /**
+     * 新增保存在线用户会话
+     */
+    @RequiresPermissions("monitor:online:manage:add")
+    @Log(title = "在线用户管理", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    @ResponseBody
+    public AjaxResult addSave(SysUserOnline userOnline)
+    {
+        userOnline.setExpireTime(1800000L);
+        return toAjax(userOnlineService.insertOnline(userOnline));
     }
 }

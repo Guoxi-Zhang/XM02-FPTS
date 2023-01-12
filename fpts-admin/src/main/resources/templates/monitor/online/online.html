@@ -26,6 +26,9 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="monitor:online:manage:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
 	            <a class="btn btn-danger multiple disabled" onclick="javascript:batchForceLogout()" shiro:hasPermission="monitor:online:batchForceLogout">
 	                <i class="fa fa-sign-out"></i> 强退
 	            </a>
@@ -57,6 +60,7 @@
 		    	uniqueId: "sessionId",
 		        url: prefix + "/list",
 		        exportUrl: prefix + "/export",
+				createUrl: prefix + "/add",
 		        sortName: "lastAccessTime",
 		        sortOrder: "desc",
 				modalName: "在线用户",

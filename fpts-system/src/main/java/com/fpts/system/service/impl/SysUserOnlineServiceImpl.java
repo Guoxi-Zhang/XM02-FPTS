@@ -88,6 +88,17 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     }
 
     /**
+     * 添加会话信息
+     *
+     * @param online 会话信息
+     */
+    @Override
+    public int insertOnline(SysUserOnline online)
+    {
+        return userOnlineDao.saveOnline(online);
+    }
+
+    /**
      * 查询会话集合
      * 
      * @param userOnline 在线用户
