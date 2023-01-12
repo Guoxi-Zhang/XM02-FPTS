@@ -62,6 +62,9 @@ function validateRule() {
             confirmPassword: {
                 required: true,
                 equalTo: "[name='password']"
+            },
+            acceptTerm: {
+                required: true
             }
         },
         messages: {
@@ -76,6 +79,17 @@ function validateRule() {
             confirmPassword: {
                 required: icon + "请再次输入您的密码",
                 equalTo: icon + "两次密码输入不一致"
+            },
+            acceptTerm: {
+                required: icon + "请阅读并同意使用条款"
+            }
+        },
+        errorPlacement : function(error, element) {
+            if (element.is(':radio') || element.is(':checkbox')) { // 如果是radio或checkbox
+                var eid = element.attr('name'); // 获取元素的name属性
+                error.appendTo(element.next().next()); // 将错误信息添加当前元素的父结点后面
+            } else {
+                error.insertAfter(element);
             }
         }
     })

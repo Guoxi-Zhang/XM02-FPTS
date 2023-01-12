@@ -4,7 +4,11 @@ $(document).ready(function(){
 		  submitHandler: function(form) {    
 		 		form.submit();    
 		}       
-	});  
+	});
+	// 校验单选框是否被选中
+	// jQuery.validator.addMethod("isAgreeRule", function(value, element) {
+	// 	return element.checked;
+	// }, "请阅读并同意用户协议后提交!");
 	//手机号码验证身份证正则合并：(^\d{15}$)|(^\d{17}([0-9]|X)$)
 	jQuery.validator.addMethod("isPhone",function(value,element){
 		var length = value.length;
