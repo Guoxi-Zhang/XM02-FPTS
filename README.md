@@ -1,7 +1,39 @@
 # XM02-FPTS
-02组项目：金融产品交易系统（Financial product optimization trading system， FPTS）
 
-## 合作开发流程
+**02组项目：金融产品交易系统（Financial product optimization trading system， FPTS），项目访问地址：http://47.108.114.204:8888**
+
+开发成员：
+
+|  姓名  |   角色   |
+| :----: | :------: |
+| 张郭熙 | 项目经理 |
+| 雷应翔 | 项目成员 |
+| 李紫阳 | 项目成员 |
+| 于成龙 | 项目成员 |
+| 王子轩 | 项目成员 |
+| 李毅诚 | 项目成员 |
+
+## 项目部署流程
+
+1. 在idea中打开该项目，等待maven自动加载完成所有依赖。
+
+2. 点击右上角绿色三角，运行该项目
+
+	![image-20230112171513392](README.assets/image-20230112171513392.png)
+
+3. 当控制台出现下述字样，项目运行成功
+
+	![image-20230112171625780](README.assets/image-20230112171625780.png)
+
+4. 在浏览器输入：localhost:80 访问项目
+
+	![image-20230112171703440](README.assets/image-20230112171703440.png)
+
+	
+
+	
+
+## 合作开发流程（面向开发者）
 
 使用github 的Collaborators 模式共同在一个仓库中开发。
 
