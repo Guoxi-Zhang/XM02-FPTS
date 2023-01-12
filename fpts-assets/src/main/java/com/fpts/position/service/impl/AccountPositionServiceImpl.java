@@ -107,15 +107,18 @@ public class AccountPositionServiceImpl implements IAccountPositionService
     //统计
     @Override
 
-    public List<Integer> getMonthlyData() {
+    public List<Integer> getMonthlyData(Long userId) {
         int len = 12;
         List<Integer> list = new ArrayList<>(12);
         for (int i = 0; i < 12; i++) {
             list.add(0);
         }
-
+        AccountPosition accountPosition = new AccountPosition();
+        if (userId!=1){
+            accountPosition.setUserId(userId);
+        }
         Calendar c = Calendar.getInstance();
-        List<AccountPosition> accountPositions = accountPositionMapper.selectAccountPositionList(new AccountPosition());
+        List<AccountPosition> accountPositions = accountPositionMapper.selectAccountPositionList(accountPosition);
         for (AccountPosition item:accountPositions) {
             if ( !"".equals(item.getAccountId())) {
                 c.setTime(item.getOrderTime());

@@ -14,7 +14,7 @@ import com.fpts.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2022-12-08
  */
-public class AccountInfo extends BaseEntity
+public class AccountInfo extends BaseEntity implements Comparable<AccountInfo>
 {
     private static final long serialVersionUID = 1L;
 
@@ -192,5 +192,10 @@ public class AccountInfo extends BaseEntity
             .append("accountCreateTime", getAccountCreateTime())
             .append("accountLastUsedTime", getAccountLastUsedTime())
             .toString();
+    }
+
+    @Override
+    public int compareTo(AccountInfo o) {
+        return o.getAccountBalance().compareTo(this.getAccountBalance());
     }
 }

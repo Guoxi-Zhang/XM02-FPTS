@@ -48,7 +48,7 @@ public class TradingRecordController extends BaseController
     public TableDataInfo list(TradingRecord tradingRecord)
     {
         startPage();
-        List<TradingRecord> list = tradingRecordService.selectTradingRecordList(tradingRecord);
+        List<TradingRecord> list = tradingRecordService.selectTradingRecordListWithName(tradingRecord);
         return getDataTable(list);
     }
 
@@ -200,9 +200,9 @@ public class TradingRecordController extends BaseController
 
     @PostMapping("/eCharts")
     @ResponseBody
-    public List<Integer> statisticsData()
+    public List<Integer> statisticsData(String userId)
     {
-        return tradingRecordService.getMonthlyData();
+        return tradingRecordService.getMonthlyData(userId);
     }
 
     @PostMapping("/searchTradingRecord")

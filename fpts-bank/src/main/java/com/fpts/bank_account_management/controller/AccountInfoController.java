@@ -126,7 +126,7 @@ public class AccountInfoController extends BaseController
     }
 
     /**
-     * 页面跳转
+     * 打印页面跳转
      * @return 页面地址
      */
     @GetMapping("print")

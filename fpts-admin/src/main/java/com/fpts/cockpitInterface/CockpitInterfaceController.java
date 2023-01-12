@@ -1,5 +1,7 @@
 package com.fpts.cockpitInterface;
 
+import com.fpts.bank_account_management.domain.AccountInfo;
+import com.fpts.bank_account_management.service.IAccountInfoService;
 import com.fpts.common.core.page.TableDataInfo;
 import com.fpts.feedback.domain.UserFeedback;
 import com.fpts.finance_query.domain.FinanceQuery;
@@ -58,6 +60,9 @@ public class CockpitInterfaceController {
     @Autowired
     private IWeatherStatisticsService weatherStatisticsService;
 
+    @Autowired
+    private IAccountInfoService accountInfoService;
+
     @GetMapping()
     public String cockpitInterface(ModelMap mmap, SysNotice notice) {
         //生成mmap
@@ -68,6 +73,7 @@ public class CockpitInterfaceController {
         noticeChart(mmap);
         certificationChart(mmap);
         feedbackChart(mmap);
+        bankAccountChart(mmap);
         //返回视图
         return prefix + "/cockpitInterface";
     }
@@ -216,5 +222,12 @@ public class CockpitInterfaceController {
             }
         }
         mmap.put("financeForum", list);
+    }
+
+    public void bankAccountChart(ModelMap mmap)
+    {
+        List<AccountInfo> list = accountInfoService.selectAccountInfoList(new AccountInfo());
+        Collections.sort(list);
+        mmap.put("accountInfoList", list);
     }
 }

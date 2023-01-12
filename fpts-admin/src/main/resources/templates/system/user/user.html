@@ -77,6 +77,9 @@
 		            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">
 			            <i class="fa fa-download"></i> 导出
 			        </a>
+					<a class="btn btn-info" onclick="printToHtml()">
+						<i class="fa fa-download"></i> 打印HTML
+					</a>
 		        </div>
 		        
 		        <div class="col-sm-12 select-table table-striped">
@@ -94,6 +97,10 @@
 		var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
 		var resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]];
 		var prefix = ctx + "system/user";
+
+		function printToHtml(){
+			$.modal.openFull(table.options.modalName + "打印", "/system/user/print");
+		}
 
 		$(function() {
 		    var panehHidden = false;
@@ -130,7 +137,8 @@
 		        },
 		        {
 		            field: 'userId',
-		            title: '用户ID'
+		            title: '用户ID',
+					sortable: true
 		        },
 		        {
 		            field: 'loginName',

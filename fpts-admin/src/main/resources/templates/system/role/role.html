@@ -50,6 +50,9 @@
 		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:role:export">
 		            <i class="fa fa-download"></i> 导出
 		        </a>
+				<a class="btn btn-info" onclick="printToHtml()">
+					<i class="fa fa-download"></i> 打印HTML
+				</a>
 	        </div>
 	        
 	        <div class="col-sm-12 select-table table-striped">
@@ -62,7 +65,10 @@
 		var editFlag = [[${@permission.hasPermi('system:role:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:role:remove')}]];
 		var prefix = ctx + "system/role";
-		
+
+		function printToHtml(){
+			$.modal.openFull(table.options.modalName + "打印", "/system/role/print");
+		}
 
 		$(function() {
 		    var options = {

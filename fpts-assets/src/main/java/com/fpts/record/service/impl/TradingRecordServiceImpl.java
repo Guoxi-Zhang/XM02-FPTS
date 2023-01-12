@@ -152,15 +152,18 @@ public class TradingRecordServiceImpl implements ITradingRecordService
 
     //统计
     @Override
-    public List<Integer> getMonthlyData() {
+    public List<Integer> getMonthlyData(String userId) {
         int len = 12;
         List<Integer> list = new ArrayList<>(len);
         for (int i = 0; i < len; i++) {
             list.add(0);
         }
-
+        TradingRecord tradingRecord = new TradingRecord();
+        if (!userId.equals("1")){
+            tradingRecord.setUserId(userId);
+        }
         Calendar c = Calendar.getInstance();
-        List<TradingRecord> tradingRecords = tradingRecordMapper.selectTradingRecordList(new TradingRecord());
+        List<TradingRecord> tradingRecords = tradingRecordMapper.selectTradingRecordList(tradingRecord);
         for (TradingRecord item:tradingRecords) {
             if ( !"".equals(item.getAccountId())) {
                 c.setTime(item.getOrderTime());

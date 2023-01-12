@@ -2,6 +2,8 @@ package com.fpts.web.controller.system;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.fpts.bank_account_management.domain.AccountInfo;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -307,4 +309,27 @@ public class SysUserController extends BaseController
         userService.checkUserDataScope(user.getUserId());
         return toAjax(userService.changeStatus(user));
     }
+
+    /**
+     * 打印页面跳转
+     * @return 页面地址
+     */
+    @GetMapping("print")
+    public String print()
+    {
+        return prefix + "/print";
+    }
+
+    /**
+     * 打印操作
+     */
+    @PostMapping("/printToHtml")
+    @ResponseBody
+    public TableDataInfo printToHtml(SysUser user)
+    {
+        List<SysUser> list = userService.selectUserList(user);
+
+        return getDataTable(list);
+    }
+
 }

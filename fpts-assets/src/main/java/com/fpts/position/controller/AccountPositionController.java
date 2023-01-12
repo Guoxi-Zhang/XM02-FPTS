@@ -158,9 +158,9 @@ public class AccountPositionController extends BaseController
 
     @PostMapping("/eCharts")
     @ResponseBody
-    public List<Integer> statisticsData()
+    public List<Integer> statisticsData(Long userId)
     {
-        return accountPositionService.getMonthlyData();
+        return accountPositionService.getMonthlyData(userId);
     }
 
     /**
@@ -184,8 +184,14 @@ public class AccountPositionController extends BaseController
         Long a = Long.parseLong(amount);
         AccountPosition accountPosition = accountPositionService.selectAccountPositionByOrderId(o);
         Long newAmount = accountPosition.getProductAmount() - a;
-        accountPosition.setProductAmount(newAmount);
-        accountPositionService.updateAccountPosition(accountPosition);
+        if (accountPosition.getProductAmount().equals(a)){
+            accountPositionService.deleteAccountPositionByOrderId(o);
+        }
+        else{
+            accountPosition.setProductAmount(newAmount);
+            accountPositionService.updateAccountPosition(accountPosition);
+        }
+
         return "position/accountPosition";
     }
 

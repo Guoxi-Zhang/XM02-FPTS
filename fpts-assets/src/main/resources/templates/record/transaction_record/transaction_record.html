@@ -107,7 +107,7 @@
             $.modal.open(table.options.modalName + "打印", "/record/transaction_record/print");
         }
         function printToChart(){
-            $.modal.openFull("交易记录统计", "/record/transaction_record/eCharts");
+            $.modal.open("交易记录统计", "/record/transaction_record/eCharts");
         }
 
         $(function() {
@@ -141,6 +141,11 @@
                 {
                     field: 'productId',
                     title: '产品编号',
+                    sortable: true
+                },
+                {
+                    field: 'name',
+                    title: '产品名称',
                     sortable: true
                 },
                 {

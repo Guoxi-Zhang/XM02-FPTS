@@ -88,6 +88,17 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     }
 
     /**
+     * 添加会话信息
+     *
+     * @param online 会话信息
+     */
+    @Override
+    public int insertOnline(SysUserOnline online)
+    {
+        return userOnlineDao.saveOnline(online);
+    }
+
+    /**
      * 查询会话集合
      * 
      * @param userOnline 在线用户
@@ -137,5 +148,35 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
     {
         String lastAccessTime = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD_HH_MM_SS, expiredDate);
         return userOnlineDao.selectOnlineByExpired(lastAccessTime);
+    }
+
+    /**
+     * 通过会话序号删除信息
+     *
+     * @param sessions 会话ID集合
+     * @return 在线用户信息
+     */
+    public int deleteOnlineByIds(List<String> sessions)
+    {
+        int numberOfSuccess = 0;
+        for (String sessionId : sessions)
+        {
+            SysUserOnline userOnline = selectOnlineById(sessionId);
+            if (StringUtils.isNotNull(userOnline))
+            {
+                numberOfSuccess += userOnlineDao.deleteOnlineById(sessionId);
+            }
+        }
+        return numberOfSuccess;
+    }
+
+    /**
+     * 修改会话信息
+     *
+     * @param online 会话信息
+     */
+    public int editOnline(SysUserOnline online)
+    {
+        return userOnlineDao.saveOnline(online);
     }
 }

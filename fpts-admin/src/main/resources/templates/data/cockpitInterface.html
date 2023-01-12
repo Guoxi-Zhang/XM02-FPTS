@@ -139,51 +139,47 @@
                 </div>
 
                 <div class="boxall" style="height: 300px">
-                    <div class="alltitle">标题样式</div>
+                    <div class="alltitle">银行账户余额排行榜</div>
                     <div class="navboxall">
                         <table class="table1" width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
-                            <tr>
-                                <th scope="col">排名</th>
-                                <th scope="col">公司</th>
-                                <th scope="col">数量</th>
-                                <th scope="col">增长率</th>
-                            </tr>
-                            <tr>
-                                <td><span>1</span></td>
-                                <td>腾讯科技</td>
-                                <td>114万<br></td>
-                                <td>100%<br></td>
-                            </tr>
-                            <tr>
-                                <td><span>2</span></td>
-                                <td>百度公司</td>
-                                <td>923823万</td>
-                                <td>21%</td>
-                            </tr>
-
-                            <tr>
-                                <td><span>3</span></td>
-                                <td>新浪</td>
-                                <td>1240253万</td>
-                                <td>12%</td>
-                            </tr>
-                            <tr>
-                                <td><span>4</span></td>
-                                <td>网易</td>
-                                <td>1.2亿</td>
-                                <td>39%</td>
-                            </tr>
-                            <tr>
-                                <td><span>5</span></td>
-                                <td>雅虎</td>
-                                <td>13423万</td>
-                                <td>9%</td>
-                            </tr>
+                                <tr>
+                                    <th scope="col">排名</th>
+                                    <th scope="col">用户ID</th>
+                                    <th scope="col">账户ID</th>
+                                    <th scope="col">余额</th>
+                                </tr>
+                                <tr th:each="accountItem:${accountInfoList}" th:if="${accountItemStat.index} lt 5">
+                                    <td><span th:text="${accountItemStat.index} + 1"></span></td>
+                                    <td th:text="${accountItem.userId}"></td>
+                                    <td th:text="${accountItem.accountId}"></td>
+                                    <td th:text="${accountItem.accountBalance}"></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
+<!--                <div class="boxall" style="height:320px;">-->
+<!--                    <div class="alltitle">银行账户余额排行榜</div>-->
+<!--                    <div class="navboxall">-->
+<!--                        <div class="wraptit">-->
+<!--                            <span>排名</span><span>用户ID</span><span>账户ID</span><span>余额</span>-->
+<!--                        </div>-->
+<!--                        <div class="wrap">-->
+<!--                            <ul th:each="accountItem:${accountInfoList}">-->
+<!--                                <li>-->
+<!--                                    <p>-->
+<!--                                        <span th:text="${accountItemStat.index}"></span>-->
+<!--                                        <span th:text="${accountItem.userId}"></span>-->
+<!--                                        <span th:text="${accountItem.accountId}"></span>-->
+<!--                                        <span th:text="${accountItem.accountBalance}"></span>-->
+<!--                                    </p>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="boxall" style="height:320px;">
                     <div class="alltitle">财经论坛</div>
@@ -847,9 +843,11 @@
         var myChart = echarts.init(document.getElementById('echart8'));
         var amountList=[0,0,0,0,0,0,0,0,0,0,0,0];
         var monthList;
+        var userId = [[${@permission.getPrincipalProperty('userId')}]];
         $.ajax({
             type: 'post',
             url: '/position/accountPosition/eCharts',
+            data: {userId: userId},
             async: false,
             success: function(res) {
                 console.log(res);
