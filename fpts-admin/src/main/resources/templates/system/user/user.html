@@ -80,6 +80,9 @@
 					<a class="btn btn-info" onclick="printToHtml()">
 						<i class="fa fa-download"></i> 打印HTML
 					</a>
+					<a class="btn btn-success" onclick="accountInfoAddChart()" >
+						<i class="fa fa-bar-chart"></i> 统计图表
+					</a>
 		        </div>
 		        
 		        <div class="col-sm-12 select-table table-striped">
@@ -97,6 +100,10 @@
 		var removeFlag = [[${@permission.hasPermi('system:user:remove')}]];
 		var resetPwdFlag = [[${@permission.hasPermi('system:user:resetPwd')}]];
 		var prefix = ctx + "system/user";
+
+		function accountInfoAddChart() {
+			$.modal.open(table.options.modalName + "统计图表", "/system/user/chart");
+		}
 
 		function printToHtml(){
 			$.modal.openFull(table.options.modalName + "打印", "/system/user/print");

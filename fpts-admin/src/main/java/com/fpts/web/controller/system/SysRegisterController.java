@@ -1,5 +1,6 @@
 package com.fpts.web.controller.system;
 
+import com.fpts.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,9 @@ public class SysRegisterController extends BaseController
     private SysRegisterService registerService;
 
     @Autowired
+    private ISysUserService userService;
+
+    @Autowired
     private ISysConfigService configService;
 
     @GetMapping("/register")
@@ -41,6 +45,18 @@ public class SysRegisterController extends BaseController
             return error("当前系统没有开启注册功能！");
         }
         String msg = registerService.register(user);
-        return StringUtils.isEmpty(msg) ? success() : error(msg);
+        if (StringUtils.isEmpty(msg))
+        {
+            Long [] roleIds = new Long[1];
+            roleIds[0] = 2L;
+            userService.insertUserRole(user.getUserId(), roleIds);
+
+            return success();
+        }
+        else
+        {
+            return  error();
+        }
+//        return StringUtils.isEmpty(msg) ? success() : error(msg);
     }
 }

@@ -1,5 +1,7 @@
 package com.fpts.framework.shiro.service;
 
+import com.fpts.framework.shiro.util.AuthorizationUtils;
+import com.fpts.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.fpts.common.constant.Constants;
@@ -64,6 +66,7 @@ public class SysRegisterService
         }
         else
         {
+            AuthorizationUtils.clearAllCachedAuthorizationInfo();
             user.setPwdUpdateDate(DateUtils.getNowDate());
             user.setUserName(loginName);
             user.setSalt(ShiroUtils.randomSalt());
@@ -76,6 +79,8 @@ public class SysRegisterService
             else
             {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.REGISTER, MessageUtils.message("user.register.success")));
+
+
             }
         }
         return msg;

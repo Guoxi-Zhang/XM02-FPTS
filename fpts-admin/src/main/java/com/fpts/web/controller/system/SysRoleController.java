@@ -1,5 +1,6 @@
 package com.fpts.web.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -324,5 +325,27 @@ public class SysRoleController extends BaseController
         List<SysRole> list = roleService.selectRoleList(role);
 
         return getDataTable(list);
+    }
+
+    @RequestMapping("/chart")
+    public String showChart(ModelMap mmap)
+    {
+        List<SysUser> userList = userService.selectUserList(new SysUser());
+        int adminNumber = 0;
+        int commmonNumber = 0;
+        for (SysUser item0: userList)
+        {
+            if (item0.getUserId() != null && item0.getUserId() == 1L)
+                adminNumber ++;
+            else
+                commmonNumber ++;
+
+        }
+        List<Integer> countList = new ArrayList<Integer>();
+        countList.add(adminNumber);
+        countList.add(commmonNumber);
+        mmap.put("countList", countList);
+
+        return prefix + "/chart";
     }
 }
