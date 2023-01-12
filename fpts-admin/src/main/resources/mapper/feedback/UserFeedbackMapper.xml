@@ -20,13 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectUserFeedbackList" parameterType="UserFeedback" resultMap="UserFeedbackResult">
         <include refid="selectUserFeedbackVo"/>
-        <where>  
+        <where>1=1
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="userFeedbackContent != null  and userFeedbackContent != ''"> and user_feedback_content like concat('%', #{userFeedbackContent}, '%')</if>
             <if test="adminFeedbackContent != null  and adminFeedbackContent != ''"> and admin_feedback_content like concat('%', #{adminFeedbackContent}, '%')</if>
             <if test="params.UserFeedbackCreatetime != null and params.UserFeedbackCreatetime != ''"> and user_feedback_createtime = #{params.UserFeedbackCreatetime} </if>
             <if test="params.AdminFeedbackCreatetime != null and params.AdminFeedbackCreatetime != ''"> and admin_feedback_createtime = #{params.AdminFeedbackCreatetime} </if>
             <if test="completemark != null "> and completemark = #{completemark}</if>
+            ${params.dataScope}
         </where>
     </select>
     
