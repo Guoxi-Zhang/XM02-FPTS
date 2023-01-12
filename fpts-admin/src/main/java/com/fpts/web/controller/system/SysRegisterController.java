@@ -135,7 +135,7 @@ public class SysRegisterController extends BaseController
         else if (queryResult != null)
         {
             // 邮箱已经存在
-            return error("邮箱已经存在，请更换后重试");
+            return error("邮箱已经存在");
         }
         else
         {
