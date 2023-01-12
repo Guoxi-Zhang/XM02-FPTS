@@ -26,12 +26,15 @@
 			</div>
 			
 	        <div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="monitor:online:manage:add">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="monitor:online:add">
 					<i class="fa fa-plus"></i> 添加
 				</a>
 	            <a class="btn btn-danger multiple disabled" onclick="javascript:batchForceLogout()" shiro:hasPermission="monitor:online:batchForceLogout">
 	                <i class="fa fa-sign-out"></i> 强退
 	            </a>
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="monitor:online:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
 				<a class="btn btn-warning" onclick="$.table.exportExcel()">
 					<i class="fa fa-download"></i> 导出
 				</a>
@@ -61,6 +64,7 @@
 		        url: prefix + "/list",
 		        exportUrl: prefix + "/export",
 				createUrl: prefix + "/add",
+				removeUrl: prefix + "/remove",
 		        sortName: "lastAccessTime",
 		        sortOrder: "desc",
 				modalName: "在线用户",

@@ -36,6 +36,14 @@ public interface ISysUserOnlineService
     public void batchDeleteOnline(List<String> sessions);
 
     /**
+     * 通过会话序号删除信息
+     *
+     * @param sessions 会话ID集合
+     * @return 在线用户信息
+     */
+    public int deleteOnlineByIds(List<String> sessions);
+
+    /**
      * 保存会话信息
      * 
      * @param online 会话信息

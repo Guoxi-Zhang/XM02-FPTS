@@ -1,5 +1,6 @@
 package com.fpts.web.controller.monitor;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.fpts.bank_account_management.domain.AccountInfo;
@@ -142,7 +143,7 @@ public class SysUserOnlineController extends BaseController
     /**
      * 新增保存在线用户会话
      */
-    @RequiresPermissions("monitor:online:manage:add")
+    @RequiresPermissions("monitor:online:add")
     @Log(title = "在线用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -150,5 +151,19 @@ public class SysUserOnlineController extends BaseController
     {
         userOnline.setExpireTime(1800000L);
         return toAjax(userOnlineService.insertOnline(userOnline));
+    }
+
+    /**
+     * 删除在线用户会话
+     */
+    @RequiresPermissions("monitor:online:remove")
+    @Log(title = "在线用户管理", businessType = BusinessType.DELETE)
+    @PostMapping( "/remove")
+    @ResponseBody
+    public AjaxResult remove(String ids)
+    {
+        String [] idStringArray = Convert.toStrArray(ids);
+        List<String> res = Arrays.asList(idStringArray);
+        return toAjax(userOnlineService.deleteOnlineByIds(res));
     }
 }
