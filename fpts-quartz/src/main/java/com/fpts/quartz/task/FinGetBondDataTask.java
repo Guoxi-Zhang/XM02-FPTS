@@ -84,7 +84,9 @@ public class FinGetBondDataTask {
 //            System.out.println(stock.toString());
 //            System.out.println(financeWarehouseService.toString());
             if(null!=bond){
-                financeWarehouseService.insertFinanceWarehouse(bond);
+                FinanceWarehouse f = financeWarehouseService.selectFinanceWarehouseByProductId(bond.getProductId());
+                if(null==f) financeWarehouseService.insertFinanceWarehouse(bond);
+                else financeWarehouseService.updateFinanceWarehouse2(bond);
             }
             //stocks.add(stock);
 
