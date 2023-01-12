@@ -1,6 +1,8 @@
 package com.fpts.feedback.service.impl;
 
 import java.util.List;
+
+import com.fpts.common.annotation.DataScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fpts.feedback.mapper.UserFeedbackMapper;
@@ -27,6 +29,7 @@ public class UserFeedbackServiceImpl implements IUserFeedbackService
      * @return 用户反馈
      */
     @Override
+    @DataScope(deptAlias = "user_feedback", userAlias = "user_feedback")
     public UserFeedback selectUserFeedbackByUserFeedbackId(Long userFeedbackId)
     {
         return userFeedbackMapper.selectUserFeedbackByUserFeedbackId(userFeedbackId);
@@ -39,6 +42,7 @@ public class UserFeedbackServiceImpl implements IUserFeedbackService
      * @return 用户反馈
      */
     @Override
+    @DataScope(deptAlias = "user_feedback", userAlias = "user_feedback")
     public List<UserFeedback> selectUserFeedbackList(UserFeedback userFeedback)
     {
         return userFeedbackMapper.selectUserFeedbackList(userFeedback);
@@ -51,6 +55,7 @@ public class UserFeedbackServiceImpl implements IUserFeedbackService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "user_feedback", userAlias = "user_feedback")
     public int insertUserFeedback(UserFeedback userFeedback)
     {
         return userFeedbackMapper.insertUserFeedback(userFeedback);
@@ -63,6 +68,7 @@ public class UserFeedbackServiceImpl implements IUserFeedbackService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "user_feedback", userAlias = "user_feedback")
     public int updateUserFeedback(UserFeedback userFeedback)
     {
         return userFeedbackMapper.updateUserFeedback(userFeedback);
@@ -75,6 +81,7 @@ public class UserFeedbackServiceImpl implements IUserFeedbackService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "user_feedback", userAlias = "user_feedback")
     public int deleteUserFeedbackByUserFeedbackIds(String userFeedbackIds)
     {
         return userFeedbackMapper.deleteUserFeedbackByUserFeedbackIds(Convert.toStrArray(userFeedbackIds));
@@ -87,6 +94,7 @@ public class UserFeedbackServiceImpl implements IUserFeedbackService
      * @return 结果
      */
     @Override
+    @DataScope(deptAlias = "user_feedback", userAlias = "user_feedback")
     public int deleteUserFeedbackByUserFeedbackId(Long userFeedbackId)
     {
         return userFeedbackMapper.deleteUserFeedbackByUserFeedbackId(userFeedbackId);
