@@ -10,6 +10,7 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.fpts.common.annotation.Log;
 import com.fpts.common.core.controller.BaseController;
@@ -165,5 +166,29 @@ public class SysUserOnlineController extends BaseController
         String [] idStringArray = Convert.toStrArray(ids);
         List<String> res = Arrays.asList(idStringArray);
         return toAjax(userOnlineService.deleteOnlineByIds(res));
+    }
+
+    /**
+     * 修改在线用户信息
+     */
+    @RequiresPermissions("monitor:online:edit")
+    @GetMapping("/edit/{sessionId}")
+    public String edit(@PathVariable("sessionId") String id, ModelMap mmap)
+    {
+        SysUserOnline onlineUserInfo = userOnlineService.selectOnlineById(id);
+        mmap.put("onlineUserInfo", onlineUserInfo);
+        return prefix + "/edit";
+    }
+
+    /**
+     * 保存修改在线用户信息
+     */
+    @RequiresPermissions("monitor:online:edit")
+    @Log(title = "在线用户管理", businessType = BusinessType.UPDATE)
+    @PostMapping("/edit")
+    @ResponseBody
+    public AjaxResult editSave(SysUserOnline online)
+    {
+        return toAjax(userOnlineService.editOnline(online));
     }
 }

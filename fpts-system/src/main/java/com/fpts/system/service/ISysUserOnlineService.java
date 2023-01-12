@@ -87,4 +87,11 @@ public interface ISysUserOnlineService
      * @return 会话集合
      */
     public List<SysUserOnline> selectOnlineByExpired(Date expiredDate);
+
+    /**
+     * 修改会话信息
+     *
+     * @param online 会话信息
+     */
+    public int editOnline(SysUserOnline online);
 }

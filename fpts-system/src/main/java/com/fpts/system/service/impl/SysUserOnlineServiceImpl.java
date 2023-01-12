@@ -169,4 +169,14 @@ public class SysUserOnlineServiceImpl implements ISysUserOnlineService
         }
         return numberOfSuccess;
     }
+
+    /**
+     * 修改会话信息
+     *
+     * @param online 会话信息
+     */
+    public int editOnline(SysUserOnline online)
+    {
+        return userOnlineDao.saveOnline(online);
+    }
 }
