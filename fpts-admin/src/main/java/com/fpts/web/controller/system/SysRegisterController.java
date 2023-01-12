@@ -80,6 +80,7 @@ public class SysRegisterController extends BaseController
         else
         {
             // 有效，注册用户
+            user.setEmail(result.get(0).getEmailTo()); // 顺手把用户的 email 填进去
             String msg = registerService.register(user);
             return StringUtils.isEmpty(msg) ? success() : error(msg);
         }
