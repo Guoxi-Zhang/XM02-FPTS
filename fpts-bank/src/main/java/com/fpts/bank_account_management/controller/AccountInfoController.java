@@ -153,7 +153,7 @@ public class AccountInfoController extends BaseController
      * 统计图表，统计近三个月以来的银行卡绑定数量
      */
     @RequestMapping("/chart")
-    public void showChart(ModelMap mmap)
+    public String showChart(ModelMap mmap)
     {
         // 获取原始数据
         List<AccountInfo> list = accountInfoService.selectAccountInfoList(new AccountInfo());
@@ -217,16 +217,17 @@ public class AccountInfoController extends BaseController
         }
 
         // 把月份打包
-        String thisMonth = new SimpleDateFormat("yyyy-MM").format(FirstDayOfThisMonth).toString();
+        String thisMonth = new SimpleDateFormat("yyyy.MM").format(FirstDayOfThisMonth).toString();
         // System.out.println(thisMonth);
-        String lastMonth = new SimpleDateFormat("yyyy-MM").format(FirstDayOfLastMonth).toString();
+        String lastMonth = new SimpleDateFormat("yyyy.MM").format(FirstDayOfLastMonth).toString();
         // System.out.println(lastMonth);
-        String llastMonth = new SimpleDateFormat("yyyy-MM").format(FirstDayOfLLastMonth).toString();
+        String llastMonth = new SimpleDateFormat("yyyy.MM").format(FirstDayOfLLastMonth).toString();
         // System.out.println(llastMonth);
         List<String> monthList = new ArrayList<String>();
         monthList.add(thisMonth);
         monthList.add(lastMonth);
         monthList.add(llastMonth);
+        System.out.println(monthList);
         mmap.put("monthList", monthList);
 
         // 把计数结果打包
@@ -236,5 +237,7 @@ public class AccountInfoController extends BaseController
         countList.add(countArray[2]);
         // System.out.println(countList);
         mmap.put("countList", countList);
+
+        return prefix + "/chart";
     }
 }

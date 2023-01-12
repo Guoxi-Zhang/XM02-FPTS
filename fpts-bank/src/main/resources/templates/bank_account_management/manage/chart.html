@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('金融信息图表')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <!-- bootstrap-table 表格插件样式 -->
+
+</head>
+<body class="white-bg">
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div id="main" style="width: 800px;height:500px;"></div>
+<script th:src="@{/js/echarts.js}"></script>
+
+<<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    //var chartDom = document.getElementById('quotations-count-container');
+    var myChart = echarts.init(document.getElementById('main'));
+
+    let monthList = [[${monthList}]];
+    console.log(monthList);
+
+    let countList = [[${countList}]];
+    console.log(countList);
+
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '银行账号管理分时段新增用户统计图'
+        },
+        tooltip: {},
+        legend: {
+            data: ['新增账号数量']
+        },
+        xAxis: {
+            //data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+            name: '月份',
+            data: monthList
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '新增账号数量',
+                type: 'bar',
+                data: countList
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</body>
+</html>
