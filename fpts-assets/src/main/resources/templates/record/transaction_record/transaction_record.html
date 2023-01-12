@@ -44,20 +44,7 @@
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
-                            <li>
-                                <label>交易方式：</label>
-                                <select name="orderPattern" th:with="type=${@dict.getType('transaction_pattern')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <label>订单情况：</label>
-                                <select name="orderSituation" th:with="type=${@dict.getType('transaction_situation')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
+
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -177,20 +164,7 @@
                        return $.table.selectDictLabel(orderDirectionDatas, value);
                     }
                 },
-                {
-                    field: 'orderPattern',
-                    title: '交易方式',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(orderPatternDatas, value);
-                    }
-                },
-                {
-                    field: 'orderSituation',
-                    title: '订单情况',
-                    formatter: function(value, row, index) {
-                       return $.table.selectDictLabel(orderSituationDatas, value);
-                    }
-                },
+
                 {
                     title: '操作',
                     align: 'center',

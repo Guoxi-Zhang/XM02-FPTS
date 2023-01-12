@@ -110,7 +110,9 @@
                 {
                     field: 'id',
                     title: '编号',
-                    visible: false
+                    visible: false,
+                    sortable: true
+
                 },
                 {
                     field: 'task',
@@ -118,14 +120,18 @@
                 },
                 {
                     field: 'endTime',
-                    title: '截止日期'
+                    title: '截止日期',
+                    sortable: true
+
                 },
                 {
                     field: 'state',
                     title: '状态',
                     formatter: function(value, row, index) {
                         return $.table.selectDictLabel(stateDatas, value);
-                    }
+                    },
+                    sortable: true
+
                 },
                 {
                     field: 'detail',
