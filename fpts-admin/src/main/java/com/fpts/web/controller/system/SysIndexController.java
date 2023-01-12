@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fpts.finance_news.domain.FinanceNews;
+import com.fpts.finance_news.service.IFinanceNewsService;
 import com.fpts.todo.domain.TodoList;
 import com.fpts.todo.service.ITodoListService;
 import com.fpts.finance_forum.domain.FinanceForum;
@@ -55,6 +57,9 @@ public class SysIndexController extends BaseController
 
     @Autowired
     private IFinanceForumService financeForumService;
+
+    @Autowired
+    private IFinanceNewsService financeNewsService;
 
     // 系统首页
     @GetMapping("/index")
@@ -144,6 +149,8 @@ public class SysIndexController extends BaseController
     public String main(ModelMap mmap, TodoList todoList,FinanceForum financeForum) throws ParseException {
         List<TodoList> list = todoListService.selectTodoListList(todoList);
         List<FinanceForum> list1 = financeForumService.selectFinanceForumList(financeForum);
+        List<FinanceNews> newsList = financeNewsService.selectFinanceNewsList(new FinanceNews());
+        mmap.put("newsNum", newsList.size());
         for(TodoList t:list){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             t.setEndTime(sdf.parse(sdf.format(t.getEndTime())));
