@@ -48,7 +48,7 @@ public class TradingRecordController extends BaseController
     public TableDataInfo list(TradingRecord tradingRecord)
     {
         startPage();
-        List<TradingRecord> list = tradingRecordService.selectTradingRecordList(tradingRecord);
+        List<TradingRecord> list = tradingRecordService.selectTradingRecordListWithName(tradingRecord);
         return getDataTable(list);
     }
 
