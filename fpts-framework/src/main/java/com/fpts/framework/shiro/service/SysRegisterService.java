@@ -75,7 +75,21 @@ public class SysRegisterService
             }
             else
             {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.REGISTER, MessageUtils.message("user.register.success")));
+                // 添加角色为普通用户
+                // System.out.println(user);
+                // 取 userId 并设置 roleId = 2
+                Long userId = user.getUserId();
+                Long [] roleIds = new Long[1];
+                roleIds[0] = 2L;
+                // 执行插入操作
+                if (userService.insertUserRoleWhenRegister(userId, roleIds) > 0)
+                {
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(loginName, Constants.REGISTER, MessageUtils.message("user.register.success")));
+                }
+                else
+                {
+                    msg = "分配角色失败，请联系管理员";
+                }
             }
         }
         return msg;

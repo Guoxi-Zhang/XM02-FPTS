@@ -211,4 +211,12 @@ public interface ISysUserService
      * @return 结果
      */
     public int changeStatus(SysUser user);
+
+    /**
+     * 注册时使用，新增用户角色信息
+     *
+     * @param userId 用户ID
+     * @param roleIds 角色组
+     */
+    public int insertUserRoleWhenRegister(Long userId, Long[] roleIds);
 }
