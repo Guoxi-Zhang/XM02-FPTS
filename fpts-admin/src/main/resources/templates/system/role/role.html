@@ -53,6 +53,9 @@
 				<a class="btn btn-info" onclick="printToHtml()">
 					<i class="fa fa-download"></i> 打印HTML
 				</a>
+				<a class="btn btn-success" onclick="accountInfoAddChart()" >
+					<i class="fa fa-bar-chart"></i> 统计图表
+				</a>
 	        </div>
 	        
 	        <div class="col-sm-12 select-table table-striped">
@@ -68,6 +71,10 @@
 
 		function printToHtml(){
 			$.modal.openFull(table.options.modalName + "打印", "/system/role/print");
+		}
+
+		function accountInfoAddChart() {
+			$.modal.open(table.options.modalName + "统计图表", "/system/role/chart");
 		}
 
 		$(function() {
