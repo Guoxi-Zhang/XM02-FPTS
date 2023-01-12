@@ -90,6 +90,10 @@
             <groupId>com.fpts</groupId>
             <artifactId>fpts-bank</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fpts</groupId>
+            <artifactId>fpts-bank</artifactId>
+        </dependency>
 
     </dependencies>
 

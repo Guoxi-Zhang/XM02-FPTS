@@ -46,8 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="link != null">link,</if>
             <if test="source != null">source,</if>
             <if test="body != null">body,</if>
-            <if test="read_num != null">read_num,</if>
-            <if test="comment_num != null">comment_num,</if>
+            <if test="read != null">read_num,</if>
+            <if test="comment != null">comment_num,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="title != null">#{title},</if>
@@ -56,8 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="link != null">#{link},</if>
             <if test="source != null">#{source},</if>
             <if test="body != null">#{body},</if>
-            <if test="read_num != null">#{read_num},</if>
-            <if test="comment_num != null">#{comment_num},</if>
+            <if test="read != null">#{read},</if>
+            <if test="comment != null">#{comment},</if>
          </trim>
     </insert>
 
@@ -70,8 +70,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="link != null">link = #{link},</if>
             <if test="source != null">source = #{source},</if>
             <if test="body != null">body = #{body},</if>
-            <if test="read_num != null">read_num = #{read_num},</if>
-            <if test="comment_num != null">comment_num = #{comment_num},</if>
+            <if test="read != null">read_num = #{read},</if>
+            <if test="comment != null">comment_num = #{comment},</if>
         </trim>
         where news_id = #{newsId}
     </update>
