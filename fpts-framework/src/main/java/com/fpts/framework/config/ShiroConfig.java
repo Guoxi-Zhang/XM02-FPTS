@@ -297,6 +297,7 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/icuniauth_client", "anon");
         // 注册相关
         filterChainDefinitionMap.put("/register", "anon,captchaValidate");
+        filterChainDefinitionMap.put("/getRegisterToken", "anon,captchaValidate");
         // 找回密码相关
         filterChainDefinitionMap.put("/resetPassword/sendCode", "anon,captchaValidate");
         filterChainDefinitionMap.put("/resetPassword/setNewPassword", "anon");

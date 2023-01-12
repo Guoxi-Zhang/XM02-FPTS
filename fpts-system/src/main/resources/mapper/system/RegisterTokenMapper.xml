@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fpts.system.mapper.RegisterTokenMapper">
+    
+    <resultMap type="RegisterToken" id="RegisterTokenResult">
+        <result property="id"    column="id"    />
+        <result property="token"    column="token"    />
+        <result property="sessionId"    column="session_id"    />
+        <result property="emailTo"    column="email_to"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectRegisterTokenVo">
+        select id, token, session_id, email_to, create_time from register_token
+    </sql>
+
+    <select id="selectRegisterTokenList" parameterType="RegisterToken" resultMap="RegisterTokenResult">
+        <include refid="selectRegisterTokenVo"/>
+        <where>  
+            <if test="token != null  and token != ''"> and token = #{token}</if>
+            <if test="sessionId != null  and sessionId != ''"> and session_id = #{sessionId}</if>
+            <if test="emailTo != null  and emailTo != ''"> and email_to = #{emailTo}</if>
+        </where>
+    </select>
+    
+    <select id="selectRegisterTokenById" parameterType="Long" resultMap="RegisterTokenResult">
+        <include refid="selectRegisterTokenVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertRegisterToken" parameterType="RegisterToken" useGeneratedKeys="true" keyProperty="id">
+        insert into register_token
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="token != null and token != ''">token,</if>
+            <if test="sessionId != null and sessionId != ''">session_id,</if>
+            <if test="emailTo != null and emailTo != ''">email_to,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="token != null and token != ''">#{token},</if>
+            <if test="sessionId != null and sessionId != ''">#{sessionId},</if>
+            <if test="emailTo != null and emailTo != ''">#{emailTo},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRegisterToken" parameterType="RegisterToken">
+        update register_token
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="token != null and token != ''">token = #{token},</if>
+            <if test="sessionId != null and sessionId != ''">session_id = #{sessionId},</if>
+            <if test="emailTo != null and emailTo != ''">email_to = #{emailTo},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRegisterTokenById" parameterType="Long">
+        delete from register_token where id = #{id}
+    </delete>
+
+    <delete id="deleteRegisterTokenByIds" parameterType="String">
+        delete from register_token where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
