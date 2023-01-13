@@ -118,7 +118,8 @@ public class CockpitInterfaceController {
             String pId = f.getName();
             Double rate = f.getIncrease();
             //改这里，找涨幅最高的十只股票
-            map.put(pId, rate);
+            if (pId != null && rate != null)
+                map.put(pId, rate);
 
         }
 
