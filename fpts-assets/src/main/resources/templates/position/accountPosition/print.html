@@ -4,10 +4,24 @@
     <th:block th:include="include :: header('交易记录html打印')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
+<style>
+    @media print {
+        .noprint {
+            display: none;
+        }
+        @page{
+            size: A3;
+            margin: 0;
+        }
+    }
+</style>
 <body>
 
 <div class="col-sm-12 select-table">
     <table id="bootstrap-table" class="table table-bordered" style="width: 600px; height: auto;"></table>
+</div>
+<div style="text-align: right; ">
+    <button onclick="print()" class="noprint">确定打印</button>
 </div>
 
 <th:block th:include="include :: footer" />
